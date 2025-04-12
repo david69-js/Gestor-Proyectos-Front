@@ -1,0 +1,81 @@
+/* Eliminar márgenes y relleno de html y body */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Asegúrate de que html y body ocupen el 100% de la altura de la ventana */
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
+.login-container {
+  background-color: #0f172a;
+  height: 100vh; /* Asegura que ocupe el 100% de la altura */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-form {
+  background-color: #1e293b;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+}
+
+.login-form h2 {
+  color: #f1f5f9;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.login-form input {
+  padding: 0.7rem;
+  margin-bottom: 1rem;
+  border: none;
+  border-radius: 6px;
+  background-color: #334155;
+  color: #f1f5f9;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.login-form input:focus {
+  outline: none;
+  background-color: #475569;
+}
+
+.login-form button {
+  padding: 0.7rem;
+  background-color: #4c6a9c;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.login-form button:hover {
+  background-color: #60a5fa;
+}
+
+.error {
+  color: #f87171;
+  font-size: 0.9rem;
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+  

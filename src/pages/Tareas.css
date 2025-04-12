@@ -1,0 +1,46 @@
+.tareas-container {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    color: #f1f5f9;
+    font-family: 'Inter', sans-serif;
+  }
+  
+  .tareas-container h2 {
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+    color: #f8fafc;
+  }
+  
+  .tareas-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .tarea-card {
+    background-color: #1e293b;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    border-left: 4px solid #3b82f6;
+  }
+  
+  .tarea-card h3 {
+    margin: 0 0 0.5rem;
+    color: #3b82f6;
+  }
+  
+  .tarea-card .descripcion {
+    color: #cbd5e1;
+    margin-bottom: 1rem;
+  }
+  
+  .tarea-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    font-size: 0.9rem;
+    color: #94a3b8;
+  }
+  

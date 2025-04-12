@@ -1,0 +1,64 @@
+/* Estilos generales para la página de Proyectos */
+
+.proyectos-container {
+    padding: 2rem;
+    text-align: center;
+    background-color: #f8fafc;
+  }
+  
+  .proyectos-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+    justify-items: center;
+    margin-top: 2rem;
+  }
+  
+  .proyecto-card {
+    background-color: #ffffff;
+    border: 1px solid #d1d5db;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 300px;
+    text-align: left;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .proyecto-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .proyecto-card h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+  
+  .proyecto-card p {
+    font-size: 1rem;
+    color: #6b7280;
+    margin-top: 0.5rem;
+  }
+  
+  /* Estilos para los botones */
+  .btn {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-bottom: 2rem;
+  }
+  
+  .btn.blue {
+    background-color: #3b82f6;
+    color: #ffffff;
+    border: none;
+  }
+  
+  .btn.blue:hover {
+    background-color: #60a5fa;
+  }
+  
