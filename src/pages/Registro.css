@@ -11,6 +11,7 @@ html, body {
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
   }
   
   .registro-form {
@@ -102,7 +103,7 @@ html, body {
     background-color: #475569;
   }
   
-  /* Eliminar texto 'Ningún archivo seleccionado' en el input de archivo */
+ 
   #imagen_perfil::-webkit-file-upload-button {
     display: none;
   }
@@ -132,5 +133,27 @@ html, body {
   #fecha_nacimiento:focus {
     outline: none;
     background-color: #475569;
+  }
+  
+
+  .back-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: transparent;
+    color: white;
+    border: 2px solid white;
+    padding: 10px 20px;
+    font-size: 16px;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .back-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #f1f1f1;
+    border-color: #f1f1f1;
   }
   

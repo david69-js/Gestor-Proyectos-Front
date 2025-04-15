@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './Registro.css'; // Importamos el archivo de estilos específico para el registro
+import { Link } from 'react-router-dom';
+import './Registro.css'; // Asegúrate de tener el CSS adecuado para el Registro
 
 function Registro() {
   const [form, setForm] = useState({
@@ -12,7 +12,6 @@ function Registro() {
   });
 
   const [error, setError] = useState('');
-  const navigate = useNavigate();
 
   const handleRegistro = (e) => {
     e.preventDefault();
@@ -26,14 +25,17 @@ function Registro() {
       return;
     }
 
-    // Aquí iría la lógica real de registro (API o inserción en la BD)
-
+    // Aquí va la lógica del registro (API, base de datos, etc.)
     console.log('Datos registrados:', form);
-    navigate('/login');
   };
 
   return (
     <div className="registro-container">
+      {/* Botón de regreso al Login utilizando Link */}
+      <Link to="/login" className="back-button">
+        &#x2190; Regresar al Login
+      </Link>
+
       <form onSubmit={handleRegistro} className="registro-form">
         <h2>Registro</h2>
 

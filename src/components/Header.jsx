@@ -18,9 +18,13 @@ function Header() {
           <li>
             <Link to="/proyectos">Proyectos</Link>
           </li>
-          {/* Puedes agregar más enlaces según lo necesites */}
           <li>
-            <Link to="/" onClick={() => localStorage.removeItem('isAuthenticated')}>Cerrar sesión</Link>
+            <Link to="/perfil">Perfil</Link>
+          </li>
+          <li>
+            <Link to="/" onClick={() => localStorage.removeItem('isAuthenticated')}>
+              Cerrar sesión
+            </Link>
           </li>
         </ul>
       </nav>

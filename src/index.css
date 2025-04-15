@@ -1,9 +1,9 @@
-/* Añadir padding-top para cuando no hay Header */
+
 .page-content {
-  padding-top: 5rem; /* Ajusta este valor según el tamaño de tu Header */
+  padding-top: 5rem; 
 }
 
-/* También puedes poner un margen inferior a la página, si es necesario */
+
 .page-content {
   margin-bottom: 2rem;
 }

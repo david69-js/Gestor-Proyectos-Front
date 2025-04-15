@@ -1,30 +1,68 @@
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Header from './components/Header';
-
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Tareas from './pages/Tareas';
 import Proyectos from './pages/Proyectos';
-import CrearProyecto from './pages/CrearProyecto'; // <-- ¡importa aquí!
+import CrearProyecto from './pages/CrearProyecto';
+import Registro from './pages/Registro';
+import Perfil from './pages/Perfil'; // <-- Importa el componente Perfil
 
-function HeaderWithConditionalRendering() {
+// Componente para rutas protegidas (requiere autenticación)
+const ProtectedRoute = ({ children }) => {
+  const isAuthenticated = localStorage.getItem('isAuthenticated');
+  return isAuthenticated ? children : <Navigate to="/login" replace />;
+};
+
+// Componente para evitar mostrar Header en rutas públicas
+function LayoutWrapper() {
   const location = useLocation();
-  if (location.pathname === "/") return null;
-  return <Header />;
+  const publicRoutes = ['/', '/login', '/registro'];
+
+  return (
+    <>
+      {!publicRoutes.includes(location.pathname) && <Header />}
+      <Routes>
+        {/* Rutas públicas */}
+        <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/registro" element={<Registro />} />
+
+        {/* Rutas protegidas */}
+        <Route path="/dashboard" element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        } />
+        <Route path="/tareas" element={
+          <ProtectedRoute>
+            <Tareas />
+          </ProtectedRoute>
+        } />
+        <Route path="/proyectos" element={
+          <ProtectedRoute>
+            <Proyectos />
+          </ProtectedRoute>
+        } />
+        <Route path="/crear-proyecto" element={
+          <ProtectedRoute>
+            <CrearProyecto />
+          </ProtectedRoute>
+        } />
+        <Route path="/perfil" element={ // <-- Nueva ruta protegida
+          <ProtectedRoute>
+            <Perfil />
+          </ProtectedRoute>
+        } />
+      </Routes>
+    </>
+  );
 }
 
 function App() {
   return (
     <Router>
-      <HeaderWithConditionalRendering />
-
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/tareas" element={<Tareas />} />
-        <Route path="/proyectos" element={<Proyectos />} />
-        <Route path="/crear-proyecto" element={<CrearProyecto />} /> {/* <-- y agrega esto */}
-      </Routes>
+      <LayoutWrapper />
     </Router>
   );
 }
