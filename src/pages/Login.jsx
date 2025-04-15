@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Registro from './Registro';
 import './Login.css';
 
 function Login() {
   const [usuario, setUsuario] = useState('');
   const [contrasena, setContrasena] = useState('');
   const [error, setError] = useState('');
+  const [mostrarRegistro, setMostrarRegistro] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = (e) => {
@@ -16,10 +18,13 @@ function Login() {
       return;
     }
 
-    // Aquí puedes agregar la lógica de autenticación real
-    localStorage.setItem('isAuthenticated', 'true'); // Simulación
-    navigate('/dashboard'); // Redirige al dashboard
+    localStorage.setItem('isAuthenticated', 'true');
+    navigate('/dashboard');
   };
+
+  if (mostrarRegistro) {
+    return <Registro volver={() => setMostrarRegistro(false)} />;
+  }
 
   return (
     <div className="login-container">
@@ -39,6 +44,23 @@ function Login() {
         />
         {error && <p className="error">{error}</p>}
         <button type="submit">Entrar</button>
+
+        <p style={{ marginTop: '1rem', color: '#f1f5f9', textAlign: 'center' }}>
+          ¿No tienes cuenta?{' '}
+          <button
+            type="button"
+            onClick={() => setMostrarRegistro(true)}
+            style={{
+              background: 'none',
+              border: 'none',
+              color: '#60a5fa',
+              cursor: 'pointer',
+              textDecoration: 'underline',
+            }}
+          >
+            Regístrate
+          </button>
+        </p>
       </form>
     </div>
   );
