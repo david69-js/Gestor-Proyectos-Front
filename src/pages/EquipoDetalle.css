@@ -1,0 +1,51 @@
+/* pages/EquipoDetalle.css */
+
+.equipo-detalle-container {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+  background-color: #f5f7fa;
+  min-height: 100vh;
+}
+
+.equipo-detalle-card {
+  background-color: #ffffff;
+  padding: 2rem 3rem;
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  max-width: 700px;
+  color: #333;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.equipo-detalle-card h2 {
+  margin-bottom: 0.5rem;
+  color: #2c3e50;
+}
+
+.equipo-detalle-card p {
+  margin-bottom: 1.5rem;
+  color: #555;
+}
+
+.seccion {
+  margin-bottom: 2rem;
+}
+
+.seccion h3 {
+  margin-bottom: 0.5rem;
+  color: #34495e;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 5px;
+}
+
+.seccion ul {
+  list-style-type: none;
+  padding-left: 1rem;
+}
+
+.seccion ul li {
+  padding: 0.3rem 0;
+  border-bottom: 1px solid #eee;
+}

@@ -6,15 +6,15 @@ import Tareas from './pages/Tareas';
 import Proyectos from './pages/Proyectos';
 import CrearProyecto from './pages/CrearProyecto';
 import Registro from './pages/Registro';
-import Perfil from './pages/Perfil'; // <-- Importa el componente Perfil
+import Perfil from './pages/Perfil';
+import Equipos from './pages/equipos';
+import EquipoDetalle from './pages/EquipoDetalle'; // <-- ✅ Nuevo import
 
-// Componente para rutas protegidas (requiere autenticación)
 const ProtectedRoute = ({ children }) => {
   const isAuthenticated = localStorage.getItem('isAuthenticated');
   return isAuthenticated ? children : <Navigate to="/login" replace />;
 };
 
-// Componente para evitar mostrar Header en rutas públicas
 function LayoutWrapper() {
   const location = useLocation();
   const publicRoutes = ['/', '/login', '/registro'];
@@ -44,14 +44,24 @@ function LayoutWrapper() {
             <Proyectos />
           </ProtectedRoute>
         } />
+        <Route path="/equipos" element={
+          <ProtectedRoute>
+            <Equipos />
+          </ProtectedRoute>
+        } />
         <Route path="/crear-proyecto" element={
           <ProtectedRoute>
             <CrearProyecto />
           </ProtectedRoute>
         } />
-        <Route path="/perfil" element={ // <-- Nueva ruta protegida
+        <Route path="/perfil" element={
           <ProtectedRoute>
             <Perfil />
+          </ProtectedRoute>
+        } />
+        <Route path="/equipos/:id" element={ // ✅ Nueva ruta
+          <ProtectedRoute>
+            <EquipoDetalle />
           </ProtectedRoute>
         } />
       </Routes>

@@ -1,0 +1,50 @@
+.equipos-page {
+    padding: 30px;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f9f9f9;
+  }
+  
+  .equipos-page h2 {
+    margin-bottom: 20px;
+    font-size: 28px;
+    color: #2c3e50;
+  }
+  
+  .filtros {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 30px;
+  }
+  
+  .filtros select,
+  .filtros input[type="date"],
+  .filtros input[type="text"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    background-color: #fff;
+    width: 180px;
+  }
+  
+  .filtros .btn.buscar {
+    background-color: #3498db;
+    color: #fff;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .filtros .btn.buscar:hover {
+    background-color: #2980b9;
+  }
+  
+  .equipos-lista {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  
