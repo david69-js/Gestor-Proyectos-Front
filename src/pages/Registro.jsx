@@ -1,6 +1,7 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import './Registro.css'; // Asegúrate de tener el CSS adecuado para el Registro
+import { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import useApi from '../hooks/useApi';
+import './Registro.css';
 
 function Registro() {
   const [form, setForm] = useState({
@@ -9,9 +10,24 @@ function Registro() {
     contrasena: '',
     imagen_perfil: null,
     fecha_nacimiento: '',
+    nombre_organizacion: '',
+    numero_telefono: '',
   });
 
   const [error, setError] = useState('');
+  const [showPopup, setShowPopup] = useState(false); // Estado para controlar el popup
+  const navigate = useNavigate(); // Hook para navegación
+
+  const { data, error: apiError, loading, fetchData } = useApi('http://localhost:3000/api/auth/register', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      ...form,
+      fecha_nacimiento: form.fecha_nacimiento ? new Date(form.fecha_nacimiento).toISOString().split('T')[0] : ''
+    }),
+  });
 
   const handleRegistro = (e) => {
     e.preventDefault();
@@ -19,19 +35,31 @@ function Registro() {
     if (
       form.nombre.trim() === '' ||
       form.correo.trim() === '' ||
-      form.contrasena.trim() === ''
+      form.contrasena.trim() === '' ||
+      form.nombre_organizacion.trim() === '' ||
+      form.numero_telefono.trim() === ''
     ) {
       setError('Por favor, completa todos los campos obligatorios.');
       return;
     }
 
-    // Aquí va la lógica del registro (API, base de datos, etc.)
-    console.log('Datos registrados:', form);
+    fetchData();
+  };
+
+  // Efecto para manejar el éxito del registro
+  useEffect(() => {
+    if (data) {
+      setShowPopup(true); // Muestra el popup cuando el registro es exitoso
+    }
+  }, [data]);
+
+  const handleClosePopup = () => {
+    setShowPopup(false);
+    navigate('/login'); // Redirige al login después de cerrar el popup
   };
 
   return (
     <div className="registro-container">
-      {/* Botón de regreso al Login utilizando Link */}
       <Link to="/login" className="back-button">
         &#x2190; Regresar al Login
       </Link>
@@ -58,6 +86,20 @@ function Registro() {
           placeholder="Contraseña"
           value={form.contrasena}
           onChange={(e) => setForm({ ...form, contrasena: e.target.value })}
+        />
+
+        <input
+          type="text"
+          placeholder="Nombre de la organización"
+          value={form.nombre_organizacion}
+          onChange={(e) => setForm({ ...form, nombre_organizacion: e.target.value })}
+        />
+
+        <input
+          type="text"
+          placeholder="Número de teléfono"
+          value={form.numero_telefono}
+          onChange={(e) => setForm({ ...form, numero_telefono: e.target.value })}
         />
 
         <div className="form-group">
@@ -91,7 +133,20 @@ function Registro() {
           />
         </div>
 
+        {showPopup && (
+          <>
+            <div className="overlay"></div> {/* Overlay for dimming background */}
+            <div className="popup">
+              <p>El usuario se registró correctamente.</p>
+              <button onClick={handleClosePopup}>Aceptar</button>
+            </div>
+          </>
+        )}
+
         {error && <p className="error">{error}</p>}
+        {apiError && <p className="error">Error: {apiError.message}</p>}
+        {loading && <p>Cargando...</p>}
+        {data && <p>Registro exitoso!</p>}
 
         <button type="submit">Registrarse</button>
       </form>

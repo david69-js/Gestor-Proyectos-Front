@@ -11,6 +11,7 @@ import Equipos from './pages/Equipos'; // Asegúrate que el nombre del archivo c
 import EquipoDetalle from './pages/EquipoDetalle';
 import InvitarPersona from './pages/InvitarPersona';
 import EditarTarea from './pages/EditarTarea';
+import { ApiProvider } from './context/ApiContext.jsx';
 
 // Componente para las rutas protegidas
 const ProtectedRoute = ({ children }) => {
@@ -57,11 +58,13 @@ function LayoutWrapper() {
 }
 
 function App() {
-  return (
-    <Router>
-      <LayoutWrapper />
-    </Router>
-  );
+    return (
+        <ApiProvider>
+            <Router>
+              <LayoutWrapper />
+            </Router>
+        </ApiProvider>
+    );
 }
 
 export default App;
