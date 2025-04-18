@@ -16,21 +16,20 @@ import { useContext } from 'react';
 import { AuthContext } from './context/AuthContext.jsx'; // Import the AuthContext
 
 // Componente para las rutas protegidas
-const ProtectedRoute = ({ children }) => {
-  const { authData } = useContext(AuthContext); // Use authData from context
-  return authData.isAuthenticated ? children : <Navigate to="/login" replace />;
-};
 
 function LayoutWrapper() {
   const location = useLocation();
   const { authData } = useContext(AuthContext); // Use authData from context
+  console.log(authData)
   const publicRoutes = ['/', '/login', '/registro'];
 
-  // Redirigir a dashboard solo si el usuario autenticado está en rutas públicas
-  if (authData.isAuthenticated && publicRoutes.includes(location.pathname)) {
-    return <Navigate to="/dashboard" replace />;
-  }
 
+  const ProtectedRoute = ({ children }) => {
+      const CurrentLocationAuth = authData.isAuthenticated ? location.pathname : '/login';
+
+        return authData.isAuthenticated ? children : <Navigate to={CurrentLocationAuth} replace />;
+  };
+  
   return (
     <>
       {/* Header solo se muestra en rutas no públicas */}
