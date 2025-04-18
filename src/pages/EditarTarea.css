@@ -1,0 +1,48 @@
+/* EditarTarea.css */
+
+.editar-tarea-container {
+    padding: 100px 20px 20px;
+    background-color: #f0f4f8;
+    min-height: 100vh;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .editar-tarea-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 25px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .editar-tarea-form input,
+  .editar-tarea-form select,
+  .editar-tarea-form button {
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #cbd5e0;
+    border-radius: 6px;
+    outline: none;
+  }
+  
+  .editar-tarea-form input:focus,
+  .editar-tarea-form select:focus {
+    border-color: #007bff;
+  }
+  
+  .editar-tarea-form button {
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .editar-tarea-form button:hover {
+    background-color: #0056b3;
+  }
+  

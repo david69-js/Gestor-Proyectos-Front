@@ -7,9 +7,12 @@ import Proyectos from './pages/Proyectos';
 import CrearProyecto from './pages/CrearProyecto';
 import Registro from './pages/Registro';
 import Perfil from './pages/Perfil';
-import Equipos from './pages/equipos';
-import EquipoDetalle from './pages/EquipoDetalle'; // <-- ✅ Nuevo import
+import Equipos from './pages/Equipos'; // Asegúrate que el nombre del archivo coincide (mayúsculas)
+import EquipoDetalle from './pages/EquipoDetalle';
+import InvitarPersona from './pages/InvitarPersona';
+import EditarTarea from './pages/EditarTarea';
 
+// Componente para las rutas protegidas
 const ProtectedRoute = ({ children }) => {
   const isAuthenticated = localStorage.getItem('isAuthenticated');
   return isAuthenticated ? children : <Navigate to="/login" replace />;
@@ -21,6 +24,7 @@ function LayoutWrapper() {
 
   return (
     <>
+      {/* Header solo se muestra en rutas no públicas */}
       {!publicRoutes.includes(location.pathname) && <Header />}
       <Routes>
         {/* Rutas públicas */}
@@ -29,41 +33,24 @@ function LayoutWrapper() {
         <Route path="/registro" element={<Registro />} />
 
         {/* Rutas protegidas */}
-        <Route path="/dashboard" element={
-          <ProtectedRoute>
-            <Dashboard />
-          </ProtectedRoute>
-        } />
-        <Route path="/tareas" element={
-          <ProtectedRoute>
-            <Tareas />
-          </ProtectedRoute>
-        } />
-        <Route path="/proyectos" element={
-          <ProtectedRoute>
-            <Proyectos />
-          </ProtectedRoute>
-        } />
-        <Route path="/equipos" element={
-          <ProtectedRoute>
-            <Equipos />
-          </ProtectedRoute>
-        } />
-        <Route path="/crear-proyecto" element={
-          <ProtectedRoute>
-            <CrearProyecto />
-          </ProtectedRoute>
-        } />
-        <Route path="/perfil" element={
-          <ProtectedRoute>
-            <Perfil />
-          </ProtectedRoute>
-        } />
-        <Route path="/equipos/:id" element={ // ✅ Nueva ruta
-          <ProtectedRoute>
-            <EquipoDetalle />
-          </ProtectedRoute>
-        } />
+        <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+        <Route path="/tareas" element={<ProtectedRoute><Tareas /></ProtectedRoute>} />
+        <Route path="/proyectos" element={<ProtectedRoute><Proyectos /></ProtectedRoute>} />
+        <Route path="/equipos" element={<ProtectedRoute><Equipos /></ProtectedRoute>} />
+        <Route path="/crear-proyecto" element={<ProtectedRoute><CrearProyecto /></ProtectedRoute>} />
+        <Route path="/perfil" element={<ProtectedRoute><Perfil /></ProtectedRoute>} />
+        <Route path="/equipos/:id" element={<ProtectedRoute><EquipoDetalle /></ProtectedRoute>} />
+        <Route path="/tareas/:id" element={<ProtectedRoute><EditarTarea /></ProtectedRoute>} />
+        
+        {/* Ruta para invitar persona - corregida */}
+        <Route 
+          path="/invitar-persona" 
+          element={
+            <ProtectedRoute>
+              <InvitarPersona />
+            </ProtectedRoute>
+          } 
+        />
       </Routes>
     </>
   );

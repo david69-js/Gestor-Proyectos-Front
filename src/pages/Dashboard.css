@@ -1,23 +1,8 @@
-/* Importación de fuente */
+
 body {
     font-family: 'Poppins', sans-serif;
   }
-  
-  .dashboard-container {
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-  }
-  
-  .dashboard-buttons {
-    display: flex;
-    justify-content: center;  /* Centra los botones */
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-  }
-  
-  .btn {
+.btn {
     padding: 1rem 2rem;
     border: none;
     border-radius: 8px;
@@ -25,8 +10,11 @@ body {
     font-size: 1rem;
     font-weight: 500;
     transition: background-color 0.3s ease;
+    min-width: 200px; 
+    text-align: center;
   }
   
+
   .btn.blue {
     background-color: #3b82f6;
     color: #fff;
@@ -36,6 +24,7 @@ body {
     background-color: #60a5fa;
   }
   
+ 
   .btn.gray {
     background-color: #6b7280;
     color: #fff;
@@ -45,12 +34,28 @@ body {
     background-color: #4b5563;
   }
   
+  .dashboard-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap; 
+  }
+  
+ 
+  .dashboard-container {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+ 
   .card {
     background-color: #fff;
     padding: 1.5rem;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    font-family: 'Poppins', sans-serif; /* Se aplica Poppins en los cards */
   }
   
   .card h3,
@@ -118,4 +123,13 @@ body {
     font-size: 1.1rem;
   }
   
+  .clickable {
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .clickable:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  }
   

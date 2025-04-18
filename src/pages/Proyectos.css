@@ -1,64 +1,131 @@
-/* Estilos generales para la página de Proyectos */
-
 .proyectos-container {
     padding: 2rem;
-    text-align: center;
-    background-color: #f8fafc;
+    background-color: #f1f5f9;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .btn.blue {
+    background-color: #4c6a9c;
+    color: #fff;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 3rem; /* Más separación con cards */
+    margin-top: 1rem;
+    display: block;
+  }
+  
+  .btn.blue:hover {
+    background-color: #60a5fa;
   }
   
   .proyectos-cards {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 1.5rem;
-    justify-items: center;
-    margin-top: 2rem;
+    grid-template-columns: repeat(auto-fill, minmax(600px, 1fr)); 
+    gap: 2rem;
+    width: 100%;
+    max-width: 1200px;
+    margin-top: 1rem;
   }
   
   .proyecto-card {
-    background-color: #ffffff;
-    border: 1px solid #d1d5db;
+    background-color: #1e293b;
+    color: #f1f5f9;
     padding: 1.5rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    font-size: 0.9rem;
     width: 100%;
-    max-width: 300px;
-    text-align: left;
-    transition: transform 0.3s ease-in-out;
   }
   
-  .proyecto-card:hover {
-    transform: translateY(-5px);
+  .proyecto-card .card-header {
+    margin-bottom: 1rem;
   }
   
   .proyecto-card h3 {
-    margin: 0;
-    font-size: 1.25rem;
+    font-size: 1.5rem;
     font-weight: 600;
   }
   
   .proyecto-card p {
-    font-size: 1rem;
-    color: #6b7280;
-    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: #bbb;
   }
   
-  /* Estilos para los botones */
-  .btn {
-    padding: 0.8rem 1.5rem;
-    font-size: 1rem;
-    font-weight: 500;
+  .sub-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  
+  .sub-card {
+    background-color: #334155;
+    padding: 1rem;
+    border-radius: 8px;
     cursor: pointer;
-    border-radius: 5px;
-    margin-bottom: 2rem;
+    transition: transform 0.3s ease;
+    font-size: 0.85rem;
+    flex: 1 1 calc(50% - 1rem);
+    min-width: 250px;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 130px; /* Altura uniforme */
   }
   
-  .btn.blue {
-    background-color: #3b82f6;
-    color: #ffffff;
+  .sub-card:hover {
+    transform: scale(1.05);
+  }
+  
+  .sub-card h4 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .sub-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .sub-card ul li {
+    font-size: 0.85rem;
+    color: #bbb;
+  }
+  
+  .sub-card p {
+    font-size: 0.85rem;
+    margin: 0;
+  }
+  
+  .proyecto-card .actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-start;
+  }
+  
+  .proyecto-card .actions button {
+    background-color: #4c6a9c;
+    color: #fff;
+    padding: 0.5rem 1rem;
     border: none;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
   }
   
-  .btn.blue:hover {
+  .proyecto-card .actions button:hover {
     background-color: #60a5fa;
   }
   

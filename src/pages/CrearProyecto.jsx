@@ -15,7 +15,12 @@ function CrearProyecto() {
       fecha_fin: fechaFin,
     };
 
-    console.log('Proyecto creado:', nuevoProyecto);
+    // Retornar el objeto en la consola
+    console.log({
+      proyecto: nuevoProyecto,
+      estado: { nombre, descripcion, fechaFin },
+    });
+
     // Aquí iría la petición al backend
   };
 
