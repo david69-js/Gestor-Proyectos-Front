@@ -1,24 +1,30 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 import './Login.css';
 
 function Login() {
-  const [usuario, setUsuario] = useState('');
+  const [correo, setCorreo] = useState('');
   const [contrasena, setContrasena] = useState('');
   const [error, setError] = useState('');
+  const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
-    if (usuario.trim() === '' || contrasena.trim() === '') {
+    if (correo.trim() === '' || contrasena.trim() === '') {
       setError('Por favor, completa ambos campos.');
       return;
     }
 
-    // Simulación de autenticación exitosa
-    localStorage.setItem('isAuthenticated', 'true');
-    navigate('/dashboard'); // Redirige al dashboard después del login
+    const result = await login(correo, contrasena);
+    if (result) {
+      console.log('Inicio de sesión exitoso');  // Agrega este cons
+      navigate('/dashboard');  // o la ruta que corresponda
+    } else {
+      setError('Correo o contraseña incorrectos.');
+    }
   };
 
   return (
@@ -26,10 +32,10 @@ function Login() {
       <form onSubmit={handleLogin} className="login-form">
         <h2>Iniciar Sesión</h2>
         <input
-          type="text"
-          placeholder="Usuario"
-          value={usuario}
-          onChange={(e) => setUsuario(e.target.value)}
+          type="email"
+          placeholder="Correo electrónico"
+          value={correo}
+          onChange={(e) => setCorreo(e.target.value)}
           required
         />
         <input
@@ -46,7 +52,7 @@ function Login() {
           ¿No tienes cuenta?{' '}
           <button
             type="button"
-            onClick={() => navigate('/registro')} // Navega a la ruta /registro
+            onClick={() => navigate('/registro')}
             style={{
               background: 'none',
               border: 'none',

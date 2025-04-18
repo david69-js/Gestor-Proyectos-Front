@@ -11,17 +11,25 @@ import Equipos from './pages/Equipos'; // Asegúrate que el nombre del archivo c
 import EquipoDetalle from './pages/EquipoDetalle';
 import InvitarPersona from './pages/InvitarPersona';
 import EditarTarea from './pages/EditarTarea';
-import { ApiProvider } from './context/ApiContext.jsx';
+import { AuthProvider } from './context/AuthContext.jsx'; // Import the AuthProvider
+import { useContext } from 'react';
+import { AuthContext } from './context/AuthContext.jsx'; // Import the AuthContext
 
 // Componente para las rutas protegidas
 const ProtectedRoute = ({ children }) => {
-  const isAuthenticated = localStorage.getItem('isAuthenticated');
-  return isAuthenticated ? children : <Navigate to="/login" replace />;
+  const { authData } = useContext(AuthContext); // Use authData from context
+  return authData.isAuthenticated ? children : <Navigate to="/login" replace />;
 };
 
 function LayoutWrapper() {
   const location = useLocation();
+  const { authData } = useContext(AuthContext); // Use authData from context
   const publicRoutes = ['/', '/login', '/registro'];
+
+  // Redirigir a dashboard solo si el usuario autenticado está en rutas públicas
+  if (authData.isAuthenticated && publicRoutes.includes(location.pathname)) {
+    return <Navigate to="/dashboard" replace />;
+  }
 
   return (
     <>
@@ -58,13 +66,13 @@ function LayoutWrapper() {
 }
 
 function App() {
-    return (
-        <ApiProvider>
-            <Router>
-              <LayoutWrapper />
-            </Router>
-        </ApiProvider>
-    );
+  return (
+      <Router>
+        <AuthProvider>
+            <LayoutWrapper />
+        </AuthProvider>
+      </Router>
+  );
 }
 
 export default App;
