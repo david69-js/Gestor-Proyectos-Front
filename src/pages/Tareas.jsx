@@ -1,123 +1,38 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { useParams } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
+import useApiData from '../hooks/useApiData';
 import './Tareas.css';
 
-// Simulamos una lista de usuarios
-const users = [
-  { id: 1, name: 'Usuario 1' },
-  { id: 2, name: 'Usuario 2' },
-  { id: 3, name: 'Usuario 3' },
-];
-
 function Tareas() {
-  const navigate = useNavigate();
+  const { authData } = useContext(AuthContext);
+  const { projectId, tareaId } = useParams();
+  const { data: tarea, loading, error } = useApiData(
+    `/tasks/project/${projectId}/tareas/${tareaId}`, 
+    authData?.token
+  );
 
-  const [tasks, setTasks] = useState([]);
-  const [taskName, setTaskName] = useState('');
-  const [assignedUser, setAssignedUser] = useState('');
-
-  // Simulamos la carga inicial de tareas
-  useEffect(() => {
-    setTasks([
-      { id: 1, name: 'Tarea 1', assignedUser: 1 },
-      { id: 2, name: 'Tarea 2', assignedUser: 2 },
-    ]);
-  }, []);
-
-  // Crear tarea
-  const handleCreateTask = () => {
-    const newTask = {
-      id: tasks.length + 1,
-      name: taskName,
-      assignedUser: assignedUser,
-    };
-    setTasks([...tasks, newTask]);
-    setTaskName('');
-    setAssignedUser('');
-  };
-
-  // Actualizar tarea
-  const handleUpdateTask = (taskId) => {
-    const updatedTasks = tasks.map((task) =>
-      task.id === taskId ? { ...task, name: taskName, assignedUser: assignedUser } : task
-    );
-    setTasks(updatedTasks);
-    setTaskName('');
-    setAssignedUser('');
-  };
-
-  // Eliminar tarea
-  const handleDeleteTask = (taskId) => {
-    const updatedTasks = tasks.filter((task) => task.id !== taskId);
-    setTasks(updatedTasks);
-  };
-
-  // Asignar tarea a un usuario
-  const handleAssignUser = (taskId) => {
-    const updatedTasks = tasks.map((task) =>
-      task.id === taskId ? { ...task, assignedUser: assignedUser } : task
-    );
-    setTasks(updatedTasks);
-    setAssignedUser('');
-  };
-
-  // Desasignar tarea
-  const handleUnassignUser = (taskId) => {
-    const updatedTasks = tasks.map((task) =>
-      task.id === taskId ? { ...task, assignedUser: null } : task
-    );
-    setTasks(updatedTasks);
-  };
+  if (!tarea) {
+    return false;
+  }
 
   return (
+    
     <div className="tareas-container">
-      <h2>Gestión de Tareas</h2>
+      <h2>Detalle de la Tarea</h2>
+      {loading && <p>Cargando tarea...</p>}
+      {error && <p>{error}</p>}
+      {tarea && (
+        <div className="task-card">
+          <h4>{tarea.nombre_tarea}</h4>
+          <p>Proyecto: {tarea.nombre_proyecto}</p>
+          <p>Descripción: {tarea.descripcion}</p>
+          <p>Fecha de creación: {new Date(tarea.fecha_creacion).toLocaleDateString()}</p>
+          <p>Fecha límite: {new Date(tarea.fecha_limite).toLocaleDateString()}</p>
+          <p>Estado: {tarea.estado_id}</p>
 
-      {/* Formulario para crear o editar tarea */}
-      <div className="task-form">
-        <input
-          type="text"
-          placeholder="Nombre de la tarea"
-          value={taskName}
-          onChange={(e) => setTaskName(e.target.value)}
-        />
-        <select
-          value={assignedUser}
-          onChange={(e) => setAssignedUser(e.target.value)}
-        >
-          <option value="">Seleccionar usuario</option>
-          {users.map((user) => (
-            <option key={user.id} value={user.id}>
-              {user.name}
-            </option>
-          ))}
-        </select>
-        <button onClick={handleCreateTask}>Crear Tarea</button>
-      </div>
-
-      <h3>Listado de Tareas</h3>
-
-      {/* Lista de tareas */}
-      <div className="task-list">
-        {tasks.map((task) => (
-          <div key={task.id} className="task-card">
-            <h4>{task.name}</h4>
-            <p>Asignada a: {task.assignedUser ? users.find((user) => user.id === task.assignedUser).name : 'Ninguno'}</p>
-
-            <button onClick={() => navigate(`/tareas/${task.id}`)}>Editar</button>
-            <button onClick={() => handleDeleteTask(task.id)}>Eliminar</button>
-
-            {/* Asignar / Desasignar tarea */}
-            <div>
-              {task.assignedUser ? (
-                <button onClick={() => handleUnassignUser(task.id)}>Desasignar Usuario</button>
-              ) : (
-                <button onClick={() => handleAssignUser(task.id)}>Asignar Usuario</button>
-              )}
-            </div>
-          </div>
-        ))}
-      </div>
+        </div>
+      )}
     </div>
   );
 }

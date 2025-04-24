@@ -14,7 +14,7 @@ function Dashboard() {
   const { data: proyectos, loading, error } = useApiData('/projects', authData?.token);
 
   return (
-    <div className="dashboard-container">
+    <div className="dashboard-container container">
       {/* Botones superiores */}
       <div className="dashboard-buttons">
         <button className="btn" onClick={() => navigate('/proyectos')}>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import useApi from '../hooks/useApi';
+import usePostApi from '../hooks/usePostApi';
 import './Registro.css';
 
 function Registro() {
@@ -15,21 +15,13 @@ function Registro() {
   });
 
   const [error, setError] = useState('');
-  const [showPopup, setShowPopup] = useState(false); // Estado para controlar el popup
-  const navigate = useNavigate(); // Hook para navegación
+  const [showPopup, setShowPopup] = useState(false);
+  const navigate = useNavigate();
 
-  const { data, error: apiError, loading, fetchData } = useApi('http://localhost:3000/api/auth/register', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      ...form,
-      fecha_nacimiento: form.fecha_nacimiento ? new Date(form.fecha_nacimiento).toISOString().split('T')[0] : ''
-    }),
-  });
+  // Usar el custom hook para POST
+  const { data, error: apiError, loading, postData } = usePostApi('/auth/register');
 
-  const handleRegistro = (e) => {
+  const handleRegistro = async (e) => {
     e.preventDefault();
 
     if (
@@ -43,19 +35,26 @@ function Registro() {
       return;
     }
 
-    fetchData();
+    setError('');
+    // Prepara el body para el registro
+    const body = {
+      ...form,
+      fecha_nacimiento: form.fecha_nacimiento
+        ? new Date(form.fecha_nacimiento).toISOString().split('T')[0]
+        : ''
+    };
+    await postData(body);
   };
 
-  // Efecto para manejar el éxito del registro
   useEffect(() => {
     if (data) {
-      setShowPopup(true); // Muestra el popup cuando el registro es exitoso
+      setShowPopup(true);
     }
   }, [data]);
 
   const handleClosePopup = () => {
     setShowPopup(false);
-    navigate('/login'); // Redirige al login después de cerrar el popup
+    navigate('/login');
   };
 
   return (
@@ -135,7 +134,7 @@ function Registro() {
 
         {showPopup && (
           <>
-            <div className="overlay"></div> {/* Overlay for dimming background */}
+            <div className="overlay"></div>
             <div className="popup">
               <p>El usuario se registró correctamente.</p>
               <button onClick={handleClosePopup}>Aceptar</button>

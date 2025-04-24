@@ -45,13 +45,14 @@ function LayoutWrapper() {
         {/* Rutas protegidas */}
         <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
         <Route path="/tareas" element={<ProtectedRoute><Tareas /></ProtectedRoute>} />
+        <Route path="/proyectos" element={<ProtectedRoute><Proyectos /></ProtectedRoute>} />
         <Route path="/proyectos/:id" element={<ProtectedRoute><ProyectoDetalle /></ProtectedRoute>} />
+        <Route path="/proyectos/:projectId/tareas/:tareaId" element={<ProtectedRoute><Tareas /></ProtectedRoute>} />
         <Route path="/equipos" element={<ProtectedRoute><Equipos /></ProtectedRoute>} />
         <Route path="/crear-proyecto" element={<ProtectedRoute><CrearProyecto /></ProtectedRoute>} />
         <Route path="/perfil" element={<ProtectedRoute><Perfil /></ProtectedRoute>} />
         <Route path="/equipos/:id" element={<ProtectedRoute><EquipoDetalle /></ProtectedRoute>} />
-        <Route path="/tareas/:id" element={<ProtectedRoute><EditarTarea /></ProtectedRoute>} />
-        
+
         {/* Ruta para invitar persona - corregida */}
         <Route 
           path="/invitar-persona" 
