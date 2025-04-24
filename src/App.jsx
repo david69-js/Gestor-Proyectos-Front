@@ -14,20 +14,22 @@ import EditarTarea from './pages/EditarTarea';
 import { AuthProvider } from './context/AuthContext.jsx'; // Import the AuthProvider
 import { useContext } from 'react';
 import { AuthContext } from './context/AuthContext.jsx'; // Import the AuthContext
+import ProyectoDetalle from './pages/ProyectoDetalle';
 
 // Componente para las rutas protegidas
 
 function LayoutWrapper() {
   const location = useLocation();
   const { authData } = useContext(AuthContext); // Use authData from context
-  console.log(authData)
   const publicRoutes = ['/', '/login', '/registro'];
 
 
   const ProtectedRoute = ({ children }) => {
-      const CurrentLocationAuth = authData.isAuthenticated ? location.pathname : '/login';
+    if (authData.isLoading) {
+      return <div>Cargando...</div>;  // O algún componente de carga
+    }
 
-        return authData.isAuthenticated ? children : <Navigate to={CurrentLocationAuth} replace />;
+    return authData.isAuthenticated ? children : <Navigate to="/login" replace />;
   };
   
   return (
@@ -43,7 +45,7 @@ function LayoutWrapper() {
         {/* Rutas protegidas */}
         <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
         <Route path="/tareas" element={<ProtectedRoute><Tareas /></ProtectedRoute>} />
-        <Route path="/proyectos" element={<ProtectedRoute><Proyectos /></ProtectedRoute>} />
+        <Route path="/proyectos/:id" element={<ProtectedRoute><ProyectoDetalle /></ProtectedRoute>} />
         <Route path="/equipos" element={<ProtectedRoute><Equipos /></ProtectedRoute>} />
         <Route path="/crear-proyecto" element={<ProtectedRoute><CrearProyecto /></ProtectedRoute>} />
         <Route path="/perfil" element={<ProtectedRoute><Perfil /></ProtectedRoute>} />

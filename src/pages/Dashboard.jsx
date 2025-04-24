@@ -2,9 +2,16 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Dashboard.css';
 import Calendario from '../components/MiCalendario';
+import { AuthContext } from '../context/AuthContext.jsx'; 
+import { useContext } from 'react';
+import useApiData from '../hooks/useApiData';
+import ProyectoCard from '../components/proyecto-card.jsx';
+
 
 function Dashboard() {
   const navigate = useNavigate();
+  const { authData } = useContext(AuthContext);
+  const { data: proyectos, loading, error } = useApiData('/projects', authData?.token);
 
   return (
     <div className="dashboard-container">
@@ -21,10 +28,18 @@ function Dashboard() {
       {/* Card clickeable de Mis Proyectos */}
       <div
         className="card centered clickable"
-        onClick={() => navigate('/proyectos')}
+        
       >
         <h3>Mis Proyectos</h3>
-        <p>Aquí verás tus proyectos recientes o en curso.</p>
+        {loading && <p>Cargando proyectos...</p>}
+        {error && <p>Error al cargar proyectos</p>}
+        {!loading && !error && proyectos && (
+          <div className="proyectos-grid">
+            {proyectos?.map((proyecto) => (
+              <ProyectoCard key={proyecto?.id || proyecto?._id} proyecto={proyecto} />
+            ))}
+          </div>
+        )}
       </div>
 
       <hr className="separator" />

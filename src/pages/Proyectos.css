@@ -34,32 +34,7 @@
     margin-top: 1rem;
   }
   
-  .proyecto-card {
-    background-color: #1e293b;
-    color: #f1f5f9;
-    padding: 1.5rem;
-    border-radius: 10px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    font-size: 0.9rem;
-    width: 100%;
-  }
-  
-  .proyecto-card .card-header {
-    margin-bottom: 1rem;
-  }
-  
-  .proyecto-card h3 {
-    font-size: 1.5rem;
-    font-weight: 600;
-  }
-  
-  .proyecto-card p {
-    font-size: 0.9rem;
-    color: #bbb;
-  }
+
   
   .sub-cards {
     display: flex;
@@ -107,25 +82,3 @@
     font-size: 0.85rem;
     margin: 0;
   }
-  
-  .proyecto-card .actions {
-    display: flex;
-    gap: 1rem;
-    justify-content: flex-start;
-  }
-  
-  .proyecto-card .actions button {
-    background-color: #4c6a9c;
-    color: #fff;
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 6px;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .proyecto-card .actions button:hover {
-    background-color: #60a5fa;
-  }
-  

@@ -1,0 +1,34 @@
+.proyectos-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .proyecto-card {
+    background: #cde0ec;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    transition: box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }  
+  
+  .proyecto-card h4{
+    margin-bottom: 0;
+  }
+  
+  .proyecto-card:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+  }
+  
+  .ver-proyecto-link {
+    margin-top: 0;
+    color: #1976d2;
+    text-decoration: underline;
+    cursor: pointer;
+    text-align: center;
+  }

@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const AuthContext = createContext();
 
@@ -9,9 +10,10 @@ const AuthProvider = ({ children }) => {
     isAuthenticated: false,
     token: null,
     user: null,
+    isLoading: true
   });
 
-  const navigate = useNavigate(); // Initialize the navigate function
+  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem('authToken');
@@ -22,30 +24,34 @@ const AuthProvider = ({ children }) => {
 
         if (decoded.exp > currentTime) {
           fetchUserData(decoded.id, token);
-          console.log('Usuario autenticado:', decoded);
-          
         } else {
           localStorage.removeItem('authToken');
+          setAuthData(prev => ({...prev, isLoading: false}));
         }
       } catch (error) {
         console.error('Token inválido:', error);
         localStorage.removeItem('authToken');
+        setAuthData(prev => ({...prev, isLoading: false}));
       }
+    } else {
+      setAuthData(prev => ({...prev, isLoading: false}));
     }
-  }, [navigate]); // Add navigate to the dependency array
+  }, [navigate]);
 
   const fetchUserData = async (userId, token) => {
     try {
-      const response = await fetch(`http://localhost:3000/api/users/${userId}`, {
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/users/${userId}`,
+        {
+          headers: { 'Authorization': `Bearer ${token}` }
+        }
+      );
 
-      if (response.ok) {
-        const user = await response.json();
+      if (response.status === 200) {
         setAuthData({
           isAuthenticated: true,
           token,
-          user,
+          user: response.data,
         });
       } else {
         console.error('Error al obtener los datos del usuario');
@@ -64,19 +70,19 @@ const AuthProvider = ({ children }) => {
     }
 
     try {
-      const response = await fetch('http://localhost:3000/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ correo, contrasena }),
-      });
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/auth/login`,
+        { correo, contrasena },
+        { headers: { 'Content-Type': 'application/json' } }
+      );
 
-      if (response.ok) {
-        const data = await response.json();
+      if (response.status === 200) {
+        const data = response.data;
         localStorage.setItem('authToken', data.token);
         setAuthData({
           isAuthenticated: true,
           token: data.token,
-          user: data.user, // Ensure user data is set correctly
+          user: data.user,
         });
         return data;
       } else {
