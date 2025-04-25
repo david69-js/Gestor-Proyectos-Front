@@ -7,10 +7,7 @@ import Proyectos from './pages/Proyectos';
 import CrearProyecto from './pages/CrearProyecto';
 import Registro from './pages/Registro';
 import Perfil from './pages/Perfil';
-import Equipos from './pages/Equipos'; // Asegúrate que el nombre del archivo coincide (mayúsculas)
-import EquipoDetalle from './pages/EquipoDetalle';
 import InvitarPersona from './pages/InvitarPersona';
-import EditarTarea from './pages/EditarTarea';
 import { AuthProvider } from './context/AuthContext.jsx'; // Import the AuthProvider
 import { useContext } from 'react';
 import { AuthContext } from './context/AuthContext.jsx'; // Import the AuthContext
@@ -48,10 +45,8 @@ function LayoutWrapper() {
         <Route path="/proyectos" element={<ProtectedRoute><Proyectos /></ProtectedRoute>} />
         <Route path="/proyectos/:id" element={<ProtectedRoute><ProyectoDetalle /></ProtectedRoute>} />
         <Route path="/proyectos/:projectId/tareas/:tareaId" element={<ProtectedRoute><Tareas /></ProtectedRoute>} />
-        <Route path="/equipos" element={<ProtectedRoute><Equipos /></ProtectedRoute>} />
         <Route path="/crear-proyecto" element={<ProtectedRoute><CrearProyecto /></ProtectedRoute>} />
         <Route path="/perfil" element={<ProtectedRoute><Perfil /></ProtectedRoute>} />
-        <Route path="/equipos/:id" element={<ProtectedRoute><EquipoDetalle /></ProtectedRoute>} />
 
         {/* Ruta para invitar persona - corregida */}
         <Route 
