@@ -32,19 +32,6 @@ function Proyectos() {
           </div>
 
           <div className="sub-cards">
-            <div className="sub-card" onClick={() => navigate('/tareas')}>
-              <h4>Tareas</h4>
-              <ul>
-                <li>Tarea 1</li>
-                <li>Tarea 2</li>
-                <li>Tarea 3</li>
-              </ul>
-            </div>
-
-            <div className="sub-card" onClick={() => navigate('/archivos')}>
-              <h4>Archivos</h4>
-              <p>No hay archivos adjuntos</p>
-            </div>
 
             {/* Ambas sub-cards redirigen a la misma página de InvitarPersona */}
             <div className="sub-card" onClick={() => navigate('/invitar-persona')}>
@@ -57,10 +44,6 @@ function Proyectos() {
               <p>Colaboradores asignados: 3</p>
             </div>
 
-            <div className="sub-card" onClick={() => navigate('/discusion-interna')}>
-              <h4>Discusión Interna</h4>
-              <p>No hay mensajes</p>
-            </div>
           </div>
 
           <div className="actions">

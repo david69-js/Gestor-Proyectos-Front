@@ -13,13 +13,7 @@ function Header() {
             <Link to="/dashboard">Dashboard</Link>
           </li>
           <li>
-            <Link to="/tareas">Tareas</Link>
-          </li>
-          <li>
             <Link to="/proyectos">Proyectos</Link>
-          </li>
-          <li>
-            <Link to="/equipos">Equipos</Link>
           </li>
           <li>
             <Link to="/perfil">Perfil</Link>
