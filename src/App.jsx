@@ -54,9 +54,9 @@ function LayoutWrapper() {
         <Route 
           path="/invitar-persona" 
           element={
-            <ProtectedRoute>
+           
               <InvitarPersona />
-            </ProtectedRoute>
+           
           } 
         />
       </Routes>
