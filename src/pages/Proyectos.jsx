@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import usePostApi from '../hooks/usePostApi';
 import './Proyectos.css';
 import { useNavigate } from 'react-router-dom';
@@ -44,6 +44,8 @@ function Proyectos() {
       descripcion: '',
       fecha_fin: ''
     });
+
+    console.log(form);
     if (!error && data) {
       setShowModal(true);
       setTimeout(() => {
@@ -52,6 +54,16 @@ function Proyectos() {
       }, 2000);
     }
   };
+
+  useEffect(() => {
+    if (data) {
+      setShowModal(true);
+      setTimeout(() => {
+        setShowModal(false);
+        navigate('/dashboard');
+      }, 2000);
+    }
+  }, [data, navigate]);
 
   return (
     <div className="proyectos-container">
@@ -84,7 +96,7 @@ function Proyectos() {
               <label htmlFor="descripcion" className="form-label">Descripción</label>
               <CKEditor
                 editor={ClassicEditor}
-                data={form.descripcion}
+                data={form.descripcion || ''} // Ensure data is not null or undefined
                 onChange={handleEditorChange}
                 onReady={handleEditorReady}
                 config={{
@@ -99,6 +111,10 @@ function Proyectos() {
                     'blockQuote',
                     'imageUpload',
                   ],
+                  image: {
+                    toolbar: ['imageTextAlternative', '|', 'imageStyle:alignLeft', 'imageStyle:full', 'imageStyle:alignRight'],
+                    styles: ['full', 'alignLeft', 'alignRight'],
+                  },
                 }}
               />
             </div>

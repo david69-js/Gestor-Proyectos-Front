@@ -1,9 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function ModalRedirect({ mensaje, redireccion, textoBoton = "Aceptar" }) {
+function ModalRedirect({ mensaje, redireccion, textoBoton = "Aceptar", segundos = 0 }) {
   const navigate = useNavigate();
   const [visible, setVisible] = useState(true);
+
+  useEffect(() => {
+    if (segundos > 0) {
+      const timer = setTimeout(() => {
+        handleRedirect();
+      }, segundos * 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [segundos]);
 
   const handleRedirect = () => {
     if (redireccion) {

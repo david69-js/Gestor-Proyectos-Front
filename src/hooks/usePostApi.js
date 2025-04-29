@@ -17,16 +17,19 @@ export default function usePostApi(endpoint, token) {
           headers: {
             'Content-Type': 'application/json',
             ...(token && { Authorization: `Bearer ${token}` })
-          }
+          },
+          maxContentLength: Infinity, // Asegura que no se trunquen respuestas grandes
+          maxBodyLength: Infinity // Asegura que no se trunquen solicitudes grandes
         }
       );
       setData(response.data);
-      setLoading(false);
+
       return response.data;
     } catch (err) {
-      setError(err);
-      setLoading(false);
+      setError(err.response?.data || err.message);
       return null;
+    } finally {
+      setLoading(false);
     }
   };
 

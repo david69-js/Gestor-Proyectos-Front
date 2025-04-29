@@ -8,33 +8,39 @@ export default class CustomUploadAdapter {
       (file) =>
         new Promise((resolve, reject) => {
           const formData = new FormData();
-          formData.append('upload', file); // Añade el archivo al FormData
 
-          // Realiza la solicitud POST al servidor
+          // Verificar si es un archivo múltiple
+          if (Array.isArray(this.loader.file)) {
+            this.loader.file.forEach((f) => formData.append('upload', f));
+          } else {
+            formData.append('upload', file);
+          }
+
           fetch(`${import.meta.env.VITE_API_URL}/upload`, {
             method: 'POST',
             body: formData,
             headers: {
-              'Authorization': `Bearer ${localStorage.getItem('authToken')}`, // Si necesitas token para la autenticación
+              'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
             },
           })
             .then((response) => response.json())
             .then((data) => {
-              if (data && data.url) {
-                resolve({ default: data.url }); // Si la respuesta contiene la URL, la devuelve al editor
+              if (data && data.urls) {
+                resolve({
+                  default: data.urls, // Responde con un array de URLs
+                });
               } else {
                 reject('No se obtuvo una URL válida del servidor.');
               }
             })
             .catch((error) => {
-              // Captura cualquier error de la red o del servidor
-              reject(`Error al subir el archivo: ${error.message || error}`);
+              reject(`Error al subir los archivos: ${error.message || error}`);
             });
         })
     );
   }
 
   abort() {
-    console.log('Subida del archivo abortada.');
+    console.log('Subida de archivo abortada.');
   }
 }
