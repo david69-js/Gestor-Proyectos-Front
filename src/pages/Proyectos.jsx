@@ -2,22 +2,18 @@ import React, { useState } from 'react';
 import usePostApi from '../hooks/usePostApi';
 import './Proyectos.css';
 import { useNavigate } from 'react-router-dom';
-// Importa el Editor de TinyMCE
-import { Editor } from '@tinymce/tinymce-react';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import CustomUploadAdapter from '../utils/CustomUploadAdapter';
 
 function Proyectos() {
-
-  // Estado para el formulario
   const [form, setForm] = useState({
     nombre_proyecto: '',
     descripcion: '',
     fecha_fin: ''
   });
 
-  // Obtener el token de autenticación (ajusta según tu lógica)
   const token = localStorage.getItem('authToken');
-
-  // Hook personalizado para POST
   const { data, loading, error, postData } = usePostApi('/projects', token);
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
@@ -29,9 +25,15 @@ function Proyectos() {
     });
   };
 
-  // Manejador específico para TinyMCE
-  const handleEditorChange = (content, editor) => {
-    setForm({ ...form, descripcion: content });
+  const handleEditorChange = (event, editor) => {
+    const data = editor.getData();
+    setForm({ ...form, descripcion: data });
+  };
+
+  const handleEditorReady = (editor) => {
+    editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+      return new CustomUploadAdapter(loader);
+    };
   };
 
   const handleSubmit = async (e) => {
@@ -80,33 +82,25 @@ function Proyectos() {
             </div>
             <div className="form-group">
               <label htmlFor="descripcion" className="form-label">Descripción</label>
-              {/* Reemplaza CKEditor con el Editor de TinyMCE */}
-              <Editor
-                  apiKey='de53ebgsh1ixenaeaw6dztanyxx1zca9gbrrp3d59p4jba6d'
-                  
-                  onEditorChange={handleEditorChange} 
-                  init={{
-                    height: 400,
-                    menubar: false,
-                    paste_data_images: true,
-                    plugins: [
-                      // Core editing features
-                      'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'image', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount',
-                      // Your account includes a free trial of TinyMCE premium features
-                      // Try the most popular premium features until May 12, 2025:
-                      'checklist', 'mediaembed', 'casechange', 'formatpainter', 'pageembed', 'a11ychecker', 'tinymcespellchecker', 'permanentpen', 'powerpaste', 'advtable', 'advcode', 'editimage', 'advtemplate', 'ai', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes', 'mergetags', 'autocorrect', 'typography', 'inlinecss', 'markdown','importword', 'exportword', 'exportpdf'
-                    ],
-                    toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-                    tinycomments_mode: 'embedded',
-                    tinycomments_author: 'Author name',
-                    mergetags_list: [
-                      { value: 'First.Name', title: 'First Name' },
-                      { value: 'Email', title: 'Email' },
-                    ],
-                    ai_request: (request, respondWith) => respondWith.string(() => Promise.reject('See docs to implement AI Assistant')),
-                  }}
-                  initialValue="Welcome to TinyMCE!"
-                />
+              <CKEditor
+                editor={ClassicEditor}
+                data={form.descripcion}
+                onChange={handleEditorChange}
+                onReady={handleEditorReady}
+                config={{
+                  toolbar: [
+                    'heading',
+                    '|',
+                    'bold',
+                    'italic',
+                    'link',
+                    'bulletedList',
+                    'numberedList',
+                    'blockQuote',
+                    'imageUpload',
+                  ],
+                }}
+              />
             </div>
             <div className="form-group">
               <label htmlFor="fecha_fin" className="form-label">Fecha de finalización</label>
