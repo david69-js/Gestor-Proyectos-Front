@@ -93,13 +93,14 @@ function Proyectos() {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="descripcion" className="form-label">Descripción</label>
+              <label htmlFor="descripcion" className="form-label">Descripción 1</label>
               <CKEditor
                 editor={ClassicEditor}
                 data={form.descripcion || ''} // Ensure data is not null or undefined
                 onChange={handleEditorChange}
                 onReady={handleEditorReady}
                 config={{
+                  licenseKey: 'eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3NDcxODA3OTksImp0aSI6ImE1ODdmYWQ0LTgxODgtNDI4NS04MDEyLTEyODM5MDlkZGI4YiIsInVzYWdlRW5kcG9pbnQiOiJodHRwczovL3Byb3h5LWV2ZW50LmNrZWRpdG9yLmNvbSIsImRpc3RyaWJ1dGlvbkNoYW5uZWwiOlsiY2xvdWQiLCJkcnVwYWwiLCJzaCJdLCJ3aGl0ZUxhYmVsIjp0cnVlLCJsaWNlbnNlVHlwZSI6InRyaWFsIiwiZmVhdHVyZXMiOlsiKiJdLCJ2YyI6IjI0NzQ1ZmU4In0.i2TduVJSKMKXiiEeFC7tGOrBfBISmL1K5ipo5nvC_E3zE-qAoDMFqlMo1V8L3i71jGM5AOMcSsSd5BFotzleqw',
                   toolbar: [
                     'heading',
                     '|',
