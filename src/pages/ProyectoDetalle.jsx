@@ -11,17 +11,22 @@ function ProyectoDetalle() {
 
   return (
     <div className='container'>
-     
+
       {loading && <p>Cargando proyecto...</p>}
       {error && <p>Error al cargar el proyecto</p>}
       {!loading && !error && proyecto && (
         <div>
           <h1>{proyecto.nombre_proyecto}</h1>
+          {/* Descripción renderizada como HTML */}
           <div className="proyecto-descripcion">
+            <strong>Descripción:</strong>
             <div
               className="descripcion-html"
               dangerouslySetInnerHTML={{ __html: proyecto.descripcion }}
             />
+            {proyecto.descripcion}
+          </div>
+          {/* Fecha de fin fuera del div de descripción */}
           <p>
             <strong>Fecha de fin:</strong>{" "}
             {proyecto.fecha_fin
@@ -31,10 +36,9 @@ function ProyectoDetalle() {
                   month: "long",
                   day: "numeric"
                 })
-              : ""}
+              : "No especificada"}
           </p>
-          </div>
-          {/* Renderiza las tareas del proyecto usando el nuevo componente */}
+          {/* Renderiza las tareas del proyecto */}
           <TareasProyecto projectId={id} />
         </div>
       )}

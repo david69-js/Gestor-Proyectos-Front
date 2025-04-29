@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import usePostApi from '../hooks/usePostApi';
 import './Proyectos.css';
 import { useNavigate } from 'react-router-dom';
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+// Importa el Editor de TinyMCE
+import { Editor } from '@tinymce/tinymce-react';
 
 function Proyectos() {
 
@@ -29,6 +29,11 @@ function Proyectos() {
     });
   };
 
+  // Manejador específico para TinyMCE
+  const handleEditorChange = (content, editor) => {
+    setForm({ ...form, descripcion: content });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     await postData(form);
@@ -37,12 +42,11 @@ function Proyectos() {
       descripcion: '',
       fecha_fin: ''
     });
-    // Solo mostrar el modal si la respuesta es positiva
     if (!error && data) {
       setShowModal(true);
       setTimeout(() => {
         setShowModal(false);
-        navigate('/proyectos'); // Cambia la ruta si es necesario
+        navigate('/proyectos');
       }, 2000);
     }
   };
@@ -76,17 +80,33 @@ function Proyectos() {
             </div>
             <div className="form-group">
               <label htmlFor="descripcion" className="form-label">Descripción</label>
-              <CKEditor
-                editor={ClassicEditor}
-                data={form.descripcion}
-                onChange={(event, editor) => {
-                  const data = editor.getData();
-                  setForm({ ...form, descripcion: data });
-                }}
-                config={{
-                  placeholder: "Descripción detallada del proyecto"
-                }}
-              />
+              {/* Reemplaza CKEditor con el Editor de TinyMCE */}
+              <Editor
+                  apiKey='de53ebgsh1ixenaeaw6dztanyxx1zca9gbrrp3d59p4jba6d'
+                  
+                  onEditorChange={handleEditorChange} 
+                  init={{
+                    height: 400,
+                    menubar: false,
+                    paste_data_images: true,
+                    plugins: [
+                      // Core editing features
+                      'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'image', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount',
+                      // Your account includes a free trial of TinyMCE premium features
+                      // Try the most popular premium features until May 12, 2025:
+                      'checklist', 'mediaembed', 'casechange', 'formatpainter', 'pageembed', 'a11ychecker', 'tinymcespellchecker', 'permanentpen', 'powerpaste', 'advtable', 'advcode', 'editimage', 'advtemplate', 'ai', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes', 'mergetags', 'autocorrect', 'typography', 'inlinecss', 'markdown','importword', 'exportword', 'exportpdf'
+                    ],
+                    toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+                    tinycomments_mode: 'embedded',
+                    tinycomments_author: 'Author name',
+                    mergetags_list: [
+                      { value: 'First.Name', title: 'First Name' },
+                      { value: 'Email', title: 'Email' },
+                    ],
+                    ai_request: (request, respondWith) => respondWith.string(() => Promise.reject('See docs to implement AI Assistant')),
+                  }}
+                  initialValue="Welcome to TinyMCE!"
+                />
             </div>
             <div className="form-group">
               <label htmlFor="fecha_fin" className="form-label">Fecha de finalización</label>
