@@ -38,10 +38,18 @@ function Proyectos() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await postData(form);
+    
+
+    const sanitizedForm = {
+      ...form,
+      descripcion: `${form.descripcion}`
+    };
+
+  
+    await postData(sanitizedForm);
     setForm({
       nombre_proyecto: '',
-      descripcion: '',
+      descripcion: ``,
       fecha_fin: ''
     });
 
