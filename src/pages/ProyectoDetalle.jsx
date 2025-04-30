@@ -45,6 +45,12 @@ function ProyectoDetalle() {
       {!loading && !error && proyecto && (
         <div>
           <h1>{proyecto.nombre_proyecto}</h1>
+          <div className="proyecto-descripcion">
+            <strong>Descripción:</strong>
+            {proyecto.descripcion && (
+              <div dangerouslySetInnerHTML={{ __html: decodeHTML(proyecto.descripcion) }} />
+            )}
+          </div>
           <button
             onClick={() => navigate(`/proyectos/${id}/editar`)}
             style={{
@@ -58,15 +64,24 @@ function ProyectoDetalle() {
               cursor: 'pointer'
             }}
           >
-            Editar
+            Editar Proyecto
           </button>
           <button onClick={handleEliminar} style={{marginBottom: '1rem', background: '#e74c3c', color: 'white', border: 'none', padding: '0.5rem 1rem', borderRadius: '4px', cursor: 'pointer'}}>Eliminar proyecto</button>
-          <div className="proyecto-descripcion">
-            <strong>Descripción:</strong>
-            {proyecto.descripcion && (
-              <div dangerouslySetInnerHTML={{ __html: decodeHTML(proyecto.descripcion) }} />
-            )}
-          </div>
+          <button 
+            onClick={() => navigate(`/proyectos/${id}/crear-tarea`)}
+            style={{
+              marginBottom: '1rem',
+              marginLeft: '1rem',
+              background: '#2ecc71',
+              color: 'white',
+              border: 'none',
+              padding: '0.5rem 1rem',
+              borderRadius: '4px',
+              cursor: 'pointer'
+            }}
+          >
+            Crear Tarea
+          </button>
           <p>
             <strong>Fecha de fin:</strong>{" "}
             {proyecto.fecha_fin

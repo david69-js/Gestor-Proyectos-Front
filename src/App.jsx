@@ -3,6 +3,7 @@ import Header from './components/Header';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Tareas from './pages/Tareas';
+import DetalleTareas from './pages/DetalleTarea';
 import Proyectos from './pages/Proyectos';
 import CrearProyecto from './pages/CrearProyecto';
 import Registro from './pages/Registro';
@@ -42,12 +43,13 @@ function LayoutWrapper() {
 
         {/* Rutas protegidas */}
         <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-        <Route path="/tareas" element={<ProtectedRoute><Tareas /></ProtectedRoute>} />
+        <Route path="/proyectos/:projectId/crear-tarea" element={<ProtectedRoute><Tareas /></ProtectedRoute>} />
+        <Route path="/proyectos/:projectId/tareas/:tareaId" element={<ProtectedRoute><Tareas /></ProtectedRoute>} />
         <Route path="/proyectos" element={<ProtectedRoute><Proyectos /></ProtectedRoute>} />
         <Route path="/proyectos/:id" element={<ProtectedRoute><ProyectoDetalle /></ProtectedRoute>} />
         <Route path="/proyectos/:id/editar" element={<ProtectedRoute><CrearProyecto modo="editar" /></ProtectedRoute>} />
         <Route path="/crear-proyecto" element={<ProtectedRoute><CrearProyecto modo="crear" /></ProtectedRoute>} />
-        <Route path="/proyectos/:projectId/tareas/:tareaId" element={<ProtectedRoute><Tareas /></ProtectedRoute>} />
+        <Route path="/proyectos/:projectId/detalle-tarea/:tareaId" element={<ProtectedRoute><DetalleTareas /></ProtectedRoute>} />
         <Route path="/crear-proyecto" element={<ProtectedRoute><CrearProyecto /></ProtectedRoute>} />
         <Route path="/perfil" element={<ProtectedRoute><Perfil /></ProtectedRoute>} />
         <Route path="/equipos/:id" element={<ProtectedRoute><EquipoDetalle /></ProtectedRoute>} />

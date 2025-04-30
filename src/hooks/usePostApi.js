@@ -18,8 +18,8 @@ export default function usePostApi(endpoint, token) {
             'Content-Type': 'application/json',
             ...(token && { Authorization: `Bearer ${token}` })
           },
-          maxContentLength: Infinity, // Asegura que no se trunquen respuestas grandes
-          maxBodyLength: Infinity // Asegura que no se trunquen solicitudes grandes
+          maxContentLength: Infinity,
+          maxBodyLength: Infinity
         }
       );
       setData(response.data);

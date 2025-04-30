@@ -55,7 +55,7 @@ function TareasProyecto({ projectId }) {
                   <Link
                     className="task-card"
                     key={tarea.TareaId}
-                    to={`/proyectos/${projectId}/tareas/${tarea.TareaId}`}
+                    to={`/proyectos/${projectId}/detalle-tarea/${tarea.TareaId}`}
                   >
                     <h5>{tarea.nombre_tarea}</h5>
                 

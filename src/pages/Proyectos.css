@@ -166,4 +166,6 @@
     padding: 20px 20px;
     margin-top: 20px;
     margin-bottom: 30px;
+    height: 300px;
+    overflow: auto;
   }

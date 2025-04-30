@@ -49,11 +49,10 @@ function Proyectos() {
     await postData(sanitizedForm);
     setForm({
       nombre_proyecto: '',
-      descripcion: ``,
+      descripcion: '',
       fecha_fin: ''
     });
 
-    console.log(form);
     if (!error && data) {
       setShowModal(true);
       setTimeout(() => {
