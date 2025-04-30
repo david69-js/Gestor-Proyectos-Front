@@ -41,18 +41,20 @@ function DetalleTareas() {
       {loading && <p>Cargando tarea...</p>}
       {error && <p>{error}</p>}
       {tarea && (
-        <div className='tareas-container'>
+        <div>
           <h1>{tarea.nombre_tarea}</h1>
           
           <div className="tarea-info">
-            <p><strong>Proyecto:</strong> {tarea.nombre_proyecto}</p>
-            <p><strong>Descripción:</strong> <div dangerouslySetInnerHTML={{ __html: tarea.descripcion }} /></p>
-            <p><strong>Fecha de creación:</strong> {new Date(tarea.fecha_creacion).toLocaleDateString()}</p>
-            <p><strong>Fecha límite:</strong> {new Date(tarea.fecha_limite).toLocaleDateString()}</p>
-            <p><strong>Estado:</strong> {tarea.estado_id}</p>
-          </div>
+           <div className='tarea-info-container'>
+              <p><strong>Descripción:</strong> <div dangerouslySetInnerHTML={{ __html: tarea.descripcion }} /></p>
+              <p><strong>Fecha de creación:</strong> {new Date(tarea.fecha_creacion).toLocaleDateString()}</p>
+              <p><strong>Fecha límite:</strong> {new Date(tarea.fecha_limite).toLocaleDateString()}</p>
+              <p><strong>Estado:</strong> {tarea.estad_tarea}</p>
+              <p><strong>Asignado:</strong> {tarea.usuarios_asignados}</p>
+            </div>
 
-          <button
+           <div className='info-tarea-buttons'>
+           <button
             onClick={() => navigate(`/proyectos/${projectId}/tareas/${tareaId}/editar`)}
             style={{
               marginBottom: '1rem',
@@ -82,6 +84,8 @@ function DetalleTareas() {
           >
             Eliminar Tarea
           </button>
+           </div>
+          </div>
         </div>
       )}
     </div>

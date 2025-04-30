@@ -20,18 +20,11 @@ function TareasProyecto({ projectId }) {
   const getTareasPorCategoria = (categoria) => {
     if (!tareas) return [];
     return tareas.filter(tarea => {
-      if (!tarea.categoria) return categoria.key === 'por_hacer';
-      if (typeof tarea.categoria === 'string') {
-        return tarea.categoria.toLowerCase() === categoria.key;
-      }
-      if (typeof tarea.categoria === 'number') {
-        return (
-          (categoria.key === 'por_hacer' && tarea.categoria === 0) ||
-          (categoria.key === 'en_progreso' && tarea.categoria === 1) ||
-          (categoria.key === 'listo' && tarea.categoria === 2)
-        );
-      }
-      return false;
+      // Normaliza el estado_tarea a minúsculas y sin espacios
+      const estado = tarea.estado_tarea
+        ? tarea.estado_tarea.toLowerCase().replace(/\s/g, '_')
+        : 'por_hacer';
+      return estado === categoria.key;
     });
   };
 
