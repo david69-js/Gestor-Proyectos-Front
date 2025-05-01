@@ -85,7 +85,11 @@ html, body {
     margin-bottom: 0.5rem;
     display: block;
   }
-  
+  .form-group-custom{
+    display: flex !important;
+    gap: 10px;
+    font-size: 12px !important;
+  }
   #imagen_perfil {
     background-color: #334155;
     color: #f1f5f9;

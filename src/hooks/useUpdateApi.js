@@ -17,7 +17,9 @@ export default function useUpdateApi(endpoint, token) {
           headers: {
             'Content-Type': 'application/json',
             ...(token && { Authorization: `Bearer ${token}` })
-          }
+          },
+          maxContentLength: Infinity,
+          maxBodyLength: Infinity
         }
       );
       setData(response.data);

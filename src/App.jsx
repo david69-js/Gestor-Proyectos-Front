@@ -5,6 +5,7 @@ import Dashboard from './pages/Dashboard';
 import Tareas from './pages/Tareas';
 import DetalleTareas from './pages/DetalleTarea';
 import Proyectos from './pages/Proyectos';
+import EditarProyecto from './pages/EditarProyecto.jsx';
 import Registro from './pages/Registro';
 import Perfil from './pages/Perfil'; // Asegúrate que el nombre del archivo coincide (mayúsculas)
 import EquipoDetalle from './pages/EquipoDetalle';
@@ -46,8 +47,9 @@ function LayoutWrapper() {
         <Route path="/proyectos/:projectId/tareas/:tareaId" element={<ProtectedRoute><Tareas /></ProtectedRoute>} />
         <Route path="/proyectos" element={<ProtectedRoute><Proyectos /></ProtectedRoute>} />
         <Route path="/proyectos/:id" element={<ProtectedRoute><ProyectoDetalle /></ProtectedRoute>} />
+        <Route path="/proyectos/:id/editar" element={<ProtectedRoute><EditarProyecto /></ProtectedRoute>} />
         <Route path="/proyectos/:projectId/detalle-tarea/:tareaId" element={<ProtectedRoute><DetalleTareas /></ProtectedRoute>} />
-        <Route path="/perfil" element={<ProtectedRoute><Perfil /></ProtectedRoute>} />
+        <Route path="/perfil" element={<ProtectedRoute><Perfil user={authData.user} /></ProtectedRoute>} />
         <Route path="/equipos/:id" element={<ProtectedRoute><EquipoDetalle /></ProtectedRoute>} />
 
         {/* Ruta para invitar persona - corregida */}
