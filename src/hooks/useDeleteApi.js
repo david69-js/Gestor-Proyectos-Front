@@ -2,7 +2,6 @@ import { useState } from 'react';
 import axios from 'axios';
 
 export default function useDeleteApi(endpoint, token) {
-  const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -10,16 +9,11 @@ export default function useDeleteApi(endpoint, token) {
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.delete(
-        `${import.meta.env.VITE_API_URL}${endpoint}`,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            ...(token && { Authorization: `Bearer ${token}` })
-          }
+      const response = await axios.delete(`${import.meta.env.VITE_API_URL}${endpoint}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
         }
-      );
-      setData(response.data);
+      });
       setLoading(false);
       return response.data;
     } catch (err) {
@@ -29,5 +23,5 @@ export default function useDeleteApi(endpoint, token) {
     }
   };
 
-  return { data, loading, error, deleteData };
+  return { loading, error, deleteData };
 }

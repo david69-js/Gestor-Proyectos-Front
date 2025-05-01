@@ -1,0 +1,69 @@
+.button {
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.button-edit {
+  margin-right: 1rem;
+  background: #2980b9;
+}
+
+.button-delete {
+  background: #e74c3c;
+}
+
+.button-create {
+  margin-left: 1rem;
+  background: #2ecc71;
+}
+
+.button-user {
+    background: #3498db;
+    min-width: 43px;
+}
+
+.container-usuarios{
+    display: flex;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.usuarios-lista{
+    width: 190px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    height: fit-content;
+}
+.usuarios-lista button{
+    font-size: 12px;
+    width: 100%;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    background: #a8a9f0;
+    margin: 0;
+    border-radius: 18px;
+}
+.container-asignados{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 7px;
+    height: fit-content;
+    position: relative;
+    top: 6px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+.usuarios-lista .button-user{
+    width: 100% !important;
+}

@@ -20,7 +20,13 @@
     margin-top: 1rem;
     display: block;
   }
-  
+  .sin-asignar  button.button-user {
+    background: rgb(230, 230, 171) !important;
+    color: #1f293b;
+  }
+  .sin-asignar{
+    gap: 10px;
+  }
   .btn.blue:hover {
     background-color: #60a5fa;
   }

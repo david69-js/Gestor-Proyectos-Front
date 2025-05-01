@@ -1,15 +1,23 @@
 import { useParams } from 'react-router-dom';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import useApiData from '../hooks/useApiData';
 import { AuthContext } from '../context/AuthContext.jsx';
 import TareasProyecto from '../components/TareasProyecto';
 import { useNavigate } from 'react-router-dom';
+import useDeleteApi from '../hooks/useDeleteApi';
+import axios from 'axios';
+import './ProyectoDetalle.css'; // Importa el archivo CSS
 
 function ProyectoDetalle() {
   const { id } = useParams();
   const { authData } = useContext(AuthContext);
   const { data: proyecto, loading, error } = useApiData(`/projects/${id}`, authData?.token);
+  const { data: usuarios, loading: loadingUsuarios, error: errorUsuarios } = useApiData('/users/organization/users', authData?.token);
   const navigate = useNavigate();
+  const { deleteData, loading: deleting, error: deleteError } = useDeleteApi(`/projects/${id}`, authData?.token);
+
+  const [isProjectUsersOpen, setProjectUsersOpen] = useState(false);
+  const [isOrganizationUsersOpen, setOrganizationUsersOpen] = useState(false);
 
   const decodeHTML = (html) => {
     const txt = document.createElement('textarea');
@@ -17,27 +25,46 @@ function ProyectoDetalle() {
     return txt.value;
   };
 
-  // Nueva función para eliminar el proyecto
   const handleEliminar = async () => {
-
-    try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/projects/${id}`, {
-        method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${authData?.token}`,
-        },
-      });
-      if (response.ok) {
-        alert('Proyecto eliminado correctamente');
-        navigate('/proyectos');
-      } else {
-        alert('Error al eliminar el proyecto');
-      }
-    } catch (err) {
-      alert('Error de conexión al eliminar el proyecto');
+    const response = await deleteData();
+    if (response) {
+      console.log(deleting);
+      navigate('/proyectos');
+    } else {
+      console.log(deleteError);
     }
   };
 
+  const handleAsignarUsuarios = async (userId ) => {
+    try {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/projects/${id}/participants/${userId}`, {}, {
+        headers: {
+          'Authorization': `Bearer ${authData?.token}`
+        }
+      });
+      if (response.status === 200) {
+        console.log(`Usuario ${userId} asignado`);
+      }
+       
+    } catch (error) {
+      console.error('Error al asignar usuario', error);
+    }
+  };
+
+ const handleDesAsignarUsuarios = async (userId ) => {
+    try {
+      const response = await axios.delete(`${import.meta.env.VITE_API_URL}/projects/${id}/participants/${userId}`, {},{
+        headers: {
+          'Authorization': `Bearer ${authData?.token}`
+        }
+      });   
+      if (response.status === 200) {
+        console.log(`Usuario ${userId} desasignado`);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
     <div className="container">
       {loading && <p>Cargando proyecto...</p>}
@@ -45,7 +72,54 @@ function ProyectoDetalle() {
       {!loading && !error && proyecto && (
         <div>
           <h1>{proyecto.nombre_proyecto}</h1>
+          
           <div className="proyecto-descripcion">
+          <div className='container-usuarios'>
+            <div className="usuarios-lista">
+              <button onClick={() => setProjectUsersOpen(!isProjectUsersOpen)} style={{ cursor: 'pointer' }}>
+                Usuarios Asignados
+              </button>
+              <div className="container-asignados">
+              {isProjectUsersOpen && (
+                <>
+                  {loadingUsuarios && <p>Cargando usuarios...</p>}
+                  {errorUsuarios && <p>Error al cargar los usuarios</p>}
+                  {!loadingUsuarios && !errorUsuarios && proyecto.usuarios.map(usuario => (
+                    <button
+                      key={usuario.id}
+                      onClick={() => handleDesAsignarUsuarios(usuario.id)}
+                      className="button button-user"
+                    >
+                      {usuario.nombre}
+                    </button>
+                  ))}
+                </>
+              )}
+              </div>
+            </div>
+            <div className="usuarios-lista sin-asignar">
+              <button onClick={() => setOrganizationUsersOpen(!isOrganizationUsersOpen)} style={{ cursor: 'pointer' }}>
+                Asignar Colaboradores
+              </button>
+              {isOrganizationUsersOpen && (
+                <>
+                  {loadingUsuarios && <p>Cargando usuarios...</p>}
+                  {errorUsuarios && <p>Error al cargar los usuarios</p>}
+                  {!loadingUsuarios && !errorUsuarios && usuarios.filter(usuario => 
+                    !proyecto.usuarios.some(asignado => asignado.id === usuario.id_usuario)
+                  ).map(usuario => (
+                    <button
+                      key={usuario.id}
+                      onClick={() => handleAsignarUsuarios(usuario.id_usuario)}
+                      className="button button-user"
+                    >
+                      {usuario.nombre_usuario}
+                    </button>
+                  ))}
+                </>
+              )}
+            </div>
+          </div>
             <strong>Descripción:</strong>
             {proyecto.descripcion && (
               <div dangerouslySetInnerHTML={{ __html: decodeHTML(proyecto.descripcion) }} />
@@ -53,32 +127,14 @@ function ProyectoDetalle() {
           </div>
           <button
             onClick={() => navigate(`/proyectos/${id}/editar`)}
-            style={{
-              marginBottom: '1rem',
-              marginRight: '1rem',
-              background: '#2980b9',
-              color: 'white',
-              border: 'none',
-              padding: '0.5rem 1rem',
-              borderRadius: '4px',
-              cursor: 'pointer'
-            }}
+            className="button button-edit"
           >
             Editar Proyecto
           </button>
-          <button onClick={handleEliminar} style={{marginBottom: '1rem', background: '#e74c3c', color: 'white', border: 'none', padding: '0.5rem 1rem', borderRadius: '4px', cursor: 'pointer'}}>Eliminar proyecto</button>
+          <button onClick={handleEliminar} className="button button-delete">Eliminar proyecto</button>
           <button 
             onClick={() => navigate(`/proyectos/${id}/crear-tarea`)}
-            style={{
-              marginBottom: '1rem',
-              marginLeft: '1rem',
-              background: '#2ecc71',
-              color: 'white',
-              border: 'none',
-              padding: '0.5rem 1rem',
-              borderRadius: '4px',
-              cursor: 'pointer'
-            }}
+            className="button button-create"
           >
             Crear Tarea
           </button>
@@ -93,6 +149,7 @@ function ProyectoDetalle() {
                 })
               : "No especificada"}
           </p>
+          
           <TareasProyecto projectId={id} />
         </div>
       )}
