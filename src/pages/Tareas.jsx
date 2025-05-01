@@ -11,7 +11,7 @@ function Tareas() {
     nombre_tarea: '',
     descripcion: '',
     fecha_limite: '',
-    estado: ''
+    estado: 'por_hacer' // Establecer el valor por defecto aquí
   });
 
   const token = localStorage.getItem('authToken');
@@ -53,7 +53,7 @@ function Tareas() {
       nombre_tarea: '',
       descripcion: '',
       fecha_limite: '',
-      estado_id: 'por_hacer'
+      estado: 'por_hacer' // Restablecer el valor por defecto aquí
     });
   
     if (!error && data) {
@@ -153,7 +153,7 @@ function Tareas() {
               >
                 <option value="por_hacer">Por hacer</option>
                 <option value="en_progreso">En progreso</option>
-                <option value="Listo">Completada</option>
+                <option value="listo">Completada</option>
               </select>
             </div>
             <button className="btn blue form-btn" type="submit" disabled={loading}>

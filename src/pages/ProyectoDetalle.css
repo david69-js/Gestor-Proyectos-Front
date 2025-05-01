@@ -67,3 +67,32 @@
 .usuarios-lista .button-user{
     width: 100% !important;
 }
+.proyecto-descripcion{
+  position: relative;
+}
+.clientes{
+  position: absolute;
+    right: 10px;
+    top: 5px;
+    width: fit-content;
+    padding: 15px;
+    background: #a8a9f0;
+
+}
+.clientes button{
+  width: 100%;
+  color: black;
+  background-color: #a8a9f0;
+  border: none;
+  position: relative;
+}
+
+.clientes button::after{
+  content: "";
+  position: absolute;
+  width: 73px;
+  height: 52px;
+  background-color:transparent;
+  right: -13px;
+  top: -19px;
+}

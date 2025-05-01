@@ -11,6 +11,7 @@ import './ProyectoDetalle.css'; // Importa el archivo CSS
 function ProyectoDetalle() {
   const { id } = useParams();
   const { authData } = useContext(AuthContext);
+
   const { data: proyecto, loading, error, refetch } = useApiData(`/projects/${id}`, authData?.token);
   const { data: usuarios, loading: loadingUsuarios, error: errorUsuarios } = useApiData('/users/organization/users', authData?.token);
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ function ProyectoDetalle() {
 
   const [isProjectUsersOpen, setProjectUsersOpen] = useState(false);
   const [isOrganizationUsersOpen, setOrganizationUsersOpen] = useState(false);
-
+  const [isClientesOpen, setClientesOpen] = useState(false);
   const decodeHTML = (html) => {
     const txt = document.createElement('textarea');
     txt.innerHTML = html;
@@ -80,18 +81,38 @@ function ProyectoDetalle() {
         <div>
           <h1>{proyecto.nombre_proyecto}</h1>
           <div className="proyecto-descripcion">
+          <div className='clientes'>
+              <button onClick={() => setClientesOpen(!isClientesOpen)} style={{ cursor: 'pointer' }}>
+              <strong>Clientes:</strong>
+              </button>
+              {isClientesOpen && (
+                <div>
+                  {usuarios.map(usuario => (
+                    usuario.rol === 'cliente' && (
+                      <div key={usuario.id_usuario}>
+                        {usuario.nombre_usuario}
+                      </div>
+                    )
+                  ))}
+                </div>
+              )}
+            </div>
             <strong>Descripción:</strong>
             {proyecto.descripcion && (
               <div dangerouslySetInnerHTML={{ __html: decodeHTML(proyecto.descripcion) }} />
             )}
           </div>
-          <button
-            onClick={() => navigate(`/proyectos/${id}/editar`)}
-            className="button button-edit"
-          >
-            Editar Proyecto
-          </button>
-          <button onClick={handleEliminar} className="button button-delete">Eliminar proyecto</button>
+          {(authData.user.rol === 'admin' || authData.user.rol === 'colaborador') && (
+            <>
+              <button
+                onClick={() => navigate(`/proyectos/${id}/editar`)}
+                className="button button-edit"
+              >
+                Editar Proyecto
+              </button>
+              <button onClick={handleEliminar} className="button button-delete">Eliminar proyecto</button>
+            </>
+          )}
           <button 
             onClick={() => navigate(`/proyectos/${id}/crear-tarea`)}
             className="button button-create"
@@ -109,13 +130,15 @@ function ProyectoDetalle() {
                     {loadingUsuarios && <p>Cargando usuarios...</p>}
                     {errorUsuarios && <p>Error al cargar los usuarios</p>}
                     {!loadingUsuarios && !errorUsuarios && proyecto.usuarios.map(usuario => (
-                      <button
-                        key={usuario.id_usuario}
-                        onClick={() => handleDesAsignarUsuarios(usuario.id_usuario)}
-                        className="button button-user"
-                      >
-                        {usuario.nombre_usuario}
-                      </button>
+                      usuario.rol_usuario !== 'admin' && authData.user.id !== usuario.id_usuario ? (
+                        <button
+                          key={usuario.id_usuario}
+                          onClick={() => handleDesAsignarUsuarios(usuario.id_usuario)}
+                          className="button button-user"
+                        >
+                          {authData.user.id === usuario.id_usuario ? 'Yo ' + usuario.nombre_usuario : usuario.nombre_usuario}
+                        </button>
+                      ) : null
                     ))}
                   </>
                 )}
@@ -137,7 +160,7 @@ function ProyectoDetalle() {
                       onClick={() => handleAsignarUsuarios(usuario.id_usuario)}
                       className="button button-user"
                     >
-                      {usuario.nombre_usuario}
+                      { authData.user.id === usuario.id_usuario ?  'YO '+ usuario.nombre_usuario  : usuario.nombre_usuario}
                     </button>
                   ))}
                 </>

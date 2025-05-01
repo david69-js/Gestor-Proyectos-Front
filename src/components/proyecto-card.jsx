@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import ModalRedirect from './ModalRedirect';
 
-function ProyectoCard({ proyecto }) {
+function ProyectoCard({ proyecto, rol }) {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
 
@@ -44,20 +44,22 @@ function ProyectoCard({ proyecto }) {
       >
         <h4>{proyecto.nombre_proyecto}</h4>
         <span className="ver-proyecto-link">Ver proyecto</span>
-        <button
-          onClick={handleEliminar}
-          style={{
-            marginTop: '0.5rem',
-            background: '#e74c3c',
-            color: 'white',
-            border: 'none',
-            padding: '0.3rem 0.7rem',
-            borderRadius: '4px',
-            cursor: 'pointer'
-          }}
-        >
-          Eliminar
-        </button>
+        { rol === 'admin' &&
+            <button
+              onClick={handleEliminar}
+              style={{
+                marginTop: '0.5rem',
+                background: '#e74c3c',
+                color: 'white',
+                border: 'none',
+                padding: '0.3rem 0.7rem',
+                borderRadius: '4px',
+                cursor: 'pointer'
+              }}
+            >
+              Eliminar
+            </button>
+        }
       </div>
     </>
   );

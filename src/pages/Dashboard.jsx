@@ -12,6 +12,7 @@ function Dashboard() {
   const navigate = useNavigate();
   const { authData } = useContext(AuthContext);
   const { data: proyectos, loading, error, refetch } = useApiData('/projects', authData?.token);
+  const rol = authData.user.rol;
 
   // Polling mechanism to refetch data every 30 seconds
   useEffect(() => {
@@ -25,14 +26,17 @@ function Dashboard() {
   return (
     <div className="dashboard-container container">
       {/* Botones superiores */}
-      <div className="dashboard-buttons">
-        <button className="btn" onClick={() => navigate('/proyectos')}>
-          + Nuevo Proyecto
-        </button>
-        <button className="btn" onClick={() => navigate('/invitar-persona')}>
-          + Invitar Persona
-        </button>
-      </div>
+       { rol === 'admin' &&
+        <div className="dashboard-buttons">
+          <button className="btn" onClick={() => navigate('/proyectos')}>
+            + Nuevo Proyecto
+          </button>
+          <button className="btn" onClick={() => navigate('/invitar-persona')}>
+            + Invitar Persona
+          </button>
+        </div>
+        
+      }
 
       {/* Card clickeable de Mis Proyectos */}
       <div
@@ -45,7 +49,7 @@ function Dashboard() {
         {!loading && !error && proyectos && (
           <div className="proyectos-grid">
             {proyectos?.map((proyecto) => (
-              <ProyectoCard key={proyecto?.id || proyecto?._id} proyecto={proyecto} />
+              <ProyectoCard key={proyecto?.id || proyecto?._id} proyecto={proyecto} rol={rol} />
             ))}
           </div>
         )}
