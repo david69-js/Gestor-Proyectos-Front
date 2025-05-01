@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import useApiData from '../hooks/useApiData';
 import { AuthContext } from '../context/AuthContext.jsx';
 import TareasProyecto from '../components/TareasProyecto';
@@ -11,7 +11,7 @@ import './ProyectoDetalle.css'; // Importa el archivo CSS
 function ProyectoDetalle() {
   const { id } = useParams();
   const { authData } = useContext(AuthContext);
-  const { data: proyecto, loading, error } = useApiData(`/projects/${id}`, authData?.token);
+  const { data: proyecto, loading, error, refetch } = useApiData(`/projects/${id}`, authData?.token);
   const { data: usuarios, loading: loadingUsuarios, error: errorUsuarios } = useApiData('/users/organization/users', authData?.token);
   const navigate = useNavigate();
   const { deleteData, loading: deleting, error: deleteError } = useDeleteApi(`/projects/${id}`, authData?.token);
@@ -35,36 +35,43 @@ function ProyectoDetalle() {
     }
   };
 
-  const handleAsignarUsuarios = async (userId ) => {
+  const handleAsignarUsuarios = async (userId) => {
     try {
       const response = await axios.post(`${import.meta.env.VITE_API_URL}/projects/${id}/participants/${userId}`, {}, {
         headers: {
           'Authorization': `Bearer ${authData?.token}`
         }
       });
-      if (response.status === 200) {
+      if (response.status === 201) {
         console.log(`Usuario ${userId} asignado`);
+        refetch();
       }
-       
     } catch (error) {
       console.error('Error al asignar usuario', error);
     }
   };
 
- const handleDesAsignarUsuarios = async (userId ) => {
+  const handleDesAsignarUsuarios = async (userId) => {
     try {
-      const response = await axios.delete(`${import.meta.env.VITE_API_URL}/projects/${id}/participants/${userId}`, {},{
+      const response = await axios.delete(`${import.meta.env.VITE_API_URL}/projects/${id}/participants/${userId}`, {
         headers: {
           'Authorization': `Bearer ${authData?.token}`
         }
-      });   
+      });
       if (response.status === 200) {
         console.log(`Usuario ${userId} desasignado`);
+        refetch(); // Refresca los datos del proyecto
       }
     } catch (error) {
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    // Este efecto se ejecutará cada vez que se actualicen los datos del proyecto
+    console.log('Datos del proyecto actualizados');
+  }, [proyecto]);
+
   return (
     <div className="container">
       {loading && <p>Cargando proyecto...</p>}
@@ -72,54 +79,7 @@ function ProyectoDetalle() {
       {!loading && !error && proyecto && (
         <div>
           <h1>{proyecto.nombre_proyecto}</h1>
-          
           <div className="proyecto-descripcion">
-          <div className='container-usuarios'>
-            <div className="usuarios-lista">
-              <button onClick={() => setProjectUsersOpen(!isProjectUsersOpen)} style={{ cursor: 'pointer' }}>
-                Usuarios Asignados
-              </button>
-              <div className="container-asignados">
-              {isProjectUsersOpen && (
-                <>
-                  {loadingUsuarios && <p>Cargando usuarios...</p>}
-                  {errorUsuarios && <p>Error al cargar los usuarios</p>}
-                  {!loadingUsuarios && !errorUsuarios && proyecto.usuarios.map(usuario => (
-                    <button
-                      key={usuario.id}
-                      onClick={() => handleDesAsignarUsuarios(usuario.id)}
-                      className="button button-user"
-                    >
-                      {usuario.nombre}
-                    </button>
-                  ))}
-                </>
-              )}
-              </div>
-            </div>
-            <div className="usuarios-lista sin-asignar">
-              <button onClick={() => setOrganizationUsersOpen(!isOrganizationUsersOpen)} style={{ cursor: 'pointer' }}>
-                Asignar Colaboradores
-              </button>
-              {isOrganizationUsersOpen && (
-                <>
-                  {loadingUsuarios && <p>Cargando usuarios...</p>}
-                  {errorUsuarios && <p>Error al cargar los usuarios</p>}
-                  {!loadingUsuarios && !errorUsuarios && usuarios.filter(usuario => 
-                    !proyecto.usuarios.some(asignado => asignado.id === usuario.id_usuario)
-                  ).map(usuario => (
-                    <button
-                      key={usuario.id}
-                      onClick={() => handleAsignarUsuarios(usuario.id_usuario)}
-                      className="button button-user"
-                    >
-                      {usuario.nombre_usuario}
-                    </button>
-                  ))}
-                </>
-              )}
-            </div>
-          </div>
             <strong>Descripción:</strong>
             {proyecto.descripcion && (
               <div dangerouslySetInnerHTML={{ __html: decodeHTML(proyecto.descripcion) }} />
@@ -138,6 +98,52 @@ function ProyectoDetalle() {
           >
             Crear Tarea
           </button>
+          <div className='container-usuarios'>
+            <div className="usuarios-lista">
+              <button onClick={() => setProjectUsersOpen(!isProjectUsersOpen)} style={{ cursor: 'pointer' }}>
+                Usuarios Asignados
+              </button>
+              <div className="container-asignados">
+                {isProjectUsersOpen && (
+                  <>
+                    {loadingUsuarios && <p>Cargando usuarios...</p>}
+                    {errorUsuarios && <p>Error al cargar los usuarios</p>}
+                    {!loadingUsuarios && !errorUsuarios && proyecto.usuarios.map(usuario => (
+                      <button
+                        key={usuario.id_usuario}
+                        onClick={() => handleDesAsignarUsuarios(usuario.id_usuario)}
+                        className="button button-user"
+                      >
+                        {usuario.nombre_usuario}
+                      </button>
+                    ))}
+                  </>
+                )}
+              </div>
+            </div>
+            <div className="usuarios-lista sin-asignar">
+              <button onClick={() => setOrganizationUsersOpen(!isOrganizationUsersOpen)} style={{ cursor: 'pointer' }}>
+                Asignar Colaboradores
+              </button>
+              {isOrganizationUsersOpen && (
+                <>
+                  {loadingUsuarios && <p>Cargando usuarios...</p>}
+                  {errorUsuarios && <p>Error al cargar los usuarios</p>}
+                  {!loadingUsuarios && !errorUsuarios && usuarios.filter(usuario => 
+                    !proyecto.usuarios.some(asignado => asignado.id_usuario === usuario.id_usuario)
+                  ).map(usuario => (
+                    <button
+                      key={usuario.id}
+                      onClick={() => handleAsignarUsuarios(usuario.id_usuario)}
+                      className="button button-user"
+                    >
+                      {usuario.nombre_usuario}
+                    </button>
+                  ))}
+                </>
+              )}
+            </div>
+          </div>
           <p>
             <strong>Fecha de fin:</strong>{" "}
             {proyecto.fecha_fin

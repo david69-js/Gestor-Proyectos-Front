@@ -7,24 +7,29 @@ export default function useApiData(endpoint, token) {
   const [error, setError] = useState(null);
   const hasRun = useRef(false);
 
+  const refetch = () => {
+    setLoading(true);
+    axios.get(`${import.meta.env.VITE_API_URL}${endpoint}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    .then(res => {
+      setData(res.data);
+      setLoading(false);
+    })
+    .catch(err => {
+      setError(err);
+      setLoading(false);
+    });
+  };
+
   useEffect(() => {
     if (token && endpoint && !hasRun.current) {
       hasRun.current = true;
-      axios.get(`${import.meta.env.VITE_API_URL}${endpoint}`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-      .then(res => {
-        setData(res.data);
-        setLoading(false);
-      })
-      .catch(err => {
-        setError(err);
-        setLoading(false);
-      });
+      refetch();
     }
   }, [endpoint, token]);
 
-  return { data, loading, error };
+  return { data, loading, error, refetch };
 }
