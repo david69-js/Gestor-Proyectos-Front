@@ -13,35 +13,40 @@ function EditarTarea() {
     `/tasks/project/${projectId}/tareas/${tareaId}`,
     localStorage.getItem('authToken')
   );
-  const { updateData, loading: updating, error: updateError } = useUpdateApi(`/tasks/project/${projectId}/tareas/${tareaId}`, localStorage.getItem('authToken'));
+  const { updateData, loading: updating, error: updateError } = useUpdateApi(
+    `/tasks/project/${projectId}/tareas/${tareaId}`,
+    localStorage.getItem('authToken')
+  );
   const [form, setForm] = useState({
     nombre_tarea: '',
     descripcion: '',
     fecha_limite: '',
-    estado: 'por_hacer'
+    estado_id: 1, // por defecto
   });
 
   useEffect(() => {
     if (tarea) {
+      const fechaFin = tarea.fecha_limite ? tarea.fecha_limite.split('T')[0] : '';
       setForm({
         nombre_tarea: tarea.nombre_tarea || '',
         descripcion: tarea.descripcion || '',
-        fecha_limite: tarea.fecha_limite || '',
-        estado: tarea.estado_tarea || 'por_hacer'
+        fecha_limite: fechaFin,
+        estado_id: tarea.estado_id,
       });
     }
   }, [tarea]);
 
   const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value
-    });
+    const { name, value } = e.target;
+    setForm((prevForm) => ({
+      ...prevForm,
+      [name]: value,
+    }));
   };
 
   const handleEditorChange = (event, editor) => {
     const data = editor.getData();
-    setForm({ ...form, descripcion: data });
+    setForm((prevForm) => ({ ...prevForm, descripcion: data }));
   };
 
   const handleEditorReady = (editor) => {
@@ -52,7 +57,13 @@ function EditarTarea() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const updated = await updateData(form);
+    const payload = {
+      nombre_tarea: form.nombre_tarea,
+      descripcion: form.descripcion,
+      fecha_limite: form.fecha_limite,
+      estado_id: parseInt(form.estado_id, 10),
+    };
+    const updated = await updateData(payload);
     if (updated) {
       navigate(`/proyectos/${projectId}/detalle-tarea/${tareaId}`);
     }
@@ -68,8 +79,11 @@ function EditarTarea() {
         <div className="col-md-8">
           <form className="form-crear-tarea" onSubmit={handleSubmit}>
             <h2 className="mb-4">Editar Tarea</h2>
+
             <div className="mb-3">
-              <label htmlFor="nombre_tarea" className="form-label">Nombre de la tarea</label>
+              <label htmlFor="nombre_tarea" className="form-label">
+                Nombre de la tarea
+              </label>
               <input
                 type="text"
                 id="nombre_tarea"
@@ -81,15 +95,19 @@ function EditarTarea() {
                 required
               />
             </div>
+
             <div className="mb-3">
-              <label htmlFor="descripcion" className="form-label">Descripción</label>
+              <label htmlFor="descripcion" className="form-label">
+                Descripción
+              </label>
               <CKEditor
                 editor={ClassicEditor}
-                data={form.descripcion || ''}
+                data={form.descripcion}
                 onChange={handleEditorChange}
                 onReady={handleEditorReady}
                 config={{
-                  licenseKey: 'eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3NDcxODA3OTksImp0aSI6ImE1ODdmYWQ0LTgxODgtNDI4NS04MDEyLTEyODM5MDlkZGI4YiIsInVzYWdlRW5kcG9pbnQiOiJodHRwczovL3Byb3h5LWV2ZW50LmNrZWRpdG9yLmNvbSIsImRpc3RyaWJ1dGlvbkNoYW5uZWwiOlsiY2xvdWQiLCJkcnVwYWwiLCJzaCJdLCJ3aGl0ZUxhYmVsIjp0cnVlLCJsaWNlbnNlVHlwZSI6InRyaWFsIiwiZmVhdHVyZXMiOlsiKiJdLCJ2YyI6IjI0NzQ1ZmU4In0.i2TduVJSKMKXiiEeFC7tGOrBfBISmL1K5ipo5nvC_E3zE-qAoDMFqlMo1V8L3i71jGM5AOMcSsSd5BFotzleqw',
+                  licenseKey:
+                    'eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3NDcxODA3OTksImp0aSI6ImE1ODdmYWQ0LTgxODgtNDI4NS04MDEyLTEyODM5MDlkZGI4YiIsInVzYWdlRW5kcG9pbnQiOiJodHRwczovL3Byb3h5LWV2ZW50LmNrZWRpdG9yLmNvbSIsImRpc3RyaWJ1dGlvbkNoYW5uZWwiOlsiY2xvdWQiLCJkcnVwYWwiLCJzaCJdLCJ3aGl0ZUxhYmVsIjp0cnVlLCJsaWNlbnNlVHlwZSI6InRyaWFsIiwiZmVhdHVyZXMiOlsiKiJdLCJ2YyI6IjI0NzQ1ZmU4In0.i2TduVJSKMKXiiEeFC7tGOrBfBISmL1K5ipo5nvC_E3zE-qAoDMFqlMo1V8L3i71jGM5AOMcSsSd5BFotzleqw',
                   toolbar: [
                     'heading',
                     '|',
@@ -102,14 +120,23 @@ function EditarTarea() {
                     'imageUpload',
                   ],
                   image: {
-                    toolbar: ['imageTextAlternative', '|', 'imageStyle:alignLeft', 'imageStyle:full', 'imageStyle:alignRight'],
+                    toolbar: [
+                      'imageTextAlternative',
+                      '|',
+                      'imageStyle:alignLeft',
+                      'imageStyle:full',
+                      'imageStyle:alignRight',
+                    ],
                     styles: ['full', 'alignLeft', 'alignRight'],
                   },
                 }}
               />
             </div>
+
             <div className="mb-3">
-              <label htmlFor="fecha_limite" className="form-label">Fecha límite</label>
+              <label htmlFor="fecha_limite" className="form-label">
+                Fecha límite
+              </label>
               <input
                 type="date"
                 id="fecha_limite"
@@ -120,26 +147,39 @@ function EditarTarea() {
                 required
               />
             </div>
+
             <div className="mb-3">
-              <label htmlFor="estado" className="form-label">Estado</label>
+              <label htmlFor="estado_id" className="form-label">
+                Estado
+              </label>
               <select
-                id="estado"
-                name="estado"
+                id="estado_id"
+                name="estado_id"
                 className="form-select"
-                value={form.estado}
+                value={form.estado_id}
                 onChange={handleChange}
                 required
               >
-                <option value="por_hacer">Por hacer</option>
-                <option value="en_progreso">En progreso</option>
-                <option value="listo">Completada</option>
+                <option value={1}>Por hacer</option>
+                <option value={2}>En progreso</option>
+                <option value={3}>Completada</option>
               </select>
             </div>
-            <button className="btn btn-primary w-100" type="submit" disabled={updating}>
+
+            <button
+              className="btn btn-primary w-100"
+              type="submit"
+              disabled={updating || loading}
+            >
               {updating ? 'Guardando...' : 'Guardar Cambios'}
             </button>
-            {updateError && <p className="text-danger mt-3">Error al guardar los cambios</p>}
-            {error && <p className="text-danger mt-3">Error al cargar la tarea</p>}
+
+            {updateError && (
+              <p className="text-danger mt-3">Error al guardar los cambios</p>
+            )}
+            {error && (
+              <p className="text-danger mt-3">Error al cargar la tarea</p>
+            )}
           </form>
         </div>
       </div>

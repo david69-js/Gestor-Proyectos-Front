@@ -57,10 +57,11 @@
 
 }
 .clientes button{
-  width: 100%;
+  width: fit-content;
   color: black;
   border: none;
   position: relative;
+  padding: 10px 0;
 }
 
 .clientes button::after{

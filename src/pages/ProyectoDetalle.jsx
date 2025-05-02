@@ -42,7 +42,7 @@ function ProyectoDetalle() {
       return;
     }
     try {
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/projects/${id}/participants/${userId}`, {}, {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/projects/${projectId}/participants/${userId}`, {}, {
         headers: {
           'Authorization': `Bearer ${authData?.token}`
         }
@@ -93,15 +93,28 @@ function ProyectoDetalle() {
               <button onClick={() => setClientesOpen(!isClientesOpen)} className="btn btn-light card dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded={isClientesOpen}>
                 <strong>Clientes:</strong>
               </button>
-              <ul className={`dropdown-menu ${isClientesOpen ? 'show' : ''}`}>
-                {usuarios.map(usuario => (
-                  usuario.rol === 'cliente' && (
-                    <li key={usuario.id_usuario} className="dropdown-item text-muted">
-                      {usuario.nombre_usuario}
-                    </li>
-                  )
-                ))}
-              </ul>
+              <ul className={`dropdown-menu ${isProjectUsersOpen ? 'show' : ''}`}>
+                  {loadingUsuarios && <li className="dropdown-item">Cargando usuarios...</li>}
+                  {errorUsuarios && <li className="dropdown-item">Error al cargar los usuarios</li>}
+                  {!loadingUsuarios && !errorUsuarios && (
+                    proyecto.usuarios.some(usuario => usuario.rol_usuario === 'cliente') ? (
+                      proyecto.usuarios.map(usuario => (
+                        usuario.rol_usuario === 'cliente' ? (
+                          <li key={usuario.id_usuario} className="dropdown-item">
+                            <button
+                              onClick={() => handleDesAsignarUsuarios(usuario.id_usuario)}
+                              className="btn btn-outline-dark"
+                            >
+                              {authData.user.id === usuario.id_usuario ? 'Yo ' + usuario.nombre_usuario : usuario.nombre_usuario}
+                            </button>
+                          </li>
+                        ) : null
+                      ))
+                    ) : (
+                      <li className="dropdown-item text-center">No hay clientes asignados</li>
+                    )
+                  )}
+                </ul>
             </div>
             <strong>Descripción:</strong>
             {proyecto.descripcion && (
