@@ -7,10 +7,10 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import CustomUploadAdapter from '../utils/CustomUploadAdapter';
 
 function EditarProyecto() {
-  const { id } = useParams();
+  const { projectId } = useParams();
   const navigate = useNavigate();
-  const { data: proyecto, loading, error } = useApiData(`/projects/${id}`, localStorage.getItem('authToken'));
-  const { updateData, loading: updating, error: updateError } = useUpdateApi(`/projects/${id}`, localStorage.getItem('authToken')); // Usar el hook
+  const { data: proyecto, loading, error } = useApiData(`/projects/${projectId}`, localStorage.getItem('authToken'));
+  const { updateData, loading: updating, error: updateError } = useUpdateApi(`/projects/${projectId}`, localStorage.getItem('authToken')); // Usar el hook
   const [form, setForm] = useState({
     nombre_proyecto: '',
     descripcion: '',

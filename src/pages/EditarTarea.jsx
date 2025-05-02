@@ -63,7 +63,7 @@ function EditarTarea() {
     <div className="proyectos-container">
       <h2 className="form-title">Editar Tarea</h2>
       <div className="bg-light pt-5 pb-5 row justify-content-center">
-        <div className="col-md-8">
+        <div className="col-md-8 card">
           <form className="form-crear-tarea" onSubmit={handleSubmit}>
             <h2 className="mb-4">Editar Tarea</h2>
             <div className="mb-3">

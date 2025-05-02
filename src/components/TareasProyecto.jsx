@@ -38,9 +38,9 @@ function TareasProyecto({ projectId }) {
           {categorias.map((categoria) => (
             <div
               key={categoria.key}
-              className={`col-md-4 mb-3 tareas-columna ${categoria.className}`}
+              className={`col-md-6 col-lg-4 mb-3 tareas-columna ${categoria.className}`}
             >
-              <div className="card bg-secondary text-white">
+              <div className="card bg-light text-white">
                 <div className="card-body">
                   <h4 className="card-title">{categoria.label}</h4>
                   {getTareasPorCategoria(categoria).length === 0 ? (

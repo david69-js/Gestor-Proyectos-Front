@@ -6,28 +6,10 @@
   cursor: pointer;
 }
 
-.button-edit {
-  margin-right: 1rem;
-  background: #2980b9;
-}
-
-.button-delete {
-  background: #e74c3c;
-}
-
-.button-create {
-  margin-left: 1rem;
-  background: #2ecc71;
-}
-
-.button-user {
-    background: #3498db;
-    min-width: 43px;
-}
 
 .container-usuarios{
     display: flex;
-    gap: 10px;
+    gap: 40px;
     margin: 20px 0;
 }
 
@@ -43,14 +25,10 @@
 }
 .usuarios-lista button{
     font-size: 12px;
-    width: 100%;
-    height: 40px;
     align-items: center;
     justify-content: center;
     display: flex;
-    background: #a8a9f0;
-    margin: 0;
-    border-radius: 18px;
+    padding: 10px 0 !important;
 }
 .container-asignados{
     display: flex;
@@ -75,14 +53,12 @@
     right: 10px;
     top: 5px;
     width: fit-content;
-    padding: 15px;
-    background: #a8a9f0;
+
 
 }
 .clientes button{
   width: 100%;
   color: black;
-  background-color: #a8a9f0;
   border: none;
   position: relative;
 }
@@ -95,4 +71,15 @@
   background-color:transparent;
   right: -13px;
   top: -19px;
+}
+.flex-container{
+  display: flex;
+  gap: 30px;
+}
+.flex-container .btn{
+  display: flex;
+  padding: 10px 0 !important;
+}
+.usuarios-lista .btn{
+  padding: 10px 0!important;
 }

@@ -9,13 +9,13 @@ import axios from 'axios';
 import './ProyectoDetalle.css'; // Importa el archivo CSS
 
 function ProyectoDetalle() {
-  const { id } = useParams();
+  const { projectId } = useParams();
   const { authData } = useContext(AuthContext);
 
-  const { data: proyecto, loading, error, refetch } = useApiData(`/projects/${id}`, authData?.token);
+  const { data: proyecto, loading, error, refetch } = useApiData(`/projects/${projectId}`, authData?.token);
   const { data: usuarios, loading: loadingUsuarios, error: errorUsuarios } = useApiData('/users/organization/users', authData?.token);
   const navigate = useNavigate();
-  const { deleteData, loading: deleting, error: deleteError } = useDeleteApi(`/projects/${id}`, authData?.token);
+  const { deleteData, loading: deleting, error: deleteError } = useDeleteApi(`/projects/${projectId}`, authData?.token);
 
   const [isProjectUsersOpen, setProjectUsersOpen] = useState(false);
   const [isOrganizationUsersOpen, setOrganizationUsersOpen] = useState(false);
@@ -62,7 +62,7 @@ function ProyectoDetalle() {
       return;
     }
     try {
-      const response = await axios.delete(`${import.meta.env.VITE_API_URL}/projects/${id}/participants/${userId}`, {
+      const response = await axios.delete(`${import.meta.env.VITE_API_URL}/projects/${projectId}/participants/${userId}`, {
         headers: {
           'Authorization': `Bearer ${authData?.token}`
         }
@@ -108,28 +108,38 @@ function ProyectoDetalle() {
               <div className="mt-2" dangerouslySetInnerHTML={{ __html: decodeHTML(proyecto.descripcion) }} />
             )}
           </div>
-          {(authData.user.rol === 'admin' ) && (
-            <>
-              <button
-                onClick={() => navigate(`/proyectos/${id}/editar`)}
-                className="btn btn-primary me-2"
-              >
-                Editar Proyecto
-              </button>
-              <button onClick={handleEliminar} className="btn btn-danger">Eliminar proyecto</button>
-            </>
-          )}
-          <button 
-            onClick={() => navigate(`/proyectos/${id}/crear-tarea`)}
-            className="btn btn-success mt-3"
-          >
-            Crear Tarea
-          </button>
+
+          <div class="container flex-container px-4 text-center">
+          
+              {(authData.user.rol === 'admin' ) && (
+                <>
+                 
+                      <button
+                        onClick={() => navigate(`/proyectos/${projectId}/editar`)}
+                        className="btn btn-light card"
+                      >
+                        Editar Proyecto
+                      </button>
+                 
+                 
+                    <button onClick={handleEliminar} className="btn btn-light card">Eliminar proyecto</button>
+                 
+                  </>
+                )}
+                       
+                <button 
+                  onClick={() => navigate(`/proyectos/${projectId}/crear-tarea`)}
+                  className="btn btn-light card"
+                >
+                  Crear Tarea
+                </button>
+
+          </div>
           {authData.user.rol === 'admin' && (
             <div className='container-usuarios mt-4'>
               <div className="usuarios-lista mb-3">
                 <div className="dropdown">
-                  <button onClick={() => setProjectUsersOpen(!isProjectUsersOpen)} className="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <button onClick={() => setProjectUsersOpen(!isProjectUsersOpen)} className="btn btn-light card dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Usuarios Asignados
                   </button>
                   <ul className={`dropdown-menu ${isProjectUsersOpen ? 'show' : ''}`}>
@@ -152,7 +162,7 @@ function ProyectoDetalle() {
               </div>
               <div className="usuarios-lista sin-asignar">
                 <div className="dropdown">
-                  <button onClick={() => setOrganizationUsersOpen(!isOrganizationUsersOpen)} className="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <button onClick={() => setOrganizationUsersOpen(!isOrganizationUsersOpen)} className="btn btn-light card dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Asignar Colaboradores
                   </button>
                   <ul className={`dropdown-menu ${isOrganizationUsersOpen ? 'show' : ''}`}>
@@ -187,7 +197,7 @@ function ProyectoDetalle() {
               : "No especificada"}
           </p>
           
-          <TareasProyecto projectId={id} />
+          <TareasProyecto projectId={projectId} />
         </div>
       )}
     </div>

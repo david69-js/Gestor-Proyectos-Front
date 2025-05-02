@@ -86,7 +86,7 @@ function Tareas() {
         </div>
       )}
       <div className="row justify-content-center">
-        <div className="col-md-8">
+        <div className="col-md-8 card">
           <form className="form-crear-tarea" onSubmit={handleSubmit}>
             <h2 className="mb-4">Crear Tarea</h2>
             <div className="mb-3">
@@ -110,7 +110,7 @@ function Tareas() {
                 onChange={handleEditorChange}
                 onReady={handleEditorReady}
                 config={{
-                  licenseKey: 'your-license-key',
+                  licenseKey: 'eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3NDcxODA3OTksImp0aSI6ImE1ODdmYWQ0LTgxODgtNDI4NS04MDEyLTEyODM5MDlkZGI4YiIsInVzYWdlRW5kcG9pbnQiOiJodHRwczovL3Byb3h5LWV2ZW50LmNrZWRpdG9yLmNvbSIsImRpc3RyaWJ1dGlvbkNoYW5uZWwiOlsiY2xvdWQiLCJkcnVwYWwiLCJzaCJdLCJ3aGl0ZUxhYmVsIjp0cnVlLCJsaWNlbnNlVHlwZSI6InRyaWFsIiwiZmVhdHVyZXMiOlsiKiJdLCJ2YyI6IjI0NzQ1ZmU4In0.i2TduVJSKMKXiiEeFC7tGOrBfBISmL1K5ipo5nvC_E3zE-qAoDMFqlMo1V8L3i71jGM5AOMcSsSd5BFotzleqw',
                   toolbar: [
                     'heading',
                     '|',
