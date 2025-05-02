@@ -59,10 +59,10 @@ function Dashboard() {
           </div>
         </div>
         <div className="col-md-6">
-          <div className="card clickable" onClick={() => navigate('/proyectos')}>
+          <div className="card clickable" onClick={() => navigate('/tareas')}>
             <div className="card-body">
-              <h4 className="card-title">Otros Proyectos</h4>
-              <p className="card-text">Proyectos donde estás como colaborador.</p>
+              <h4 className="card-title">Tus Asignaciones</h4>
+              <p className="card-text">Tareas asignadas a ti.</p>
             </div>
           </div>
         </div>
@@ -73,18 +73,10 @@ function Dashboard() {
       {/* Cards Calendario y Asignaciones */}
       <div className="row">
         <div className="col-md-6">
-          <div className="card large-card">
+          <div className="card">
             <div className="card-body">
               <h4 className="card-title">Calendario</h4>
               <Calendario />
-            </div>
-          </div>
-        </div>
-        <div className="col-md-6">
-          <div className="card large-card clickable" onClick={() => navigate('/tareas')}>
-            <div className="card-body">
-              <h4 className="card-title">Tus Asignaciones</h4>
-              <p className="card-text">Tareas asignadas a ti.</p>
             </div>
           </div>
         </div>

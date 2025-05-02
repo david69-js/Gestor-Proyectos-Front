@@ -1,7 +1,16 @@
 import { Link } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React, { useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
+
 
 function Header() {
+  const { logout } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    logout();
+    navigate('/login');  
+  };
   return (
     <header className="header">
       <nav className="navbar container navbar-expand-lg navbar-light bg-light">
@@ -13,13 +22,13 @@ function Header() {
           <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul className="navbar-nav">
               <li className="nav-item">
-                <Link className="nav-link" to="/dashboard">Dashboard</Link>
+                <Link className="nav-link" to="/">Dashboard</Link>
               </li>
               <li className="nav-item">
                 <Link className="nav-link" to="/perfil">Perfil</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/" onClick={() => localStorage.removeItem('isAuthenticated')}>
+                <Link className="nav-link" to="/" onClick={handleLogout}>
                   Cerrar sesión
                 </Link>
               </li>

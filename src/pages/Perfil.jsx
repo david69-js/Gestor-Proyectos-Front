@@ -45,16 +45,18 @@ function Perfil({ user }) {
     formData.append('nombre', usuario.nombre);
     formData.append('numero_telefono', usuario.numero_telefono);
     formData.append('fecha_nacimiento', usuario.fecha_nacimiento);
-   
-    // Solo se agrega la imagen si el usuario ha seleccionado una
+    
+    // Verifica si se seleccionó una imagen, si no, asigna `null`
     if (usuario.imagen_perfil) {
-      console.log("Imagen a enviar:", usuario.imagen_perfil); // Asegúrate de que la imagen esté allí
       formData.append('imagen_perfil', usuario.imagen_perfil);
+    } else {
+      formData.append('imagen_perfil', null); // Aquí asignamos `null` si no se seleccionó ninguna imagen
     }
-   
+  
     await updateData(formData);
-    console.log(data, loading );
+    console.log(data, loading);
   };
+  
 
   const isButtonDisabled = () => {
     // Comparamos los valores actuales con los iniciales

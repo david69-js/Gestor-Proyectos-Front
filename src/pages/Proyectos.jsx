@@ -67,7 +67,7 @@ function Proyectos() {
       setShowModal(true);
       setTimeout(() => {
         setShowModal(false);
-        navigate('/dashboard');
+        navigate('/');
       }, 2000);
     }
   }, [data, navigate]);

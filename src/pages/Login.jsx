@@ -21,7 +21,7 @@ function Login() {
     const result = await login(correo, contrasena);
     if (result) {
       console.log('Inicio de sesión exitoso');  // Agrega este cons
-      navigate('/dashboard');  // o la ruta que corresponda
+      navigate('/');  // o la ruta que corresponda
     } else {
       setError('Correo o contraseña incorrectos.');
     }
