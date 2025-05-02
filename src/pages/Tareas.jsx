@@ -11,7 +11,7 @@ function Tareas() {
     nombre_tarea: '',
     descripcion: '',
     fecha_limite: '',
-    estado: 'por_hacer' // Establecer el valor por defecto aquí
+    estado: 'por_hacer'
   });
 
   const token = localStorage.getItem('authToken');
@@ -53,7 +53,7 @@ function Tareas() {
       nombre_tarea: '',
       descripcion: '',
       fecha_limite: '',
-      estado: 'por_hacer' // Restablecer el valor por defecto aquí
+      estado: 'por_hacer'
     });
   
     if (!error && data) {
@@ -76,7 +76,7 @@ function Tareas() {
   }, [data, navigate]);
 
   return (
-    <div className="tareas-container">
+    <div className="container mt-5">
       {showModal && (
         <div className="modal-backdrop">
           <div className="modal-content">
@@ -85,24 +85,24 @@ function Tareas() {
           </div>
         </div>
       )}
-      <div className="tareas-cards">
-        <div className="tarea-card">
-          <form className="form-crear-tarea styled-form" onSubmit={handleSubmit}>
-            <h2 className="form-title">Crear Tarea</h2>
-            <div className="form-group">
+      <div className="row justify-content-center">
+        <div className="col-md-8">
+          <form className="form-crear-tarea" onSubmit={handleSubmit}>
+            <h2 className="mb-4">Crear Tarea</h2>
+            <div className="mb-3">
               <label htmlFor="nombre_tarea" className="form-label">Nombre de la tarea</label>
               <input
                 type="text"
                 id="nombre_tarea"
                 name="nombre_tarea"
-                className="form-input"
+                className="form-control"
                 placeholder="Nombre de la tarea"
                 value={form.nombre_tarea}
                 onChange={handleChange}
                 required
               />
             </div>
-            <div className="form-group">
+            <div className="mb-3">
               <label htmlFor="descripcion" className="form-label">Descripción</label>
               <CKEditor
                 editor={ClassicEditor}
@@ -110,7 +110,7 @@ function Tareas() {
                 onChange={handleEditorChange}
                 onReady={handleEditorReady}
                 config={{
-                  licenseKey: 'eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3NDcxODA3OTksImp0aSI6ImE1ODdmYWQ0LTgxODgtNDI4NS04MDEyLTEyODM5MDlkZGI4YiIsInVzYWdlRW5kcG9pbnQiOiJodHRwczovL3Byb3h5LWV2ZW50LmNrZWRpdG9yLmNvbSIsImRpc3RyaWJ1dGlvbkNoYW5uZWwiOlsiY2xvdWQiLCJkcnVwYWwiLCJzaCJdLCJ3aGl0ZUxhYmVsIjp0cnVlLCJsaWNlbnNlVHlwZSI6InRyaWFsIiwiZmVhdHVyZXMiOlsiKiJdLCJ2YyI6IjI0NzQ1ZmU4In0.i2TduVJSKMKXiiEeFC7tGOrBfBISmL1K5ipo5nvC_E3zE-qAoDMFqlMo1V8L3i71jGM5AOMcSsSd5BFotzleqw',
+                  licenseKey: 'your-license-key',
                   toolbar: [
                     'heading',
                     '|',
@@ -129,24 +129,24 @@ function Tareas() {
                 }}
               />
             </div>
-            <div className="form-group">
+            <div className="mb-3">
               <label htmlFor="fecha_limite" className="form-label">Fecha límite</label>
               <input
                 type="date"
                 id="fecha_limite"
                 name="fecha_limite"
-                className="form-input"
+                className="form-control"
                 value={form.fecha_limite}
                 onChange={handleChange}
                 required
               />
             </div>
-            <div className="form-group">
+            <div className="mb-3">
               <label htmlFor="estado" className="form-label">Estado</label>
               <select
                 id="estado"
                 name="estado"
-                className="form-input"
+                className="form-select"
                 value={form.estado}
                 onChange={handleChange}
                 required
@@ -156,11 +156,11 @@ function Tareas() {
                 <option value="listo">Completada</option>
               </select>
             </div>
-            <button className="btn blue form-btn" type="submit" disabled={loading}>
+            <button className="btn btn-primary w-100" type="submit" disabled={loading}>
               {loading ? 'Creando...' : 'Crear Tarea'}
             </button>
-            {error && <p className="error">Error al crear la tarea</p>}
-            {data && <p className="success">Tarea creada correctamente</p>}
+            {error && <p className="text-danger mt-3">Error al crear la tarea</p>}
+            {data && <p className="text-success mt-3">Tarea creada correctamente</p>}
           </form>
         </div>
       </div>

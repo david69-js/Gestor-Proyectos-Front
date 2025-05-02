@@ -3,6 +3,7 @@ import Header from './components/Header';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Tareas from './pages/Tareas';
+import EditarTarea from './pages/EditarTarea.jsx';
 import DetalleTareas from './pages/DetalleTarea';
 import Proyectos from './pages/Proyectos';
 import EditarProyecto from './pages/EditarProyecto.jsx';
@@ -44,11 +45,11 @@ function LayoutWrapper() {
         {/* Rutas protegidas */}
         <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
         <Route path="/proyectos/:projectId/crear-tarea" element={<ProtectedRoute><Tareas /></ProtectedRoute>} />
-        <Route path="/proyectos/:projectId/tareas/:tareaId" element={<ProtectedRoute><Tareas /></ProtectedRoute>} />
+        <Route path="/proyectos/:projectId/tareas/:tareaId" element={<ProtectedRoute><EditarTarea /></ProtectedRoute>} />
+        <Route path="/proyectos/:projectId/detalle-tarea/:tareaId" element={<ProtectedRoute><DetalleTareas /></ProtectedRoute>} />
         <Route path="/proyectos" element={<ProtectedRoute><Proyectos /></ProtectedRoute>} />
         <Route path="/proyectos/:id" element={<ProtectedRoute><ProyectoDetalle /></ProtectedRoute>} />
         <Route path="/proyectos/:id/editar" element={<ProtectedRoute><EditarProyecto /></ProtectedRoute>} />
-        <Route path="/proyectos/:projectId/detalle-tarea/:tareaId" element={<ProtectedRoute><DetalleTareas /></ProtectedRoute>} />
         <Route path="/perfil" element={<ProtectedRoute><Perfil user={authData.user} /></ProtectedRoute>} />
         <Route path="/equipos/:id" element={<ProtectedRoute><EquipoDetalle /></ProtectedRoute>} />
 

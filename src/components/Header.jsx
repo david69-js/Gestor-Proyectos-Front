@@ -1,29 +1,34 @@
 import { Link } from 'react-router-dom';
-import './Header.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Header() {
   return (
     <header className="header">
-      <div className="logo">
-        <h1>Gestor de Proyectos</h1>
-      </div>
-      <nav className="nav">
-        <ul>
-          <li>
-            <Link to="/dashboard">Dashboard</Link>
-          </li>
-          <li>
-            <Link to="/proyectos">Proyectos</Link>
-          </li>
-          <li>
-            <Link to="/perfil">Perfil</Link>
-          </li>
-          <li>
-            <Link to="/" onClick={() => localStorage.removeItem('isAuthenticated')}>
-              Cerrar sesión
-            </Link>
-          </li>
-        </ul>
+      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <div className="container-fluid">
+          <Link className="navbar-brand" to="/">Gestor de Proyectos</Link>
+          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <div className="collapse navbar-collapse" id="navbarNav">
+            <ul className="navbar-nav">
+              <li className="nav-item">
+                <Link className="nav-link" to="/dashboard">Dashboard</Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/proyectos">Proyectos</Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/perfil">Perfil</Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/" onClick={() => localStorage.removeItem('isAuthenticated')}>
+                  Cerrar sesión
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </div>
       </nav>
     </header>
   );

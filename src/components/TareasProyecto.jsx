@@ -29,35 +29,38 @@ function TareasProyecto({ projectId }) {
   };
 
   return (
-    <div>
-      <h3>Tareas del Proyecto</h3>
+    <div className="container bg-light text-dark p-4 rounded">
+      <h3 className="mb-4">Tareas del Proyecto</h3>
       {loading && <p>Cargando tareas...</p>}
       {error && <p>Error al cargar las tareas</p>}
       {!loading && !error && tareas && tareas.length > 0 ? (
-        <div className="tareas-board">
+        <div className="row">
           {categorias.map((categoria) => (
             <div
               key={categoria.key}
-              className={`tareas-columna ${categoria.className}`}
+              className={`col-md-4 mb-3 tareas-columna ${categoria.className}`}
             >
-              <h4>{categoria.label}</h4>
-              {getTareasPorCategoria(categoria).length === 0 ? (
-                <p>Sin tareas</p>
-              ) : (
-                getTareasPorCategoria(categoria).map((tarea) => (
-                  <Link
-                    className="task-card"
-                    key={tarea.TareaId}
-                    to={`/proyectos/${projectId}/detalle-tarea/${tarea.TareaId}`}
-                  >
-                    <h5>{tarea.nombre_tarea}</h5>
-                
-                    <p>
-                      Asignada a: {tarea.usuarios_asignados ? tarea.usuarios_asignados : "Ninguno"}
-                    </p>
-                  </Link>
-                ))
-              )}
+              <div className="card bg-secondary text-white">
+                <div className="card-body">
+                  <h4 className="card-title">{categoria.label}</h4>
+                  {getTareasPorCategoria(categoria).length === 0 ? (
+                    <p>Sin tareas</p>
+                  ) : (
+                    getTareasPorCategoria(categoria).map((tarea) => (
+                      <Link
+                        className="task-card text-white"
+                        key={tarea.TareaId}
+                        to={`/proyectos/${projectId}/detalle-tarea/${tarea.TareaId}`}
+                      >
+                        <h5>{tarea.nombre_tarea}</h5>
+                        <p>
+                          Asignada a: {tarea.usuarios_asignados ? tarea.usuarios_asignados : "Ninguno"}
+                        </p>
+                      </Link>
+                    ))
+                  )}
+                </div>
+              </div>
             </div>
           ))}
         </div>

@@ -37,29 +37,23 @@ function ProyectoCard({ proyecto, rol }) {
         />
       )}
       <div
-        className="proyecto-card"
+        className="card proyecto-card bg-secondary text-dark"
         aria-label={`Ver proyecto ${proyecto.nombre_proyecto}`}
         onClick={() => navigate(`/proyectos/${proyecto.id || proyecto._id}`)}
         tabIndex={0}
       >
-        <h4>{proyecto.nombre_proyecto}</h4>
-        <span className="ver-proyecto-link">Ver proyecto</span>
-        { rol === 'admin' &&
+        <div className="card-body">
+          <h4 className="card-title">{proyecto.nombre_proyecto}</h4>
+          <span className="card-text ver-proyecto-link">Ver proyecto</span>
+          {rol === 'admin' && (
             <button
               onClick={handleEliminar}
-              style={{
-                marginTop: '0.5rem',
-                background: '#e74c3c',
-                color: 'white',
-                border: 'none',
-                padding: '0.3rem 0.7rem',
-                borderRadius: '4px',
-                cursor: 'pointer'
-              }}
+              className="btn btn-danger mt-2"
             >
               Eliminar
             </button>
-        }
+          )}
+        </div>
       </div>
     </>
   );
