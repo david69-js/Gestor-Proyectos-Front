@@ -1,18 +1,23 @@
 import { useState, useEffect } from 'react';
-import useUpdateApi from '../hooks/useUpdateApi'; // Importa el hook
+import useUpdateApi from '../hooks/hookform'; // Importa el hook
 import ModalRedirect from '../components/ModalRedirect'; // Importa el componente ModalRedirect
+import { useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
 import './Perfil.css';
 
 function Perfil({ user }) {
+  const { authData } = useContext(AuthContext);
+  const api = import.meta.env.VITE_API_URL;
   const [usuario, setUsuario] = useState({
     nombre: '',
     imagen_perfil: '',
+    imagen_previa: '',
     numero_telefono: '',
     fecha_nacimiento: ''
   });
 
-  const { data, loading, error, updateData } = useUpdateApi('/users/update-user', localStorage.getItem('authToken'));
-  const [showModal, setShowModal] = useState(false); // Estado para controlar el modal
+  const { data, loading, error, updateData } = useUpdateApi('/users/update-user', authData?.token);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     setUsuario(user);
@@ -22,12 +27,16 @@ function Perfil({ user }) {
     const { name, value, files } = e.target;
     if (name === 'imagen_perfil' && files.length > 0) {
       const file = files[0];
-      setUsuario({ ...usuario, imagen_perfil: file });
-      // Vista previa de la imagen
-      const imagePreview = URL.createObjectURL(file);
-      setUsuario((prevState) => ({ ...prevState, imagen_previa: imagePreview }));
+      setUsuario((prevState) => ({
+        ...prevState,
+        imagen_perfil: file,  // GUARDAMOS EL ARCHIVO COMPLETO aquí
+        imagen_previa: URL.createObjectURL(file) // Crear una URL para la previsualización
+      }));
     } else {
-      setUsuario({ ...usuario, [name]: value });
+      setUsuario((prevState) => ({
+        ...prevState,
+        [name]: value
+      }));
     }
   };
 
@@ -36,25 +45,44 @@ function Perfil({ user }) {
     formData.append('nombre', usuario.nombre);
     formData.append('numero_telefono', usuario.numero_telefono);
     formData.append('fecha_nacimiento', usuario.fecha_nacimiento);
+   
+    // Solo se agrega la imagen si el usuario ha seleccionado una
     if (usuario.imagen_perfil) {
+      console.log("Imagen a enviar:", usuario.imagen_perfil); // Asegúrate de que la imagen esté allí
       formData.append('imagen_perfil', usuario.imagen_perfil);
     }
+   
+    await updateData(formData);
+    console.log(data, loading );
+  };
 
-    const result = await updateData(formData);
-    if (result) {
-      setShowModal(true); // Muestra el modal si la actualización es exitosa
-    }
+  const isButtonDisabled = () => {
+    // Comparamos los valores actuales con los iniciales
+    return (
+      usuario.nombre === user.nombre &&
+      usuario.imagen_perfil === user.imagen_perfil &&
+      usuario.numero_telefono === user.numero_telefono &&
+      usuario.fecha_nacimiento === user.fecha_nacimiento
+    );
   };
 
   return (
     <div className="perfil-container">
       <h2>Perfil de Usuario</h2>
-
-      {usuario.imagen_previa && (
-        <img src={usuario.imagen_previa} alt="Perfil" className="imagen-perfil" />
+      {usuario.imagen_previa ? (
+        <img src={usuario.imagen_previa} alt="Vista Previa" className="imagen-perfil" />
+      ) : (
+        <img src={api.replace('/api', '') + usuario.imagen_perfil} alt="Perfil" className="imagen-perfil" />
       )}
+      
       <label htmlFor="imagen_perfil">Imagen de perfil</label>
-      <input type="file" name="imagen_perfil" onChange={handleChange} />
+      <input 
+        type="file" 
+        name="imagen_perfil" 
+        accept="image/*" 
+        onChange={handleChange} 
+      />
+      
       <label htmlFor="nombre">Nombre</label>
       <input
         type="text"
@@ -72,6 +100,7 @@ function Perfil({ user }) {
         disabled
         placeholder="Correo"
       />
+
       <label htmlFor="numero_telefono">Número de teléfono</label>
       <input
         type="text"
@@ -80,24 +109,29 @@ function Perfil({ user }) {
         placeholder="Número de teléfono"
         onChange={handleChange}
       />
+
       <label htmlFor="fecha_nacimiento">Fecha de nacimiento</label>
       <input
         type="date"
         name="fecha_nacimiento"
-        value={usuario.fecha_nacimiento}
+        value={usuario.fecha_nacimiento.split('T')[0] || ''} // Manejar fecha en formato correcto
         onChange={handleChange}
       />
 
-      <button onClick={handleGuardar} disabled={loading}>
+      <button 
+        onClick={handleGuardar} 
+        disabled={loading || isButtonDisabled()}
+      >
         {loading ? 'Guardando...' : 'Guardar cambios'}
       </button>
+
       {error && <p className="error">Error al guardar los cambios</p>}
       {data && <p className="success">Cambios guardados correctamente</p>}
 
       {showModal && (
         <ModalRedirect
           mensaje="Perfil actualizado correctamente"
-          redireccion={null} // No redirigir
+          redireccion={console.log('Listo')}
           textoBoton="Cerrar"
         />
       )}

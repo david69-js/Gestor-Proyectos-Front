@@ -11,17 +11,8 @@ import ProyectoCard from '../components/proyecto-card.jsx';
 function Dashboard() {
   const navigate = useNavigate();
   const { authData } = useContext(AuthContext);
-  const { data: proyectos, loading, error, refetch } = useApiData('/projects', authData?.token);
+  const { data: proyectos, loading, error } = useApiData('/projects', authData?.token);
   const rol = authData.user.rol;
-
-  // Polling mechanism to refetch data every 30 seconds
-  useEffect(() => {
-    const interval = setInterval(() => {
-      refetch(); // Assuming useApiData hook provides a refetch method
-    }, 30000); // 30000 ms = 30 seconds
-
-    return () => clearInterval(interval); // Cleanup interval on component unmount
-  }, [refetch]);
 
   return (
     <div className="dashboard-container container">
