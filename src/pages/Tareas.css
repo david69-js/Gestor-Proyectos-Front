@@ -114,3 +114,13 @@
     }
   }
   
+  .tarea-info{
+    background-color: #f0f4f8;
+    margin: 22px 20px;
+  }
+  .tarea-info-container{
+    padding: 20px;
+  }
+  .info-tarea-buttons{
+    padding: 0 20px;
+  }

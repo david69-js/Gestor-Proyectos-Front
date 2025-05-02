@@ -1,67 +1,189 @@
-// src/pages/EditarTarea.jsx
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-
-// Simulamos una lista de usuarios
-const users = [
-  { id: 1, name: 'Usuario 1' },
-  { id: 2, name: 'Usuario 2' },
-  { id: 3, name: 'Usuario 3' },
-];
-
-// Simulamos las tareas existentes
-const tasks = [
-  { id: 1, name: 'Tarea 1', assignedUser: 1 },
-  { id: 2, name: 'Tarea 2', assignedUser: 2 },
-];
+import useApiData from '../hooks/useApiData';
+import useUpdateApi from '../hooks/useUpdateApi';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import CustomUploadAdapter from '../utils/CustomUploadAdapter';
 
 function EditarTarea() {
-  const { id } = useParams();
+  const { projectId, tareaId } = useParams();
   const navigate = useNavigate();
-  const [task, setTask] = useState(null);
-  const [taskName, setTaskName] = useState('');
-  const [assignedUser, setAssignedUser] = useState('');
+  const { data: tarea, loading, error } = useApiData(
+    `/tasks/project/${projectId}/tareas/${tareaId}`,
+    localStorage.getItem('authToken')
+  );
+  const { updateData, loading: updating, error: updateError } = useUpdateApi(
+    `/tasks/project/${projectId}/tareas/${tareaId}`,
+    localStorage.getItem('authToken')
+  );
+  const [form, setForm] = useState({
+    nombre_tarea: '',
+    descripcion: '',
+    fecha_limite: '',
+    estado_id: 1, // por defecto
+  });
 
-  // Cargar la tarea cuando se pase el id en la URL
   useEffect(() => {
-    const taskToEdit = tasks.find((task) => task.id === parseInt(id));
-    if (taskToEdit) {
-      setTask(taskToEdit);
-      setTaskName(taskToEdit.name);
-      setAssignedUser(taskToEdit.assignedUser || '');
+    if (tarea) {
+      const fechaFin = tarea.fecha_limite ? tarea.fecha_limite.split('T')[0] : '';
+      setForm({
+        nombre_tarea: tarea.nombre_tarea || '',
+        descripcion: tarea.descripcion || '',
+        fecha_limite: fechaFin,
+        estado_id: tarea.estado_id,
+      });
     }
-  }, [id]);
+  }, [tarea]);
 
-  // Guardar los cambios realizados en la tarea
-  const handleSave = () => {
-    const updatedTask = { ...task, name: taskName, assignedUser: assignedUser };
-    console.log('Tarea actualizada:', updatedTask);
-    navigate('/tareas');  // Redirigir a la lista de tareas
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm((prevForm) => ({
+      ...prevForm,
+      [name]: value,
+    }));
   };
 
-  return task ? (
-    <div>
-      <h2>Editar Tarea</h2>
-      <input
-        type="text"
-        value={taskName}
-        onChange={(e) => setTaskName(e.target.value)}
-      />
-      <select
-        value={assignedUser}
-        onChange={(e) => setAssignedUser(e.target.value)}
-      >
-        <option value="">Seleccionar usuario</option>
-        {users.map((user) => (
-          <option key={user.id} value={user.id}>
-            {user.name}
-          </option>
-        ))}
-      </select>
-      <button onClick={handleSave}>Guardar</button>
+  const handleEditorChange = (event, editor) => {
+    const data = editor.getData();
+    setForm((prevForm) => ({ ...prevForm, descripcion: data }));
+  };
+
+  const handleEditorReady = (editor) => {
+    editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+      return new CustomUploadAdapter(loader);
+    };
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const payload = {
+      nombre_tarea: form.nombre_tarea,
+      descripcion: form.descripcion,
+      fecha_limite: form.fecha_limite,
+      estado_id: parseInt(form.estado_id, 10),
+    };
+    const updated = await updateData(payload);
+    if (updated) {
+      navigate(`/proyectos/${projectId}/detalle-tarea/${tareaId}`);
+    }
+  };
+
+  if (loading) {
+    return <div>Cargando...</div>;
+  }
+
+  return (
+    <div className="proyectos-container">
+      <div className="bg-light pt-5 pb-5 container justify-content-center row">
+        <div className="col-md-8">
+          <form className="form-crear-tarea" onSubmit={handleSubmit}>
+            <h2 className="mb-4">Editar Tarea</h2>
+
+            <div className="mb-3">
+              <label htmlFor="nombre_tarea" className="form-label">
+                Nombre de la tarea
+              </label>
+              <input
+                type="text"
+                id="nombre_tarea"
+                name="nombre_tarea"
+                className="form-control"
+                placeholder="Nombre de la tarea"
+                value={form.nombre_tarea}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div className="mb-3">
+              <label htmlFor="descripcion" className="form-label">
+                Descripción
+              </label>
+              <CKEditor
+                editor={ClassicEditor}
+                data={form.descripcion}
+                onChange={handleEditorChange}
+                onReady={handleEditorReady}
+                config={{
+                  licenseKey:
+                    'eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3NDcxODA3OTksImp0aSI6ImE1ODdmYWQ0LTgxODgtNDI4NS04MDEyLTEyODM5MDlkZGI4YiIsInVzYWdlRW5kcG9pbnQiOiJodHRwczovL3Byb3h5LWV2ZW50LmNrZWRpdG9yLmNvbSIsImRpc3RyaWJ1dGlvbkNoYW5uZWwiOlsiY2xvdWQiLCJkcnVwYWwiLCJzaCJdLCJ3aGl0ZUxhYmVsIjp0cnVlLCJsaWNlbnNlVHlwZSI6InRyaWFsIiwiZmVhdHVyZXMiOlsiKiJdLCJ2YyI6IjI0NzQ1ZmU4In0.i2TduVJSKMKXiiEeFC7tGOrBfBISmL1K5ipo5nvC_E3zE-qAoDMFqlMo1V8L3i71jGM5AOMcSsSd5BFotzleqw',
+                  toolbar: [
+                    'heading',
+                    '|',
+                    'bold',
+                    'italic',
+                    'link',
+                    'bulletedList',
+                    'numberedList',
+                    'blockQuote',
+                    'imageUpload',
+                  ],
+                  image: {
+                    toolbar: [
+                      'imageTextAlternative',
+                      '|',
+                      'imageStyle:alignLeft',
+                      'imageStyle:full',
+                      'imageStyle:alignRight',
+                    ],
+                    styles: ['full', 'alignLeft', 'alignRight'],
+                  },
+                }}
+              />
+            </div>
+
+            <div className="mb-3">
+              <label htmlFor="fecha_limite" className="form-label">
+                Fecha límite
+              </label>
+              <input
+                type="date"
+                id="fecha_limite"
+                name="fecha_limite"
+                className="form-control"
+                value={form.fecha_limite}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div className="mb-3">
+              <label htmlFor="estado_id" className="form-label">
+                Estado
+              </label>
+              <select
+                id="estado_id"
+                name="estado_id"
+                className="form-select"
+                value={form.estado_id}
+                onChange={handleChange}
+                required
+              >
+                <option value={1}>Por hacer</option>
+                <option value={2}>En progreso</option>
+                <option value={3}>Completada</option>
+              </select>
+            </div>
+
+            <button
+              className="btn btn-primary w-100"
+              type="submit"
+              disabled={updating || loading}
+            >
+              {updating ? 'Guardando...' : 'Guardar Cambios'}
+            </button>
+
+            {updateError && (
+              <p className="text-danger mt-3">Error al guardar los cambios</p>
+            )}
+            {error && (
+              <p className="text-danger mt-3">Error al cargar la tarea</p>
+            )}
+          </form>
+        </div>
+      </div>
     </div>
-  ) : (
-    <p>Cargando tarea...</p>
   );
 }
 

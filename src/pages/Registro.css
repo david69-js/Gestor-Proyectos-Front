@@ -19,7 +19,6 @@ html, body {
     padding: 2rem;
     border-radius: 10px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-    width: 320px;
     display: flex;
     flex-direction: column;
   }
@@ -85,7 +84,11 @@ html, body {
     margin-bottom: 0.5rem;
     display: block;
   }
-  
+  .form-group-custom{
+    display: flex !important;
+    gap: 10px;
+    font-size: 12px !important;
+  }
   #imagen_perfil {
     background-color: #334155;
     color: #f1f5f9;
@@ -198,4 +201,8 @@ html, body {
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 999;
 }
-  
+@media (max-width: 768px)  {
+  .registro-form {
+    width: 356px;
+  }
+}

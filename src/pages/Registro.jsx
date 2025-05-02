@@ -36,14 +36,23 @@ function Registro() {
     }
 
     setError('');
-    // Prepara el body para el registro
-    const body = {
-      ...form,
-      fecha_nacimiento: form.fecha_nacimiento
-        ? new Date(form.fecha_nacimiento).toISOString().split('T')[0]
-        : ''
-    };
-    await postData(body);
+    
+    // Usamos FormData en lugar de un objeto plano
+    const formData = new FormData();
+    formData.append('nombre', form.nombre);
+    formData.append('correo', form.correo);
+    formData.append('contrasena', form.contrasena);
+    formData.append('nombre_organizacion', form.nombre_organizacion);
+    formData.append('numero_telefono', form.numero_telefono);
+    formData.append('fecha_nacimiento', form.fecha_nacimiento);
+
+    // Si hay imagen, la añadimos al FormData
+    if (form.imagen_perfil) {
+      formData.append('imagen_perfil', form.imagen_perfil);
+    }
+
+    // Enviar el formulario usando FormData
+    await postData(formData);
   };
 
   useEffect(() => {

@@ -1,41 +1,38 @@
 import { useState } from 'react';
 import axios from 'axios';
 
-export default function usePostApi(endpoint, token) {
+export default function useUpdateApi(endpoint, token) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const postData = async (body) => {
+  const updateData = async (body) => {
     setLoading(true);
     setError(null);
-
-    // Revisamos si body es un FormData
-    const isFormData = body instanceof FormData;
-
     try {
-      const response = await axios.post(
+      const isFormData = body instanceof FormData;
+      const response = await axios.put(
         `${import.meta.env.VITE_API_URL}${endpoint}`,
         body,
         {
           headers: {
-            // Si no es FormData, usamos JSON
-            ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
-            ...(token && { Authorization: `Bearer ${token}` })
+            ...(token && { Authorization: `Bearer ${token}` }),
+            // Solo añadir Content-Type si NO es FormData
+            ...(isFormData ? {} : { 'Content-Type': 'application/json' })
           },
           maxContentLength: Infinity,
           maxBodyLength: Infinity
         }
       );
       setData(response.data);
+      setLoading(false);
       return response.data;
     } catch (err) {
-      setError(err.response?.data || err.message);
-      return null;
-    } finally {
+      setError(err);
       setLoading(false);
+      return null;
     }
   };
-
-  return { data, loading, error, postData };
+  
+  return { data, loading, error, updateData };
 }

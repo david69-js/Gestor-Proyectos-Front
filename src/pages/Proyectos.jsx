@@ -1,23 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import usePostApi from '../hooks/usePostApi';
 import './Proyectos.css';
 import { useNavigate } from 'react-router-dom';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import CustomUploadAdapter from '../utils/CustomUploadAdapter';
 
 function Proyectos() {
-
-  // Estado para el formulario
   const [form, setForm] = useState({
     nombre_proyecto: '',
     descripcion: '',
     fecha_fin: ''
   });
 
-  // Obtener el token de autenticación (ajusta según tu lógica)
   const token = localStorage.getItem('authToken');
-
-  // Hook personalizado para POST
   const { data, loading, error, postData } = usePostApi('/projects', token);
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
@@ -29,23 +25,52 @@ function Proyectos() {
     });
   };
 
+  const handleEditorChange = (event, editor) => {
+    const data = editor.getData();
+    setForm({ ...form, descripcion: data });
+  };
+
+  const handleEditorReady = (editor) => {
+    editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+      return new CustomUploadAdapter(loader);
+    };
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await postData(form);
+    
+
+    const sanitizedForm = {
+      ...form,
+      descripcion: `${form.descripcion}`
+    };
+
+  
+    await postData(sanitizedForm);
     setForm({
       nombre_proyecto: '',
       descripcion: '',
       fecha_fin: ''
     });
-    // Solo mostrar el modal si la respuesta es positiva
+
     if (!error && data) {
       setShowModal(true);
       setTimeout(() => {
         setShowModal(false);
-        navigate('/proyectos'); // Cambia la ruta si es necesario
+        navigate('/proyectos');
       }, 2000);
     }
   };
+
+  useEffect(() => {
+    if (data) {
+      setShowModal(true);
+      setTimeout(() => {
+        setShowModal(false);
+        navigate('/');
+      }, 2000);
+    }
+  }, [data, navigate]);
 
   return (
     <div className="proyectos-container">
@@ -75,16 +100,29 @@ function Proyectos() {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="descripcion" className="form-label">Descripción</label>
+              <label htmlFor="descripcion" className="form-label">Descripción 1</label>
               <CKEditor
                 editor={ClassicEditor}
-                data={form.descripcion}
-                onChange={(event, editor) => {
-                  const data = editor.getData();
-                  setForm({ ...form, descripcion: data });
-                }}
+                data={form.descripcion || ''} // Ensure data is not null or undefined
+                onChange={handleEditorChange}
+                onReady={handleEditorReady}
                 config={{
-                  placeholder: "Descripción detallada del proyecto"
+                  licenseKey: 'eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3NDcxODA3OTksImp0aSI6ImE1ODdmYWQ0LTgxODgtNDI4NS04MDEyLTEyODM5MDlkZGI4YiIsInVzYWdlRW5kcG9pbnQiOiJodHRwczovL3Byb3h5LWV2ZW50LmNrZWRpdG9yLmNvbSIsImRpc3RyaWJ1dGlvbkNoYW5uZWwiOlsiY2xvdWQiLCJkcnVwYWwiLCJzaCJdLCJ3aGl0ZUxhYmVsIjp0cnVlLCJsaWNlbnNlVHlwZSI6InRyaWFsIiwiZmVhdHVyZXMiOlsiKiJdLCJ2YyI6IjI0NzQ1ZmU4In0.i2TduVJSKMKXiiEeFC7tGOrBfBISmL1K5ipo5nvC_E3zE-qAoDMFqlMo1V8L3i71jGM5AOMcSsSd5BFotzleqw',
+                  toolbar: [
+                    'heading',
+                    '|',
+                    'bold',
+                    'italic',
+                    'link',
+                    'bulletedList',
+                    'numberedList',
+                    'blockQuote',
+                    'imageUpload',
+                  ],
+                  image: {
+                    toolbar: ['imageTextAlternative', '|', 'imageStyle:alignLeft', 'imageStyle:full', 'imageStyle:alignRight'],
+                    styles: ['full', 'alignLeft', 'alignRight'],
+                  },
                 }}
               />
             </div>

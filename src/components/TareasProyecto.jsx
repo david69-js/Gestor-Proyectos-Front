@@ -20,51 +20,47 @@ function TareasProyecto({ projectId }) {
   const getTareasPorCategoria = (categoria) => {
     if (!tareas) return [];
     return tareas.filter(tarea => {
-      if (!tarea.categoria) return categoria.key === 'por_hacer';
-      if (typeof tarea.categoria === 'string') {
-        return tarea.categoria.toLowerCase() === categoria.key;
-      }
-      if (typeof tarea.categoria === 'number') {
-        return (
-          (categoria.key === 'por_hacer' && tarea.categoria === 0) ||
-          (categoria.key === 'en_progreso' && tarea.categoria === 1) ||
-          (categoria.key === 'listo' && tarea.categoria === 2)
-        );
-      }
-      return false;
+      // Normaliza el estado_tarea a minúsculas y sin espacios
+      const estado = tarea.estado_tarea
+        ? tarea.estado_tarea.toLowerCase().replace(/\s/g, '_')
+        : 'por_hacer';
+      return estado === categoria.key;
     });
   };
 
   return (
-    <div>
-      <h3>Tareas del Proyecto</h3>
+    <div className="container bg-light text-dark p-4 rounded">
+      <h3 className="mb-4">Tareas del Proyecto</h3>
       {loading && <p>Cargando tareas...</p>}
       {error && <p>Error al cargar las tareas</p>}
       {!loading && !error && tareas && tareas.length > 0 ? (
-        <div className="tareas-board">
+        <div className="row">
           {categorias.map((categoria) => (
             <div
               key={categoria.key}
-              className={`tareas-columna ${categoria.className}`}
+              className={`col-md-6 col-lg-4 mb-3 tareas-columna ${categoria.className}`}
             >
-              <h4>{categoria.label}</h4>
-              {getTareasPorCategoria(categoria).length === 0 ? (
-                <p>Sin tareas</p>
-              ) : (
-                getTareasPorCategoria(categoria).map((tarea) => (
-                  <Link
-                    className="task-card"
-                    key={tarea.TareaId}
-                    to={`/proyectos/${projectId}/tareas/${tarea.TareaId}`}
-                  >
-                    <h5>{tarea.nombre_tarea}</h5>
-                
-                    <p>
-                      Asignada a: {tarea.usuarios_asignados ? tarea.usuarios_asignados : "Ninguno"}
-                    </p>
-                  </Link>
-                ))
-              )}
+              <div className="card bg-light text-white">
+                <div className="card-body">
+                  <h4 className="card-title">{categoria.label}</h4>
+                  {getTareasPorCategoria(categoria).length === 0 ? (
+                    <p>Sin tareas</p>
+                  ) : (
+                    getTareasPorCategoria(categoria).map((tarea) => (
+                      <Link
+                        className="task-card text-white"
+                        key={tarea.TareaId}
+                        to={`/proyectos/${projectId}/detalle-tarea/${tarea.TareaId}`}
+                      >
+                        <h5>{tarea.nombre_tarea}</h5>
+                        <p>
+                          Asignada a: {tarea.usuarios_asignados ? tarea.usuarios_asignados : "Ninguno"}
+                        </p>
+                      </Link>
+                    ))
+                  )}
+                </div>
+              </div>
             </div>
           ))}
         </div>
