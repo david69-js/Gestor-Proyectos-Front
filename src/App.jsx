@@ -45,7 +45,7 @@ function LayoutWrapper() {
         <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
         
         <Route path="/proyectos/:projectId/crear-tarea" element={<ProtectedRoute><Tareas /></ProtectedRoute>} />
-        <Route path="/proyectos/:projectId/tareas/:tareaId" element={<ProtectedRoute><EditarTarea /></ProtectedRoute>} />
+        <Route path="/proyectos/:projectId/tareas/:tareaId/editar" element={<ProtectedRoute><EditarTarea /></ProtectedRoute>} />
         <Route path="/proyectos/:projectId/detalle-tarea/:tareaId" element={<ProtectedRoute><DetalleTareas /></ProtectedRoute>} />
         
         <Route path="/proyectos" element={<ProtectedRoute><Proyectos /></ProtectedRoute>} />

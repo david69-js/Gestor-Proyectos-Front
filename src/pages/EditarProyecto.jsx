@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import useApiData from '../hooks/useApiData';
-import useUpdateApi from '../hooks/useUpdateApi'; // Importar el hook
+import useUpdateApi from '../hooks/useUpdateApi';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import CustomUploadAdapter from '../utils/CustomUploadAdapter';
@@ -10,7 +10,7 @@ function EditarProyecto() {
   const { projectId } = useParams();
   const navigate = useNavigate();
   const { data: proyecto, loading, error } = useApiData(`/projects/${projectId}`, localStorage.getItem('authToken'));
-  const { updateData, loading: updating, error: updateError } = useUpdateApi(`/projects/${projectId}`, localStorage.getItem('authToken')); // Usar el hook
+  const { updateData, loading: updating, error: updateError } = useUpdateApi(`/projects/${projectId}`, localStorage.getItem('authToken'));
   const [form, setForm] = useState({
     nombre_proyecto: '',
     descripcion: '',
@@ -21,9 +21,9 @@ function EditarProyecto() {
     if (proyecto) {
       const fechaFin = proyecto.fecha_fin ? proyecto.fecha_fin.split('T')[0] : '';
       setForm({
-        nombre_proyecto: proyecto.nombre_proyecto,
-        descripcion: proyecto.descripcion,
-        fecha_fin: fechaFin
+        nombre_proyecto: proyecto.nombre_proyecto || '',
+        descripcion: proyecto.descripcion || '',
+        fecha_fin: fechaFin || ''
       });
     }
   }, [proyecto]);
@@ -48,9 +48,9 @@ function EditarProyecto() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const updated = await updateData(form); // Llamar a updateData
+    const updated = await updateData(form);
     if (updated) {
-      navigate(`/proyectos/${id}`);
+      navigate(`/proyectos/${projectId}`);
     }
   };
 
@@ -95,17 +95,6 @@ function EditarProyecto() {
             />
           </div>
           <div className="form-group">
-          <label className='form-label form-group-custom'>
-            <label className='form-label form-group-custom'>Fecha de fin:</label>{" "}
-            {proyecto.fecha_fin
-              ? new Date(proyecto.fecha_fin).toLocaleDateString("es-ES", {
-                  weekday: "long",
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric"
-                })
-              : "No especificada"}
-          </label>
             <label htmlFor="fecha_fin" className="form-label">Fecha de finalización</label>
             <input
               type="date"
