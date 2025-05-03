@@ -10,20 +10,26 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@ckeditor/ckeditor5-build-classic": "^41.4.2",
+    "@ckeditor/ckeditor5-build-classic": "^44.3.0",
     "@ckeditor/ckeditor5-react": "^9.5.0",
+    "@emagtechlabs/ckeditor5-classic-image-resize": "^1.0.6",
+    "@popperjs/core": "^2.11.8",
     "@tanstack/react-query": "^5.74.4",
-    "@tinymce/tinymce-react": "^6.1.0",
     "axios": "^1.8.4",
+    "bootstrap": "^5.3.5",
+    "ckeditor5-custom-build-mathtype-imageresize": "^1.0.1",
     "compression": "^1.8.0",
+    "dompurify": "^3.2.5",
     "express": "^5.1.0",
     "jwt-decode": "^4.0.0",
     "react": "^19.0.0",
     "react-calendar": "^5.1.0",
     "react-dom": "^19.0.0",
-    "react-router-dom": "^6.30.0"
+    "react-router-dom": "^6.30.0",
+    "react-select": "^5.10.1"
   },
   "devDependencies": {
+    "@ckeditor/vite-plugin-ckeditor5": "^0.1.3",
     "@eslint/js": "^9.21.0",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",

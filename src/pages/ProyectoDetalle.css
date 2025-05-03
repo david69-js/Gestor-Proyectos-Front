@@ -1,0 +1,86 @@
+.button {
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+
+.container-usuarios{
+    display: flex;
+    gap: 40px;
+    margin: 20px 0;
+}
+
+.usuarios-lista{
+    width: 190px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    height: fit-content;
+}
+.usuarios-lista button{
+    font-size: 12px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    padding: 10px 0 !important;
+}
+.container-asignados{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 7px;
+    height: fit-content;
+    position: relative;
+    top: 6px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+.usuarios-lista .button-user{
+    width: 100% !important;
+}
+.proyecto-descripcion{
+  position: relative;
+}
+.clientes{
+  position: absolute;
+    right: 10px;
+    top: 5px;
+    width: fit-content;
+
+
+}
+.clientes button{
+  width: fit-content;
+  color: black;
+  border: none;
+  position: relative;
+  padding: 10px 0;
+}
+
+.clientes button::after{
+  content: "";
+  position: absolute;
+  width: 73px;
+  height: 52px;
+  background-color:transparent;
+  right: -13px;
+  top: -19px;
+}
+.flex-container{
+  display: flex;
+  gap: 30px;
+}
+.flex-container .btn{
+  display: flex;
+  padding: 10px 0 !important;
+}
+.usuarios-lista .btn{
+  padding: 10px 0!important;
+}

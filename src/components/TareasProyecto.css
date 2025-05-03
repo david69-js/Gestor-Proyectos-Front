@@ -5,26 +5,6 @@
     margin-top: 24px;
 }
 
-.tareas-columna {
-  background: #22223b;
-  padding: 12px;
-  border-radius: 8px;
-  min-width: 300px;
-  flex: 1;
-  color: #fff;
-}
-
-.tareas-columna.por-hacer {
-  background: #bca7df;
-}
-
-.tareas-columna.en-progreso {
-  background: #e88f8f;
-}
-
-.tareas-columna.listo {
-  background: #85d8a4;
-}
 
 .task-card {
   display: block;
