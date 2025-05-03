@@ -9,7 +9,7 @@ const ApiProvider = ({ children }) => {
 
     useEffect(() => {
         // Realiza la conexión a la API
-        fetch('http://localhost:3000')
+        fetch('/api')
             .then(response => response.json())
             .then(data => setData(data))
             .catch(error => console.error('Error fetching data:', error));
