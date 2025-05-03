@@ -7,7 +7,6 @@ import './Perfil.css';
 
 function Perfil({ user }) {
   const { authData } = useContext(AuthContext);
-  const api = import.meta.env.VITE_API_URL;
   const [usuario, setUsuario] = useState({
     nombre: '',
     imagen_perfil: '',
