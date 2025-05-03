@@ -16,7 +16,7 @@ export default class CustomUploadAdapter {
             formData.append('upload', file);
           }
 
-          fetch(`${import.meta.env.VITE_API_URL}/upload`, {
+          fetch(`${import.meta.env.VITE_API_URL}/uploadfile`, {
             method: 'POST',
             body: formData,
             headers: {
