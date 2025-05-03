@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import useApiData from '../hooks/useApiData';
 import axios from 'axios';
+import socket from '../hooks/socket'; // Importa el socket desde el archivo socket.js
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Tareas.css';
 import ComentariosList from '../components/ComentariosList';
@@ -17,7 +18,6 @@ function DetalleTareas() {
   const [isOrganizationUsersOpen, setOrganizationUsersOpen] = useState(false);
   const navigate = useNavigate();
 
-
   const {
     data: tarea,
     loading: loadingTarea,
@@ -28,7 +28,6 @@ function DetalleTareas() {
     authData?.token
   );
 
-
   const {
     data: usuarios,
     loading: loadingUsuarios,
@@ -38,7 +37,6 @@ function DetalleTareas() {
     authData?.token
   );
 
-
   const {
     data: dataComentarios,
     loading: loadingComentarios,
@@ -47,6 +45,32 @@ function DetalleTareas() {
     `/tasks/project/${projectId}/tareas/${tareaId}/comentarios`,
     authData?.token
   );
+
+  useEffect(() => {
+    if (dataComentarios) {
+      setComentarios(dataComentarios);
+    }
+  }, [dataComentarios]);
+
+  useEffect(() => {
+    // Usa el socket importado para escuchar eventos
+    socket.on('connect', () => {
+      console.log('Socket connected');
+    });
+    
+    socket.on('connect_error', (error) => {
+      console.error('Connection error:', error);
+    });
+    
+    socket.on('disconnect', (error) => {
+      console.log('Socket disconnected', error);
+    });
+
+    return () => {
+      socket.disconnect();
+      console.log('Desconectado del servidor de WebSocket');
+    };
+  }, [authData]);
 
   const handleAsignarUsuarios = async (userId) => {
     try {
@@ -103,12 +127,6 @@ function DetalleTareas() {
       }
     }
   }, [tarea]);
-
-  useEffect(() => {
-    if (dataComentarios) {
-      setComentarios(dataComentarios);
-    }
-  }, [dataComentarios, setComentarios]);
 
   return (
     <div className="container bg-light text-dark p-4 rounded shadow-sm">
