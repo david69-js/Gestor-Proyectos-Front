@@ -74,7 +74,7 @@ function Perfil({ user }) {
       {usuario.imagen_previa ? (
         <img src={usuario.imagen_previa} alt="Vista Previa" className="imagen-perfil" />
       ) : (
-        <img src={api.replace('/api', '') + usuario.imagen_perfil} alt="Perfil" className="imagen-perfil" />
+        <img src={api + usuario.imagen_perfil} alt="Perfil" className="imagen-perfil" />
       )}
       
       <label htmlFor="imagen_perfil">Imagen de perfil</label>
