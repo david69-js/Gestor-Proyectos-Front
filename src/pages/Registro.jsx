@@ -1,24 +1,48 @@
 import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import usePostApi from '../hooks/usePostApi';
+import { jwtDecode } from "jwt-decode";
 import './Registro.css';
 
 function Registro() {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const queryParams = new URLSearchParams(location.search);
+  const invitacion = queryParams.get('invitacion');
+
+  let decoded = null;
+  let tokenValido = false;
+  if (invitacion) {
+    try {
+      decoded = jwtDecode(invitacion);
+      const currentTime = Math.floor(Date.now() / 1000); // Tiempo actual en segundos
+      if (decoded.exp && decoded.exp > currentTime) {
+        tokenValido = true;
+      } else {
+        console.error('Token expirado');
+      }
+    } catch (error) {
+      console.error('Error decoding invitacion:', error);
+    }
+  }
+
+  const { id_organizacion, nombre_organizacion, email_invitado } = decoded || {};
   const [form, setForm] = useState({
     nombre: '',
-    correo: '',
+    correo: email_invitado || '',
     contrasena: '',
     imagen_perfil: null,
     fecha_nacimiento: '',
-    nombre_organizacion: '',
+    nombre_organizacion: nombre_organizacion || '',
     numero_telefono: '',
+    token: invitacion || ''
   });
 
   const [error, setError] = useState('');
   const [showPopup, setShowPopup] = useState(false);
-  const navigate = useNavigate();
+  const [popupMessage, setPopupMessage] = useState('');
 
-  // Usar el custom hook para POST
   const { data, error: apiError, loading, postData } = usePostApi('/auth/register');
 
   const handleRegistro = async (e) => {
@@ -31,13 +55,19 @@ function Registro() {
       form.nombre_organizacion.trim() === '' ||
       form.numero_telefono.trim() === ''
     ) {
-      setError('Por favor, completa todos los campos obligatorios.');
+      setPopupMessage('Por favor, completa todos los campos obligatorios.');
+      setShowPopup(true);
+      return;
+    }
+
+    if (form.correo !== email_invitado) {
+      setPopupMessage('Este usuario no es el invitado.');
+      setShowPopup(true);
       return;
     }
 
     setError('');
     
-    // Usamos FormData en lugar de un objeto plano
     const formData = new FormData();
     formData.append('nombre', form.nombre);
     formData.append('correo', form.correo);
@@ -45,25 +75,33 @@ function Registro() {
     formData.append('nombre_organizacion', form.nombre_organizacion);
     formData.append('numero_telefono', form.numero_telefono);
     formData.append('fecha_nacimiento', form.fecha_nacimiento);
+    tokenValido ? formData.append('token', invitacion) : null;
 
-    // Si hay imagen, la añadimos al FormData
     if (form.imagen_perfil) {
       formData.append('imagen_perfil', form.imagen_perfil);
     }
 
-    // Enviar el formulario usando FormData
-    await postData(formData);
-  };
-
-  useEffect(() => {
-    if (data) {
+    const response = await postData(formData);
+    if (response && response.status === 201) {
+      setPopupMessage('Registro exitoso! Redirigiendo al login...');
+      setShowPopup(true);
+      setTimeout(() => navigate('/login'), 2000);
+    } else {
+      setPopupMessage('El usuario ya existe.');
       setShowPopup(true);
     }
-  }, [data]);
+  };
+  
+  useEffect(() => {
+    if (!tokenValido && invitacion) {
+      setPopupMessage('El token no es válido o ha expirado. Redirigiendo al login...');
+      setShowPopup(true);
+      setTimeout(() => navigate('/login'), 2000);
+    }
+  }, [tokenValido, invitacion, navigate]);
 
   const handleClosePopup = () => {
     setShowPopup(false);
-    navigate('/login');
   };
 
   return (
@@ -96,12 +134,22 @@ function Registro() {
           onChange={(e) => setForm({ ...form, contrasena: e.target.value })}
         />
 
-        <input
-          type="text"
-          placeholder="Nombre de la organización"
-          value={form.nombre_organizacion}
-          onChange={(e) => setForm({ ...form, nombre_organizacion: e.target.value })}
-        />
+        {tokenValido ? (
+          <input
+            type="text"
+            placeholder="Nombre de la organización"
+            value={form.nombre_organizacion}
+            readOnly
+            hidden
+          />
+        ) : (
+          <input
+            type="text"
+            placeholder="Nombre de la organización"
+            value={form.nombre_organizacion}
+            onChange={(e) => setForm({ ...form, nombre_organizacion: e.target.value })}
+          />
+        )}
 
         <input
           type="text"
@@ -145,16 +193,14 @@ function Registro() {
           <>
             <div className="overlay"></div>
             <div className="popup">
-              <p>El usuario se registró correctamente.</p>
-              <button onClick={handleClosePopup}>Aceptar</button>
+              <p>{popupMessage}</p>
+              <button onClick={handleClosePopup}>Cerrar</button>
             </div>
           </>
         )}
 
-        {error && <p className="error">{error}</p>}
         {apiError && <p className="error">Error: {apiError.message}</p>}
         {loading && <p>Cargando...</p>}
-        {data && <p>Registro exitoso!</p>}
 
         <button type="submit">Registrarse</button>
       </form>

@@ -34,9 +34,11 @@ function InvitarPersona() {
             rol: form.rol,
             id_organizacion: authData?.organizacion_id,
             nombre_organizacion: authData?.organizacion,
-            email_destino: form.email_destino
+            email_destino: form.email_destino,
+            id_proyecto: form.proyectoo
         };
 
+        console.log(sanitizedForm);
         const response = await postData(sanitizedForm);
         if (response && response.status === 201) { 
             setShowModal(true);
