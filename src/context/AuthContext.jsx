@@ -48,10 +48,14 @@ const AuthProvider = ({ children }) => {
       );
 
       if (response.status === 200) {
+        const token = localStorage.getItem('authToken');
+        const decoded = jwtDecode(token);
         setAuthData({
           isAuthenticated: true,
           token,
           user: response.data,
+          organizacion: decoded.organizacion,
+          organizacion_id: decoded.id_organizacion,
         });
       } else {
         console.error('Error al obtener los datos del usuario');

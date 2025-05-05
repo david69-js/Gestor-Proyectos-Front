@@ -22,7 +22,6 @@ function DetalleTareas() {
     data: tarea,
     loading: loadingTarea,
     error: errorTarea,
-    refetch,
   } = useApiData(
     `/tasks/project/${projectId}/tareas/${tareaId}`,
     authData?.token
@@ -85,7 +84,6 @@ function DetalleTareas() {
       );
       if (response.status === 201) {
         console.log(`Usuario ${userId} asignado`);
-        refetch();
       }
     } catch (error) {
       console.error('Error al asignar usuario', error);
@@ -107,7 +105,6 @@ function DetalleTareas() {
         setUsuariosAsignados((prevUsuarios) =>
           prevUsuarios.filter((usuario) => usuario.usuario_id !== userId)
         );
-        refetch();
       }
     } catch (error) {
       console.error(error);
@@ -119,9 +116,9 @@ function DetalleTareas() {
   };
 
   useEffect(() => {
-    if (tarea?.usuarios_asignados) {
+    if (tarea?.usuariosAsignados) {
       try {
-        setUsuariosAsignados(JSON.parse(tarea.usuarios_asignados));
+        setUsuariosAsignados(tarea?.usuariosAsignados);
       } catch (err) {
         console.error('Error al parsear usuarios asignados', err);
       }

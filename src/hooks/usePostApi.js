@@ -28,7 +28,7 @@ export default function usePostApi(endpoint, token) {
         }
       );
       setData(response.data);
-      return response.data;
+      return response; // Retornar el objeto de respuesta completo
     } catch (err) {
       setError(err.response?.data || err.message);
       return null;

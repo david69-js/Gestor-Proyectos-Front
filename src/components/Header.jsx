@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 function Header() {
-  const { logout } = useContext(AuthContext);
+  const { logout, authData } = useContext(AuthContext);
   const navigate = useNavigate();
   const handleLogout = () => {
     logout();
@@ -15,7 +15,7 @@ function Header() {
     <header className="header">
       <nav className="navbar container navbar-expand-lg navbar-light bg-light">
         <div className="container-fluid">
-          <Link className="navbar-brand" to="/">Gestor de Proyectos</Link>
+          <Link className="navbar-brand" to="/">{authData.organizacion}</Link>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
