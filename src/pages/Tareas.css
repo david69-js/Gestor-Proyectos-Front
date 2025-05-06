@@ -124,3 +124,8 @@
   .info-tarea-buttons{
     padding: 0 20px;
   }
+
+  .dropdown-menu.show {
+    position: absolute !important;
+    top: 39px !important;
+  }

@@ -15,7 +15,7 @@ function AgregarComentario({ projectId, tareaId, onComentarioAgregado, token }) 
     const nuevoComentario = { comentario };
     const result = await postData(nuevoComentario);
      if (result) {
-       onComentarioAgregado(result);
+       onComentarioAgregado(result.data);
        setComentario('');
      }
   };

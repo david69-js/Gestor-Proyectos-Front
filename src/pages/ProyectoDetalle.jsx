@@ -16,10 +16,10 @@ function ProyectoDetalle() {
   const { authData } = useContext(AuthContext);
 
   const { data: proyecto, loading, error, refetch } = useApiData(`/projects/${projectId}`, authData?.token);
-  const { data: usuarios, loading: loadingUsuarios, error: errorUsuarios } = useApiData('/users/organization/users', authData?.token);
+  const { data: usuarios, loading: loadingUsuarios, error: errorUsuarios, refetch: refetchUsers } = useApiData('/users/organization/users', authData?.token);
   const navigate = useNavigate();
   const { deleteData, loading: deleting, error: deleteError } = useDeleteApi(`/projects/${projectId}`, authData?.token);
-
+  const [usuariosAsignados, setUsuariosAsignados] = useState([]);
   const [isProjectUsersOpen, setProjectUsersOpen] = useState(false);
   const [isOrganizationUsersOpen, setOrganizationUsersOpen] = useState(false);
   const [isClientesOpen, setClientesOpen] = useState(false);
@@ -30,7 +30,6 @@ function ProyectoDetalle() {
     txt.innerHTML = html;
     return txt.value;
   };
-
 
   const handleEliminar = async () => {
     const response = await deleteData();
@@ -54,8 +53,7 @@ function ProyectoDetalle() {
         }
       });
       if (response.status === 201) {
-        console.log(`Usuario ${userId} asignado`);
-        refetch();
+        refetch();        
       }
     } catch (error) {
       console.error('Error al asignar usuario', error);
@@ -74,8 +72,11 @@ function ProyectoDetalle() {
         }
       });
       if (response.status === 200) {
-        console.log(`Usuario ${userId} desasignado`);
-        refetch(); // Refresca los datos del proyecto
+   
+        refetch();
+        setUsuariosAsignados((prevUsuarios) =>
+          prevUsuarios.filter((usuario) => usuario.usuario_id !== userId)
+        );
       }
     } catch (error) {
       console.error(error);
@@ -86,7 +87,6 @@ function ProyectoDetalle() {
 
   const generarReporte = async () => {
     const datosReporte = await obtenerReporteDelProyecto(authData, projectId);
-    console.log(datosReporte);
     if (datosReporte) {
       setReporte(datosReporte);
     }
@@ -120,12 +120,12 @@ function ProyectoDetalle() {
                     proyecto.usuarios.some(usuario => usuario.rol_usuario === 'cliente') ? (
                       proyecto.usuarios.map(usuario => (
                         usuario.rol_usuario === 'cliente' ? (
-                          <li key={usuario.id_usuario} className="dropdown-item">
+                          <li key={usuario.usuario_id} className="dropdown-item">
                             <button
-                              onClick={() => handleDesAsignarUsuarios(usuario.id_usuario)}
+                              onClick={() => handleDesAsignarUsuarios(usuario.usuario_id)}
                               className="btn btn-outline-dark"
                             >
-                              {authData.user.id === usuario.id_usuario ? 'Yo ' + usuario.nombre_usuario : usuario.nombre_usuario}
+                              {authData.user.id === usuario.usuario_id ? 'Yo ' + usuario.nombre : usuario.nombre}
                             </button>
                           </li>
                         ) : null
@@ -179,13 +179,13 @@ function ProyectoDetalle() {
                     {loadingUsuarios && <li className="dropdown-item">Cargando usuarios...</li>}
                     {errorUsuarios && <li className="dropdown-item">Error al cargar los usuarios</li>}
                     {!loadingUsuarios && !errorUsuarios && proyecto.usuarios.map(usuario => (
-                      usuario.rol_usuario !== 'admin' && authData.user.id !== usuario.id_usuario ? (
-                        <li key={usuario.id_usuario} className="dropdown-item">
+                      usuario.rol_usuario !== 'admin' && authData.user.id !== usuario.usuario_id ? (
+                        <li key={usuario.usuario_id} className="dropdown-item">
                           <button
-                            onClick={() => handleDesAsignarUsuarios(usuario.id_usuario)}
+                            onClick={() => handleDesAsignarUsuarios(usuario.usuario_id)}
                             className="btn btn-outline-dark"
                           >
-                            {authData.user.id === usuario.id_usuario ? 'Yo ' + usuario.nombre_usuario : usuario.nombre_usuario}
+                            {authData.user.id === usuario.usuario_id ? 'Yo ' + usuario.nombre : usuario.nombre}
                           </button>
                         </li>
                       ) : null
@@ -202,14 +202,14 @@ function ProyectoDetalle() {
                     {loadingUsuarios && <li className="dropdown-item">Cargando usuarios...</li>}
                     {errorUsuarios && <li className="dropdown-item">Error al cargar los usuarios</li>}
                     {!loadingUsuarios && !errorUsuarios && usuarios.filter(usuario => 
-                      !proyecto.usuarios.some(asignado => asignado.id_usuario === usuario.id_usuario)
+                      !proyecto.usuarios.some(asignado => asignado.usuario_id === usuario.usuario_id)
                     ).map(usuario => (
                       <li key={usuario.id} className="dropdown-item">
                         <button
-                          onClick={() => handleAsignarUsuarios(usuario.id_usuario)}
+                          onClick={() => handleAsignarUsuarios(usuario.usuario_id)}
                           className="btn btn-outline-dark"
                         >
-                          { authData.user.id === usuario.id_usuario ?  'YO '+ usuario.nombre_usuario  : usuario.nombre_usuario}
+                          { authData.user.id === usuario.usuario_id ?  'YO '+ usuario.nombre  : usuario.nombre}
                         </button>
                       </li>
                     ))}

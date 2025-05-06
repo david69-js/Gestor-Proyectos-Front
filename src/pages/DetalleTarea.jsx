@@ -21,7 +21,7 @@ function DetalleTareas() {
   const {
     data: tarea,
     loading: loadingTarea,
-    error: errorTarea,
+    error: errorTarea
   } = useApiData(
     `/tasks/project/${projectId}/tareas/${tareaId}`,
     authData?.token
@@ -31,6 +31,7 @@ function DetalleTareas() {
     data: usuarios,
     loading: loadingUsuarios,
     error: errorUsuarios,
+    refetch: refetchUsers,
   } = useApiData(
     `/projects/${projectId}/project-participants`,
     authData?.token
@@ -83,7 +84,11 @@ function DetalleTareas() {
         }
       );
       if (response.status === 201) {
-        console.log(`Usuario ${userId} asignado`);
+        refetchUsers();
+        const usuarioAsignado = usuarios.find(usuario => usuario.usuario_id === userId);
+        if (usuarioAsignado) {
+          setUsuariosAsignados((prevUsuarios) => [...prevUsuarios, usuarioAsignado]);
+        }
       }
     } catch (error) {
       console.error('Error al asignar usuario', error);
@@ -101,7 +106,7 @@ function DetalleTareas() {
         }
       );
       if (response.status === 200) {
-        console.log(`Usuario ${userId} desasignado`);
+        refetchUsers();
         setUsuariosAsignados((prevUsuarios) =>
           prevUsuarios.filter((usuario) => usuario.usuario_id !== userId)
         );
@@ -248,8 +253,8 @@ function DetalleTareas() {
                               className="btn btn-outline-dark mt-1"
                             >
                               {authData.user.id === usuario.usuario_id
-                                ? 'Yo ' + usuario.usuario_nombre
-                                : usuario.usuario_nombre}
+                                ? 'Yo - ' + usuario.nombre
+                                : usuario.nombre}
                             </button>
                           </li>
                         ))}
