@@ -20,7 +20,7 @@ function Perfil({ user }) {
 
   useEffect(() => {
     setUsuario(user);
-  }, [user]);
+  }, [user, data, loading]);
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -49,11 +49,11 @@ function Perfil({ user }) {
     if (usuario.imagen_perfil) {
       formData.append('imagen_perfil', usuario.imagen_perfil);
     } else {
-      formData.append('imagen_perfil', null); // Aquí asignamos `null` si no se seleccionó ninguna imagen
+      formData.append('imagen_perfil', null); 
     }
   
     await updateData(formData);
-    console.log(data, loading);
+
   };
   
 
@@ -129,7 +129,7 @@ function Perfil({ user }) {
       {error && <p className="error">Error al guardar los cambios</p>}
       {data && <p className="success">Cambios guardados correctamente</p>}
 
-      {showModal && (
+      {data && (
         <ModalRedirect
           mensaje="Perfil actualizado correctamente"
           redireccion={console.log('Listo')}

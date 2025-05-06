@@ -24,7 +24,8 @@ export default function useUpdateApi(endpoint, token) {
       );
       setData(response.data);
       setLoading(false);
-      return response.data;
+      return response;
+      
     } catch (err) {
       setError(err);
       setLoading(false);
