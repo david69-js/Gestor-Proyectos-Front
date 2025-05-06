@@ -73,7 +73,7 @@ function Tareas() {
         navigate(`/proyectos/${projectId}`);
       }, 2000);
     }
-  }, [data, navigate]);
+  }, [data, navigate, loading]);
 
   return (
     <div className="container mt-5">

@@ -175,3 +175,9 @@
     height: 300px;
     overflow: auto;
   }
+  .modal-dialog{
+    max-width: 800px;
+  }
+  .fs-6{
+    font-size: 12px;
+  }

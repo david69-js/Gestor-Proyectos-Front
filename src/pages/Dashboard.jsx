@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Dashboard.css';
 import Calendario from '../components/MiCalendario';
 import { AuthContext } from '../context/AuthContext.jsx'; 
-import { useContext } from 'react';
 import useApiData from '../hooks/useApiData';
 import ProyectoCard from '../components/proyecto-card.jsx';
 
@@ -22,7 +21,7 @@ function Dashboard() {
           <button className="btn btn-primary me-2" onClick={() => navigate('/proyectos')}>
             + Nuevo Proyecto
           </button>
-          <button className="btn btn-secondary" onClick={() => navigate('/invitar-persona')}>
+          <button className="btn btn-secondary me-2" onClick={() => navigate('/invitar-persona')}>
             + Invitar Persona
           </button>
         </div>

@@ -7,6 +7,9 @@ import { useNavigate } from 'react-router-dom';
 import useDeleteApi from '../hooks/useDeleteApi';
 import axios from 'axios';
 import './ProyectoDetalle.css'; // Importa el archivo CSS
+import { obtenerReporteDelProyecto } from '../hooks/reportes.js';
+import ReporteProyectos from '../components/Reporte.jsx';
+import DescargarPDF from '../components/PDF.jsx';
 
 function ProyectoDetalle() {
   const { projectId } = useParams();
@@ -20,11 +23,14 @@ function ProyectoDetalle() {
   const [isProjectUsersOpen, setProjectUsersOpen] = useState(false);
   const [isOrganizationUsersOpen, setOrganizationUsersOpen] = useState(false);
   const [isClientesOpen, setClientesOpen] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  
   const decodeHTML = (html) => {
     const txt = document.createElement('textarea');
     txt.innerHTML = html;
     return txt.value;
   };
+
 
   const handleEliminar = async () => {
     const response = await deleteData();
@@ -76,6 +82,20 @@ function ProyectoDetalle() {
     }
   };
 
+  const [reporte, setReporte] = useState(null);
+
+  const generarReporte = async () => {
+    const datosReporte = await obtenerReporteDelProyecto(authData, projectId);
+    console.log(datosReporte);
+    if (datosReporte) {
+      setReporte(datosReporte);
+    }
+  };
+
+
+  const handleOpenModal = () => setShowModal(true);
+  const handleCloseModal = () => setShowModal(false);
+  
   useEffect(() => {
     // Este efecto se ejecutará cada vez que se actualicen los datos del proyecto
     console.log('Datos del proyecto actualizados');
@@ -198,6 +218,20 @@ function ProyectoDetalle() {
               </div>
             </div>
           )}
+        
+          <button className="btn btn-info" onClick={generarReporte}>
+            Generar Reporte del Proyecto
+          </button>
+
+          <div>
+            { reporte &&
+            <>
+               <button onClick={handleOpenModal} className="btn btn-primary">Ver Reporte</button>
+               <ReporteProyectos reporte={reporte} showModal={showModal} handleClose={handleCloseModal} />
+              <DescargarPDF reporte={reporte} />
+            </>
+            }
+          </div>
           <p className="mt-4">
             <strong>Fecha de fin:</strong>{" "}
             {proyecto.fecha_fin
