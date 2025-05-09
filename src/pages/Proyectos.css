@@ -37,7 +37,8 @@
     gap: 2rem;
     width: 100%;
     max-width: 1900px;
-    margin-top: 1rem;
+    margin: 1rem auto 0 auto; /* ✅ Esto centra horizontalmente */
+    padding: 0 1rem; /* Espaciado lateral en pantallas pequeñas */
   }
   
 
@@ -188,14 +189,16 @@
 
   @media (max-width: 470px) {
     .proyecto-card {
-        width: 330px;
-        height: 200px;
+      width: 330px;
+      height: 200px;
+      margin: 0 auto; /* ✅ Centra horizontalmente */
     }
     
-    .proyecto-cardis{
-      width: 374px !important;
-      margin-left: -32px !important;
-    }
+    
+    .proyecto-cardis {
+  width: 374px;
+  margin-left: -5%; /* Centra horizontalmente */
+}
 
     .proyecto-card h4 {
       font-size: 1rem;
