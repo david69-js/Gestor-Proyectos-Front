@@ -22,7 +22,7 @@ function Header() {
           <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul className="navbar-nav">
               <li className="nav-item">
-                <Link className="nav-link" to="/">Dashboard</Link>
+                <Link className="nav-link" to="/">Inicio</Link>
               </li>
               <li className="nav-item">
                 <Link className="nav-link" to="/perfil">Perfil</Link>
