@@ -2,7 +2,49 @@
 body {
     font-family: 'Poppins', sans-serif;
   }
-.btn {
+
+
+  .navbar {
+    background-color: rgb(30 41 59) !important;
+    border-radius: 6px;
+  }
+  .navbar-toggler {
+    padding: var(--bs-navbar-toggler-padding-y) var(--bs-navbar-toggler-padding-x);
+    font-size: var(--bs-navbar-toggler-font-size);
+    line-height: 1;
+    color: rgb(151 145 145);
+    background-color: #334155;
+    border: var(--bs-border-width) solid rgb(0 0 0 / 15%);
+    border-radius: var(--bs-navbar-toggler-border-radius);
+    transition: var(--bs-navbar-toggler-transition);
+
+  }
+  .navbar-brand {
+    padding-top: var(--bs-navbar-brand-padding-y);
+    padding-bottom: var(--bs-navbar-brand-padding-y);
+    margin-right: var(--bs-navbar-brand-margin-end);
+    font-size: var(--bs-navbar-brand-font-size);
+    color: rgb(255 255 255);
+    text-decoration: none;
+    white-space: nowrap;
+}
+.nav-link {
+  display: block;
+  padding: var(--bs-nav-link-padding-y) var(--bs-nav-link-padding-x);
+  font-size: var(--bs-nav-link-font-size);
+  font-weight: var(--bs-nav-link-font-weight);
+  color: rgb(255 255 255 / 48%);
+  text-decoration: none;
+  background: 0 0;
+  border: 0;
+  transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out;
+}
+
+.nav-link:focus, .nav-link:hover {
+  color: rgb(241 200 200);
+}
+
+.btn {  
     padding: 1rem 2rem;
     border: none;
     border-radius: 8px;
@@ -14,8 +56,61 @@ body {
     text-align: center;
   }
   
-
+  .btn-primary {
+   
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #3f597f;
+    --bs-btn-border-color: #000000;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #1d314f;
+    --bs-btn-hover-border-color: #0a58ca;
+    --bs-btn-focus-shadow-rgb: 49, 132, 253;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #0a58ca;
+    --bs-btn-active-border-color: #0a53be;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: #0d6efd;
+    --bs-btn-disabled-border-color: #0d6efd;
+}
   
+.btn-secondary {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: #6c757d;
+  --bs-btn-border-color: #6c757d;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #5c636a;
+  --bs-btn-hover-border-color: #565e64;
+  --bs-btn-focus-shadow-rgb: 130, 138, 145;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #565e64;
+  --bs-btn-active-border-color: #51585e;
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #fff;
+  --bs-btn-disabled-bg: #6c757d;
+  --bs-btn-disabled-border-color: #6c757d;
+}
+.proyecto-card {
+  background: rgb(15 23 42) !important;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.2s;
+  display: flex
+;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 200px;
+}
+h3.card-title {
+  color: rgb(30 41 59);
+}
+.card-title {
+  margin-bottom: var(--bs-card-title-spacer-y);
+  color: white;
+}
   .dashboard-buttons {
     display: flex;
     justify-content: center;
@@ -109,3 +204,66 @@ body {
   .card-body-flex a{
     text-decoration: none;
   }
+
+
+  /* Estilos para el movil */
+  @media (max-width: 200px) {
+    .proyecto-card {
+      min-height: auto;
+      padding: 0.75rem;
+      font-size: 0.95rem;
+    }
+    
+    .dashboard-container {
+      padding: 1rem;
+    }
+  
+    .dashboard-buttons {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+  
+    .btn {
+      min-width: unset;
+      width: 100%;
+      padding: 0.5rem 1rem;
+      font-size: 0.95rem;
+    }
+  
+    .card {
+      padding: 0;
+      margin-bottom: 1rem;
+      border-radius: 6px;
+    }
+  
+    .card-body {
+      padding: 1rem;
+    }
+  
+    .card-title {
+      font-size: 1.1rem;
+      margin-bottom: 0.75rem;
+      text-align: center;
+    }
+  
+    .row > [class*="col-"] {
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
+    }
+  
+    .proyecto-card {
+      padding: 0.75rem !important;
+      min-height: auto !important;
+    }
+  
+    .card p {
+      font-size: 0.9rem;
+    }
+  
+    .separator {
+      margin: 1rem 0;
+    }
+  }
+  

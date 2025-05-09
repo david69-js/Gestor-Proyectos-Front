@@ -51,7 +51,7 @@ html, body {
   /* Botón de registro */
   .registro-form button {
     padding: 0.7rem;
-    background-color: #4c6a9c;
+    background-color: #5d6a81;
     color: #ffffff;
     border: none;
     border-radius: 6px;
@@ -94,17 +94,16 @@ html, body {
     color: #f1f5f9;
     padding: 0.7rem;
     border-radius: 6px;
+    border: none;
     font-size: 1rem;
-    cursor: pointer;
     width: 100%;
-    display: block;
-    margin-bottom: 1rem;
-  }
+    transition: background-color 0.3s ease;
+}
   
-  #imagen_perfil:focus {
-    outline: none;
-    background-color: #475569;
-  }
+#imagen_perfil:focus {
+  outline: none;
+  background-color: #475569;
+}
   
  
   #imagen_perfil::-webkit-file-upload-button {
@@ -143,9 +142,10 @@ html, body {
     position: absolute;
     top: 20px;
     right: 20px;
-    background: transparent;
+    background: #1e293b;
     color: white;
-    border: 2px solid white;
+    border: none;
+    border-radius: 6px;
     padding: 10px 20px;
     font-size: 16px;
     text-decoration: none;

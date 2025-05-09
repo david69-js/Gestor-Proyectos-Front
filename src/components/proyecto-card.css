@@ -34,3 +34,22 @@
     cursor: pointer;
     text-align: center;
   }
+
+
+  @media (max-width: 410px) {
+    .proyecto-card {
+      min-height: auto;
+      padding: 0.75rem;
+      font-size: 0.95rem;
+    }
+  
+    .proyecto-card h4 {
+      font-size: 1rem;
+      text-align: center;
+    }
+  
+    .card-body-flex {
+      padding: 0.5rem;
+    }
+  }
+  

@@ -27,7 +27,7 @@
     padding: 0.75rem;
     border-radius: 0.5rem;
     border: none;
-    background-color: #334155;
+    background-color: #ffffff;
     color: #f1f5f9;
     margin-top: 0.5rem;
   }
@@ -54,3 +54,37 @@
     background-color: #2563eb;
   }
   
+
+  @media (max-width: 768px) {
+  .proyecto-card {
+    padding: 0.75rem;
+    min-height: auto;
+    gap: 6px;
+  }
+
+  .proyecto-card h4 {
+    font-size: 1rem;
+    text-align: center;
+  }
+
+  .card-body-flex {
+    padding: 0.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .proyecto-card {
+    padding: 0.75rem;
+    min-height: auto;
+    gap: 6px;
+  }
+
+  .proyecto-card h4 {
+    font-size: 1rem;
+    text-align: center;
+  }
+
+  .card-body-flex {
+    padding: 0.5rem;
+  }
+}

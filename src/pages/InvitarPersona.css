@@ -2,13 +2,14 @@
 
 /* Asegura que el contenedor ocupe toda la altura y el ancho de la ventana */
 .invitar-wrapper {
-    background-color: #0f172a;
-    height: 100vh;
-    display: flex;
-    align-items: center; /* Alineamos el contenido al centro del eje vertical */
-    justify-content: center;
-    padding-top: 2rem; /* Le damos un espacio superior */
-  }
+  margin-top: -130px;
+  height: 10px;
+  height: 800px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 2rem;
+}
   
   /* Contenedor principal del formulario */
   .invitar-container {
@@ -35,6 +36,7 @@
     margin-bottom: 1.5rem;
     text-align: center;
     font-weight: 600;
+    color: #ffffff;
   }
   
   /* Formulario */

@@ -1,6 +1,6 @@
 .proyectos-container {
     padding: 2rem;
-    background-color: #f1f5f9;
+    background-color: #ffffff;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -8,7 +8,7 @@
   }
   
   .btn.blue {
-    background-color: #4c6a9c;
+    background-color: #435779;
     color: #fff;
     padding: 0.75rem 1.5rem;
     border: none;
@@ -36,7 +36,7 @@
     grid-template-columns: repeat(auto-fill, minmax(600px, 1fr)); 
     gap: 2rem;
     width: 100%;
-    max-width: 1200px;
+    max-width: 1900px;
     margin-top: 1rem;
   }
   
@@ -46,6 +46,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
+    
   }
   
   .sub-card {
@@ -117,13 +118,15 @@
   }
   
   .form-input {
+    background: #334155;
     width: 100%;
     padding: 10px 12px;
-    border: 1px solid #d1d5db;
+    border: 1px solid #334155;
     border-radius: 6px;
     font-size: 1rem;
     transition: border 0.2s;
-  }
+    color: white;
+}
   
   .form-input:focus {
     border-color: #3498db;
@@ -181,3 +184,25 @@
   .fs-6{
     font-size: 12px;
   }
+
+
+  @media (max-width: 470px) {
+    .proyecto-card {
+        width: 330px;
+        height: 200px;
+    }
+    
+    .proyecto-cardis{
+      width: 374px !important;
+      margin-left: -32px !important;
+    }
+
+    .proyecto-card h4 {
+      font-size: 1rem;
+      text-align: center;
+    }
+  
+    .card-body-flex {
+      padding: 0.5rem;
+    }
+ }
