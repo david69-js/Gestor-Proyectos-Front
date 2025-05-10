@@ -176,8 +176,10 @@
     padding: 20px 20px;
     margin-top: 20px;
     margin-bottom: 30px;
-    height: 300px;
+    height: 500px;
     overflow: auto;
+    background: #1f293b;
+    color: #fff;
   }
   .modal-dialog{
     max-width: 800px;
@@ -195,9 +197,16 @@
     }
     
     
-    .proyecto-cardis {
-  width: 374px;
-  margin-left: -5%; /* Centra horizontalmente */
+
+      .proyecto-cardis {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center; /* Centra horizontalmente */
 }
 
     .proyecto-card h4 {
@@ -208,4 +217,6 @@
     .card-body-flex {
       padding: 0.5rem;
     }
+
+   
  }

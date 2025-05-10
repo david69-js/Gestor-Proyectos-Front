@@ -108,12 +108,9 @@ function ProyectoDetalle() {
       {!loading && !error && proyecto && (
         <div>
           <h1 className="mb-4">{proyecto.nombre_proyecto}</h1>
-          <div className="proyecto-descripcion mb-4">
-            <div className='clientes mb-3'>
-              <button onClick={() => setClientesOpen(!isClientesOpen)} className="btn btn-light card dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded={isClientesOpen}>
+          <div className='clientes mb-3'>
                 <strong>Clientes:</strong>
-              </button>
-              <ul className={`dropdown-menu ${isProjectUsersOpen ? 'show' : ''}`}>
+              <ul className="lista-clientes show">
                   {loadingUsuarios && <li className="dropdown-item">Cargando usuarios...</li>}
                   {errorUsuarios && <li className="dropdown-item">Error al cargar los usuarios</li>}
                   {!loadingUsuarios && !errorUsuarios && (
@@ -136,43 +133,45 @@ function ProyectoDetalle() {
                   )}
                 </ul>
             </div>
+          <div className="proyecto-descripcion mb-4">
+            
             <strong>Descripción:</strong>
             {proyecto.descripcion && (
               <div className="mt-2" dangerouslySetInnerHTML={{ __html: decodeHTML(proyecto.descripcion) }} />
             )}
           </div>
 
-          <div class="container flex-container px-4 text-center">
+          <div class="container flex-container px-4 text-center container-buttons">
           
+              <div className="container-cta">
               {(authData.user.rol === 'admin' ) && (
                 <>
                  
                       <button
                         onClick={() => navigate(`/proyectos/${projectId}/editar`)}
-                        className="btn btn-light card"
+                        className="btn btn-darkbluecustom card"
                       >
                         Editar Proyecto
                       </button>
                  
                  
-                    <button onClick={handleEliminar} className="btn btn-light card">Eliminar proyecto</button>
+                    <button onClick={handleEliminar} className="btn btn-darkbluecustom card">Eliminar proyecto</button>
                  
                   </>
                 )}
                        
                 <button 
                   onClick={() => navigate(`/proyectos/${projectId}/crear-tarea`)}
-                  className="btn btn-light card"
+                  className="btn btn-darkbluecustom card"
                 >
                   Crear Tarea
                 </button>
-
-          </div>
-          {authData.user.rol === 'admin' && (
+              </div>
+                {authData.user.rol === 'admin' && (
             <div className='container-usuarios mt-4'>
               <div className="usuarios-lista mb-3">
-                <div className="dropdown">
-                  <button onClick={() => setProjectUsersOpen(!isProjectUsersOpen)} className="btn btn-light card dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <div className="dropdown dropdown-custom">
+                  <button onClick={() => setProjectUsersOpen(!isProjectUsersOpen)} className="btn btn-secondary card dropdown-toggle btn-custom" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Usuarios Asignados
                   </button>
                   <ul className={`dropdown-menu ${isProjectUsersOpen ? 'show' : ''}`}>
@@ -194,8 +193,8 @@ function ProyectoDetalle() {
                 </div>
               </div>
               <div className="usuarios-lista sin-asignar">
-                <div className="dropdown">
-                  <button onClick={() => setOrganizationUsersOpen(!isOrganizationUsersOpen)} className="btn btn-light card dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <div className="dropdown dropdown-custom">
+                  <button onClick={() => setOrganizationUsersOpen(!isOrganizationUsersOpen)} className="btn btn-secondary card dropdown-toggle btn-custom" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Asignar Colaboradores
                   </button>
                   <ul className={`dropdown-menu ${isOrganizationUsersOpen ? 'show' : ''}`}>
@@ -218,20 +217,25 @@ function ProyectoDetalle() {
               </div>
             </div>
           )}
-        
-          <button className="btn btn-info" onClick={generarReporte}>
+          <button className="btn btn-info btn-report text-center justify-content-center align-items-center" onClick={generarReporte}>
             Generar Reporte del Proyecto
           </button>
 
-          <div>
+          <div className='container-generate-report'>
             { reporte &&
             <>
-               <button onClick={handleOpenModal} className="btn btn-primary">Ver Reporte</button>
+               <button onClick={handleOpenModal} className="btn btn-primary justify-content-center align-items-center">Ver Reporte</button>
                <ReporteProyectos reporte={reporte} showModal={showModal} handleClose={handleCloseModal} />
               <DescargarPDF reporte={reporte} />
             </>
             }
           </div>
+          </div>
+          
+        
+          
+
+          
           <p className="mt-4">
             <strong>Fecha de fin:</strong>{" "}
             {proyecto.fecha_fin

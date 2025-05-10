@@ -1,12 +1,24 @@
 .button {
-  color: white;
+  color: #3f597f;
   border: none;
   padding: 0.5rem 1rem;
   border-radius: 4px;
   cursor: pointer;
 }
 
+.container-cta{
+  display: flex;
+  gap: 15px;
+}
 
+.btn-darkbluecustom{
+  background: #435779 !important;
+  color: #fff;
+}
+.btn-custom{
+  background: #6c757d !important;
+  color: #fff;
+}
 .container-usuarios{
     display: flex;
     gap: 40px;
@@ -50,7 +62,6 @@
   position: relative;
 }
 .clientes{
-  position: absolute;
     right: 10px;
     top: 5px;
     width: fit-content;
@@ -85,3 +96,49 @@
 .usuarios-lista .btn{
   padding: 10px 0!important;
 }
+.container-buttons{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  }
+  .btn-report{
+width: fit-content;
+padding: 10px 15px!important;
+  }
+
+  .container-generate-report{
+    display: flex;
+    gap: 15px;
+  }
+
+
+@media (max-width: 768px) {
+  
+  .container-generate-report{
+    flex-direction: column;
+  }
+
+  .container-cta{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .btn-report{
+    width: 100%;
+      }
+
+  .container-usuarios{
+  flex-direction: column;
+  
+  }
+  .dropdown-custom, .btn-custom, .usuarios-lista{
+  width: 100%;
+  }
+
+  .container-usuarios{
+    gap: 0px;
+}
+}
+
+

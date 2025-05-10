@@ -51,7 +51,7 @@ function DescargarPDF({ reporte }) {
   };
 
   return (
-    <button onClick={generarPDF} className="btn btn-primary">
+    <button onClick={generarPDF} className="btn btn-primary justify-content-center align-items-center">
       Descargar PDF
     </button>
   );
