@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import React, { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-
+import './Navbar.css';
 
 function Header() {
   const { logout, authData } = useContext(AuthContext);
@@ -13,9 +13,9 @@ function Header() {
   };
   return (
     <header className="header">
-      <nav className="navbar container navbar-expand-lg navbar-light bg-light">
+      <nav className="navbar container navbar-expand-lg navbar-light bg-light navbar-custom">
         <div className="container-fluid">
-          <Link className="navbar-brand" to="/">{authData.organizacion}</Link>
+          <Link className="navbar-brand navbar-custom navbar-custom-title" to="/">{authData.organizacion}</Link>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>

@@ -3,7 +3,9 @@ body {
     font-family: 'Poppins', sans-serif;
   }
 
-
+.card-title-custom{
+  color: #fff!important;
+}
   .navbar {
     background-color: rgb(30 41 59) !important;
     border-radius: 0px;
@@ -29,6 +31,9 @@ body {
     text-decoration: none;
     white-space: nowrap;
 }
+
+
+
 .nav-link {
   display: block;
   padding: var(--bs-nav-link-padding-y) var(--bs-nav-link-padding-x);

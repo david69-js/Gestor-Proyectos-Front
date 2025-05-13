@@ -26,8 +26,8 @@
     align-items: center;
     justify-content: center;
     margin-top: 2rem;
-    margin-left: auto;
-    margin-right: auto; /* Centrado horizontal */
+    margin-left: 15px;
+    margin-right: 15px; /* Centrado horizontal */
   }
   
   /* Título del formulario */

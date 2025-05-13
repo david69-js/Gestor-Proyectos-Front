@@ -146,7 +146,7 @@ function DetalleTareas() {
           <div className="tarea-info">
             <div className="tarea-info-container">
               <div
-                className="bg-secondary text-white p-3 mb-3"
+                className="bg-secondary text-white p-3 mb-3 custom-background"
                 style={{ overflow: 'auto', height: '50%' }}
               >
                 <strong>Descripción:</strong>
@@ -169,7 +169,7 @@ function DetalleTareas() {
                 <div className="dropdown usuarios-lista">
                   <button
                     onClick={() => setTaskUsersOpen(!isTaskUsersOpen)}
-                    className="btn btn-outline-secondary dropdown-toggle"
+                    className="btn btn-outline-secondary dropdown-toggle custom-buttom-detalle"
                     type="button"
                   >
                     Asignados
@@ -213,7 +213,7 @@ function DetalleTareas() {
                     onClick={() =>
                       setOrganizationUsersOpen(!isOrganizationUsersOpen)
                     }
-                    className="btn btn-outline-secondary dropdown-toggle"
+                    className="btn btn-outline-secondary dropdown-toggle custom-buttom-detalle"
                     type="button"
                   >
                     Asignar personas
@@ -267,11 +267,11 @@ function DetalleTareas() {
                 onClick={() =>
                   navigate(`/proyectos/${projectId}/tareas/${tareaId}/editar`)
                 }
-                className="btn btn-primary me-2"
+                className="btn btn-primary me-2 custome-botones"
               >
                 Editar Tarea
               </button>
-              <button className="btn btn-danger">Eliminar Tarea</button>
+              <button className="btn btn-danger custome-botones">Eliminar Tarea</button>
             </div>
           </div>
         </div>

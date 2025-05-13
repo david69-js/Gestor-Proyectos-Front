@@ -101,10 +101,12 @@
   flex-direction: column;
   gap: 10px;
   }
-  .btn-report{
+  .container-buttons .btn-report{
 width: fit-content;
 padding: 10px 15px!important;
   }
+
+
 
   .container-generate-report{
     display: flex;
@@ -126,7 +128,13 @@ padding: 10px 15px!important;
 
   .btn-report{
     width: 100%;
+    background-color: #000425;
+    color: #fff;
       }
+.btn-report:hover{
+    background-color: #435779 !important;
+    color: #fff;
+      } 
 
   .container-usuarios{
   flex-direction: column;
@@ -139,6 +147,21 @@ padding: 10px 15px!important;
   .container-usuarios{
     gap: 0px;
 }
+
+  .modal-body{
+  overflow: auto;
+}
+
+.container-buttons .btn-report{
+  width: 100%;
+
+    }
+
+    .custome-botones{
+      width: 100%;
+      margin-bottom: 25px;
+    }
+
 }
 
 

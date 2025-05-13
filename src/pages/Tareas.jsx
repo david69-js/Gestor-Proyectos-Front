@@ -86,11 +86,11 @@ function Tareas() {
         </div>
       )}
       <div className="row justify-content-center">
-        <div className="col-md-8 card">
+        <div className="col-md-8 card card-crear-tareas">
           <form className="form-crear-tarea" onSubmit={handleSubmit}>
-            <h2 className="mb-4">Crear Tarea</h2>
+            <h2 className="mb-4 custom-crear-tarea">Crear Tarea</h2>
             <div className="mb-3">
-              <label htmlFor="nombre_tarea" className="form-label">Nombre de la tarea</label>
+              <label htmlFor="nombre_tarea " className="custom-crear-tarea form-label ">Nombre de la tarea</label>
               <input
                 type="text"
                 id="nombre_tarea"
@@ -156,7 +156,7 @@ function Tareas() {
                 <option value="listo">Completada</option>
               </select>
             </div>
-            <button className="btn btn-primary w-100" type="submit" disabled={loading}>
+            <button className="btn btn-crear-tarea btn-primary w-100" type="submit" disabled={loading}>
               {loading ? 'Creando...' : 'Crear Tarea'}
             </button>
             {error && <p className="text-danger mt-3">Error al crear la tarea</p>}

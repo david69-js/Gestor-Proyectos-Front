@@ -56,7 +56,7 @@ function AgregarComentario({ projectId, tareaId, onComentarioAgregado, token }) 
           },
         }}
       />
-      <button type="submit" className="btn btn-primary mt-2">Agregar Comentario</button>
+      <button type="submit" className="btn btn-primary mt-2 custome-botones">Agregar Comentario</button>
     </form>
   );
 }

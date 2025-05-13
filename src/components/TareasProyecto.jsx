@@ -48,7 +48,7 @@ function TareasProyecto({ projectId }) {
                   ) : (
                     getTareasPorCategoria(categoria).map((tarea) => (
                       <Link
-                        className="task-card text-white"
+                        className={`task-card text-white ${tarea.estado_tarea === 'Listo' ? 'card-completada' : tarea.estado_tarea === 'En progreso' ? 'card-progreso' : 'card-por-hacer'}`}
                         key={tarea.TareaId}
                         to={`/proyectos/${projectId}/detalle-tarea/${tarea.TareaId}`}
                       >

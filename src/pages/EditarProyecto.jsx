@@ -5,7 +5,7 @@ import useUpdateApi from '../hooks/useUpdateApi';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import CustomUploadAdapter from '../utils/CustomUploadAdapter';
-
+import './EditarProyecto.css';
 function EditarProyecto() {
   const { projectId } = useParams();
   const navigate = useNavigate();
@@ -64,7 +64,7 @@ function EditarProyecto() {
 
   return (
     <div className="container">
-      <h2>Editar Proyecto</h2>
+      <h2 id ='proyecto-title'>Editar Proyecto</h2>
       {loading ? (
         <p>Cargando proyecto...</p>
       ) : error ? (

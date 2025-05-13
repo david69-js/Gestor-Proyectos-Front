@@ -115,7 +115,7 @@
     display: block;
     margin-bottom: 6px;
     font-weight: 500;
-    color: #34495e;
+    color: #ffffff;
   }
   
   .form-input {
@@ -176,11 +176,18 @@
     padding: 20px 20px;
     margin-top: 20px;
     margin-bottom: 30px;
-    height: 500px;
-    overflow: auto;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
     background: #1f293b;
     color: #fff;
   }
+
+  .proyecto-descripcion img{
+    max-width: 100%!important;
+    object-fit: contain!important;
+  }
+
   .modal-dialog{
     max-width: 800px;
   }
@@ -189,25 +196,30 @@
   }
 
 
+
+  
+
   @media (max-width: 470px) {
-    .proyecto-card {
-      width: 330px;
-      height: 200px;
-      margin: 0 auto; /* ✅ Centra horizontalmente */
+    .proyectos-cards {
+      display: flex;
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      flex-direction: column;
+    }
+    .proyectos-container{
+      padding: 0;
     }
     
-    
 
-      .proyecto-cardis {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center; /* Centra horizontalmente */
-}
+    .proyecto-cardis {
+      position: relative;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
     .proyecto-card h4 {
       font-size: 1rem;

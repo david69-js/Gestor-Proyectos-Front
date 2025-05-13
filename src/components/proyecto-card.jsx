@@ -13,7 +13,7 @@ function ProyectoCard({ proyecto }) {
       role="button"
     >
       <div className="card-body card-body-flex">
-        <h4 className="card-title">{proyecto.nombre_proyecto}</h4>
+        <h4 className="card-title card-title-custom">{proyecto.nombre_proyecto}</h4>
       </div>
     </div>
   );
