@@ -127,6 +127,14 @@ padding: 10px 15px!important;
     gap: 15px;
   }
 
+  .custom-separador{
+    border: 1px solid #0066ff;
+    margin: 2rem 0;
+    width: 100%;
+    
+  }
+
+
 
 @media (max-width: 768px) {
   
