@@ -140,7 +140,7 @@ function ProyectoDetalle() {
               <div className="mt-2" dangerouslySetInnerHTML={{ __html: decodeHTML(proyecto.descripcion) }} />
             )}
           </div>
-
+<hr className='custom-separador'/>
           <div class="container flex-container px-4 text-center container-buttons">
           
               <div className="container-cta">
@@ -167,6 +167,9 @@ function ProyectoDetalle() {
                   Crear Tarea
                 </button>
               </div>
+
+              <hr className='custom-separador' />
+
                 {authData.user.rol === 'admin' && (
             <div className='container-usuarios mt-4'>
               <div className="usuarios-lista mb-3">
@@ -217,6 +220,8 @@ function ProyectoDetalle() {
               </div>
             </div>
           )}
+
+          <hr className='custom-separador'/>
           <button className="btn btn-info btn-report text-center justify-content-center align-items-center" onClick={generarReporte}>
             Generar Reporte del Proyecto
           </button>

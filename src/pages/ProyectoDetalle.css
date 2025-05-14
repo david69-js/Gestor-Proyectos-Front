@@ -8,7 +8,9 @@
 
 .container-cta{
   display: flex;
-  gap: 15px;
+  gap: 25px;
+  justify-content: center;
+
 }
 
 .btn-darkbluecustom{
@@ -24,6 +26,7 @@
     display: flex;
     gap: 40px;
     margin: 20px 0;
+    justify-content: center;
 }
 
 .usuarios-lista{
@@ -69,6 +72,11 @@
 
 
 }
+
+.btn-report{
+  background-color: #277282;
+  color: #fff;
+}
 .clientes button{
   width: fit-content;
   color: black;
@@ -101,7 +109,12 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  justify-content: center;
+  align-items: center;
   }
+
+
+
   .container-buttons .btn-report{
 width: fit-content;
 padding: 10px 15px!important;
@@ -125,20 +138,22 @@ padding: 10px 15px!important;
     display: flex;
     flex-direction: column;
     gap: 10px;
+    width: 100%;
   }
 
   .btn-report{
     width: 100%;
-    background-color: #000425;
+    background-color: #277282;
     color: #fff;
       }
 .btn-report:hover{
-    background-color: #435779 !important;
+    background-color: #277282 !important;
     color: #fff;
       } 
 
   .container-usuarios{
   flex-direction: column;
+  width: 100%;
   
   }
   .dropdown-custom, .btn-custom, .usuarios-lista{
