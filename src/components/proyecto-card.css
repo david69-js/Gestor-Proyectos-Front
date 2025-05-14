@@ -4,7 +4,10 @@
     gap: 1rem;
     margin-top: 1rem;
   }
-  
+  .custom-card{
+height: 250px !important;
+  }
+
   .proyecto-card {
     background: #cde0ec;
     border-radius: 8px;

@@ -137,6 +137,10 @@
   }
   .info-tarea-buttons{
     padding: 0 20px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    gap: 60px;
   }
 
 
@@ -167,11 +171,17 @@
     .custom-buttom-detalle{
       width: 100% !important;
       margin-bottom: 25px;
+      font-size: 16px !important;
     }
 
     .btnEditarTarea{
       width: 100%; 
       margin-bottom: 30px; ;
       padding: 12px;
+    }
+
+    .info-tarea-buttons{
+      gap: 0px;
+      flex-direction: column;
     }
   }

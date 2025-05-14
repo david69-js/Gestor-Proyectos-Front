@@ -6,7 +6,7 @@ function ProyectoCard({ proyecto }) {
 
   return (
     <div
-      className="card proyecto-card bg-light text-dark"
+      className="card proyecto-card bg-light text-dark custom-card"
       aria-label={`Ver proyecto ${proyecto.nombre_proyecto}`}
       onClick={() => navigate(`/proyectos/${proyecto.id || proyecto._id}`)}
       tabIndex={0}
