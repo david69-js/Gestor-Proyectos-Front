@@ -10,6 +10,13 @@
     height: 550px;
     background: #1f293b !important;
   }
+
+  h2.custom-title-editar-tarea{
+    color: #fff !important;
+  }
+
+
+
   h2 {
     text-align: center;
     color: #2c3e50;
@@ -183,5 +190,15 @@
     .info-tarea-buttons{
       gap: 0px;
       flex-direction: column;
+    }
+
+
+    .custom-btn-crear-tarea{
+      height: 40px;
+      align-items: center;
+      justify-content: center;
+      display: flex;
+      padding: 0!important;
+      margin-top: 55px;
     }
   }

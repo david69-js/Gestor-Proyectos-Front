@@ -7,6 +7,12 @@
     font-family: 'Segoe UI', sans-serif;
   }
   
+
+  h2.mb4.custom-title-editar-tarea{
+    color: #fff !important;
+  }
+
+
   .editar-tarea-form {
     display: flex;
     flex-direction: column;

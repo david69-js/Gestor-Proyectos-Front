@@ -76,9 +76,9 @@ function EditarTarea() {
   return (
     <div className="proyectos-container">
       <div className="bg-light pt-5 pb-5 container justify-content-center row">
-        <div className="col-md-8">
+        <div className="col-md-8 card styled-form">
           <form className="form-crear-tarea" onSubmit={handleSubmit}>
-            <h2 className="mb-4">Editar Tarea</h2>
+            <h2 className="mb-4 custom-title-editar-tarea">Editar Tarea</h2>
 
             <div className="mb-3">
               <label htmlFor="nombre_tarea" className="form-label">
@@ -167,7 +167,7 @@ function EditarTarea() {
             </div>
 
             <button
-              className="btn btn-primary w-100"
+              className="btn btn-primary w-100  custom-btn-crear-tarea"
               type="submit"
               disabled={updating || loading}
             >
