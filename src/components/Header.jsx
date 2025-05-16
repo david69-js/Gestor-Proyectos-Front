@@ -12,7 +12,7 @@ function Header() {
     navigate('/login');  
   };
   return (
-    <header className="header">
+    <header className="header custom-header">
       <nav className="navbar container navbar-expand-lg navbar-light bg-light navbar-custom">
         <div className="container-fluid">
           <Link className="navbar-custom-title" to="/">{authData.organizacion}</Link>

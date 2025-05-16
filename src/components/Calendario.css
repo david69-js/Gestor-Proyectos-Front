@@ -1,15 +1,21 @@
 .react-calendar {
   font-size: 1rem;
   width: 100%;
-  background: #e7e8e9;
+  background: #A49E8D;
   border: none;
   border-radius: 8px;
   font-family: 'Poppins', sans-serif;
 }
   
-  .react-calendar__tile--active {
-    background: #0f286e;
-    color: rgb(255, 255, 255);
-    
-  }
-  
+
+.react-calendar__tile--active{
+  background: #6b6555 !important;
+}
+
+.react-calendar__tile--now {
+  background: #938b75 !important;
+}
+
+.react-calendar__month-view__days__day--weekend {
+  color: #000000 !important;
+}

@@ -18,16 +18,18 @@
     border-radius: 12px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
     width: 100%;
-    max-width: 400px;
+    max-width: 600px;
+    height: 600px;
     color: #f1f5f9;
     font-family: 'Poppins', sans-serif;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-top: 2rem;
+    margin-top: 10rem;
     margin-left: 15px;
     margin-right: 15px; /* Centrado horizontal */
+    margin-bottom: 100px;
   }
   
   /* Título del formulario */
@@ -98,6 +100,11 @@
   /* Efecto hover del botón */
   .invitar-form button:hover {
     background-color: #60a5fa;
+  }
+
+  .custom-btInvitar {
+    margin-top: 50px;
+    background: #A06B6B !important;
   }
   
   /* Mensajes de éxito y error */

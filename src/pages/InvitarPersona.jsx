@@ -122,7 +122,7 @@ function InvitarPersona() {
                         ))}
                     </select>
 
-                    <button type="submit" className="btn btn-primary">Enviar Invitación</button>
+                    <button type="submit" className="btn custom-btInvitar">Enviar Invitación</button>
                 </form>
             </div>
         </div>

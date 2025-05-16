@@ -135,13 +135,20 @@
   }
   
   .form-btn {
+    background: #A06B6B !important;
     width: 100%;
     margin-top: 10px;
     padding: 12px 0;
     font-size: 1.1rem;
     border-radius: 6px;
   }
-  
+
+  .form-btn:hover {
+    background: #a06b6b6b !important;
+  }
+
+
+
   .error {
     color: #e74c3c;
     text-align: center;
@@ -172,14 +179,13 @@
   }
 
   .proyecto-descripcion{
-    border: 1px solid #d1d5db;
     padding: 20px 20px;
     margin-top: 20px;
     margin-bottom: 30px;
     min-height: 400px;
     display: flex;
     flex-direction: column;
-    background: #1f293b;
+    background: #A06B6B;
     color: #fff;
   }
 
@@ -222,7 +228,7 @@
     }
 
     .proyecto-card h4 {
-      font-size: 1rem;
+      font-size: 18px;
       text-align: center;
     }
   
@@ -230,5 +236,5 @@
       padding: 0.5rem;
     }
 
-   
- }
+
+}

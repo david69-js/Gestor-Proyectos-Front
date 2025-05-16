@@ -18,7 +18,7 @@ function Dashboard() {
 
       {/* Botones superiores */}
       {rol === 'admin' && (
-        <div className="dashboard-buttons d-flex flex-wrap justify-content-center mb-4">
+        <div className="dashboard-buttons custom-buttons-inicio d-flex flex-wrap justify-content-center mb-4">
           <button
             className="btn btn-primary mb-2 me-md-2"
             onClick={() => navigate('/proyectos')}
@@ -33,9 +33,12 @@ function Dashboard() {
           </button>
         </div>
       )}
+<hr class= 'separator' />
+
+
 
       {/* Mis Proyectos */}
-      <div className="card centered clickable mb-4">
+      <div className="card centered mb-4 custom-card-inicio">
         <div className="card-body">
           <h3 className="card-title text-center mb-4">Mis Proyectos</h3>
           {loading && <p className="text-center">Cargando proyectos...</p>}
@@ -60,9 +63,9 @@ function Dashboard() {
       {/* Calendario */}
       <div className="row">
         <div className="col-12">
-          <div className="card mb-4">
+          <div className=" mb-4 custom-card-calendario">
             <div className="card-body">
-              <h4 className="card-title text-center mb-3">Calendario</h4>
+              <h4 className="card-title text-center mb-3 ">Calendario</h4>
               <Calendario />
             </div>
           </div>

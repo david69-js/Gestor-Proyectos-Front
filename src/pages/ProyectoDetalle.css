@@ -69,6 +69,7 @@
     right: 10px;
     top: 5px;
     width: fit-content;
+    font-size: 25px;
 
 
 }
@@ -134,6 +135,18 @@ padding: 10px 15px!important;
     
   }
 
+
+
+  .custom-detalleproyecto {
+    background: #fff;
+    box-shadow: #fff !important;
+
+  }
+
+.custom-detalleproyecto h1 {
+  text-align: center;
+  margin-top: 50px;
+}
 
 
 @media (max-width: 768px) {

@@ -7,4 +7,20 @@
         color: rgb(255 255 255);
         text-decoration: none;
         white-space: nowrap;
+        font-size: 30px;
+    }
+
+
+    .custom-header{
+    background: rgb(30 41 59) !important
+    }
+
+
+    @media (max-width: 480px) {
+        
+        a.navbar-custom-title{
+            font-size:25px;
+        }
+
+
     }

@@ -102,12 +102,14 @@ function ProyectoDetalle() {
   }, [proyecto]);
 
   return (
-    <div className="container bg-light text-dark p-4 rounded shadow-sm">
+    <div className="container text-dark p-4 rounded custom-detalleproyecto">
       {loading && <p className="text-muted">Cargando proyecto...</p>}
       {error && <p className="text-danger">Error al cargar el proyecto</p>}
       {!loading && !error && proyecto && (
         <div>
           <h1 className="mb-4">{proyecto.nombre_proyecto}</h1>
+
+          <hr class = 'separator' />
           <div className='clientes mb-3'>
                 <strong>Clientes:</strong>
               <ul className="lista-clientes show">
@@ -133,6 +135,9 @@ function ProyectoDetalle() {
                   )}
                 </ul>
             </div>
+
+                  <hr class= 'separator' />
+
           <div className="proyecto-descripcion mb-4">
             
             <strong>Descripción:</strong>
@@ -146,20 +151,20 @@ function ProyectoDetalle() {
               <div className="container-cta">
               {(authData.user.rol === 'admin' ) && (
                 <>
-                 
+                
                       <button
                         onClick={() => navigate(`/proyectos/${projectId}/editar`)}
                         className="btn btn-darkbluecustom card"
                       >
                         Editar Proyecto
                       </button>
-                 
-                 
+                
+                
                     <button onClick={handleEliminar} className="btn btn-darkbluecustom card">Eliminar proyecto</button>
-                 
+                
                   </>
                 )}
-                       
+
                 <button 
                   onClick={() => navigate(`/proyectos/${projectId}/crear-tarea`)}
                   className="btn btn-darkbluecustom card"
