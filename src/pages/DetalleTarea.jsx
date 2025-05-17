@@ -149,6 +149,14 @@ function DetalleTareas() {
 
   return (
     <div className="container bg-light text-dark p-4 rounded shadow-sm custom-card-DetalleTarea">
+            {showModal && (
+        <div className="modal-backdrop">
+          <div className="modal-content">
+            <h3>¡Tarea creada eliminada exitosamente!</h3>
+            <p>Serás redirigido en unos segundos...</p>
+          </div>
+        </div>
+      )}
       {loadingTarea && <p className="text-muted">Cargando tarea...</p>}
       {errorTarea && <p className="text-danger">Error al cargar la tarea</p>}
       {!loadingTarea && !errorTarea && tarea && (

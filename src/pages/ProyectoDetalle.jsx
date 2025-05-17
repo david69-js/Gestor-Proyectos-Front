@@ -11,6 +11,7 @@ import { obtenerReporteDelProyecto } from '../hooks/reportes.js';
 import ReporteProyectos from '../components/Reporte.jsx';
 import DescargarPDF from '../components/PDF.jsx';
 
+
 function ProyectoDetalle() {
   const { projectId } = useParams();
   const { authData } = useContext(AuthContext);
@@ -34,8 +35,13 @@ function ProyectoDetalle() {
   const handleEliminar = async () => {
     const response = await deleteData();
     if (response) {
-      console.log(deleting);
-      navigate('/proyectos');
+      setShowModal(true);
+      setTimeout(() => {
+        setShowModal(false);
+        navigate('/');
+      }, 2000);
+      
+     
     } else {
       console.log(deleteError);
     }
@@ -103,6 +109,14 @@ function ProyectoDetalle() {
 
   return (
     <div className="container text-dark p-4 rounded custom-detalleproyecto">
+      {showModal && (
+        <div className="modal-backdrop">
+          <div className="modal-content">
+            <h3>¡Proyecto eliminado correctamente!</h3>
+            <p>Serás redirigido en unos segundos...</p>
+          </div>
+        </div>
+      )}
       {loading && <p className="text-muted">Cargando proyecto...</p>}
       {error && <p className="text-danger">Error al cargar el proyecto</p>}
       {!loading && !error && proyecto && (
