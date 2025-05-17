@@ -60,7 +60,7 @@ function Registro() {
       return;
     }
 
-    if (form.correo !== email_invitado) {
+    if (tokenValido && form.correo !== email_invitado) {
       setPopupMessage('Este usuario no es el invitado.');
       setShowPopup(true);
       return;

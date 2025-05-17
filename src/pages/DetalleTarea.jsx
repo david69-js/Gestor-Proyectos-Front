@@ -8,14 +8,17 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './Tareas.css';
 import ComentariosList from '../components/ComentariosList';
 import AgregarComentario from '../components/AgregarComentario';
+import useDeleteApi from '../hooks/useDeleteApi';
 
 function DetalleTareas() {
   const { authData } = useContext(AuthContext);
   const { projectId, tareaId } = useParams();
+  const { deleteData, loading: deleting, error: deleteError } = useDeleteApi(`/tasks/project/${projectId}/tareas/${tareaId}`, authData?.token);
   const [usuariosAsignados, setUsuariosAsignados] = useState([]);
   const [comentarios, setComentarios] = useState([]);
   const [isTaskUsersOpen, setTaskUsersOpen] = useState(false);
   const [isOrganizationUsersOpen, setOrganizationUsersOpen] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
 
   const {
@@ -45,6 +48,20 @@ function DetalleTareas() {
     `/tasks/project/${projectId}/tareas/${tareaId}/comentarios`,
     authData?.token
   );
+  
+  const handleEliminar = async () => {
+    const response = await deleteData();
+    if (response) {
+      console.log(deleting);
+      setShowModal(true);
+      setTimeout(() => {
+        setShowModal(false);
+        navigate(`/proyectos/${projectId}`);
+      }, 2000);
+    } else {
+      console.log(deleteError);
+    }
+  };
 
   useEffect(() => {
     if (dataComentarios) {
@@ -277,7 +294,7 @@ function DetalleTareas() {
               >
                 Editar Tarea
               </button>
-              <button className="btn btn-danger custome-botones custom-btnEliminar">Eliminar Tarea</button>
+              <button onClick={handleEliminar} className="btn btn-danger custome-botones custom-btnEliminar">Eliminar Tarea</button>
             </div>
           </div>
         </div>
