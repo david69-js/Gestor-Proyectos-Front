@@ -89,7 +89,7 @@ function Tareas() {
         <div className="col-md-8 card card-crear-tareas">
           <form className="form-crear-tarea" onSubmit={handleSubmit}>
             <h2 className="mb-4 custom-crear-tarea">Crear Tarea</h2>
-            <div className="mb-3">
+            <div className="mb-3 custom-nombre">
               <label htmlFor="nombre_tarea " className="custom-crear-tarea form-label ">Nombre de la tarea</label>
               <input
                 type="text"
@@ -102,7 +102,7 @@ function Tareas() {
                 required
               />
             </div>
-            <div className="mb-3">
+            <div className="mb-3 custom-descripcion">
               <label htmlFor="descripcion" className="form-label">Descripción</label>
               <CKEditor
                 editor={ClassicEditor}
@@ -129,7 +129,7 @@ function Tareas() {
                 }}
               />
             </div>
-            <div className="mb-3">
+            <div className="mb-3 custom-fecha">
               <label htmlFor="fecha_limite" className="form-label">Fecha límite</label>
               <input
                 type="date"
@@ -141,7 +141,7 @@ function Tareas() {
                 required
               />
             </div>
-            <div className="mb-3">
+            <div className="mb-3 custom-estado">
               <label htmlFor="estado" className="form-label">Estado</label>
               <select
                 id="estado"
@@ -156,7 +156,7 @@ function Tareas() {
                 <option value="listo">Completada</option>
               </select>
             </div>
-            <button className="btn btn-crear-tarea btn-primary w-100" type="submit" disabled={loading}>
+            <button className="btn custom-boton-crear btn-crear-tarea btn-primary w-100" type="submit" disabled={loading}>
               {loading ? 'Creando...' : 'Crear Tarea'}
             </button>
             {error && <p className="text-danger mt-3">Error al crear la tarea</p>}

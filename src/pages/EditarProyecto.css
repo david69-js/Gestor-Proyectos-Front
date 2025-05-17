@@ -2,3 +2,14 @@
     color:black; 
 }
 
+.custom-btnRepor{
+    align-items: center !important;
+      display: flex !important;
+      justify-content: center !important;
+      margin-top: 30px !important;
+      margin-bottom: 50px !important;
+  }
+
+  .custom-editarProyecto{
+    padding: 30px;
+  }

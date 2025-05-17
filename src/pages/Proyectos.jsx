@@ -84,7 +84,7 @@ function Proyectos() {
       )}
       <div className="proyectos-cards">
         <div className="proyecto-cardis">
-          <form className="form-crear-proyecto styled-form" onSubmit={handleSubmit}>
+          <form className="form-crear-proyecto styled-form custom-crearProyecto" onSubmit={handleSubmit}>
             <h2 className="form-title">Crear Proyecto</h2>
             <div className="form-group">
               <label htmlFor="nombre_proyecto" className="form-label">Nombre del proyecto</label>

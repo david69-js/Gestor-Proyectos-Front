@@ -131,11 +131,11 @@ function DetalleTareas() {
   }, [tarea]);
 
   return (
-    <div className="container bg-light text-dark p-4 rounded shadow-sm">
+    <div className="container bg-light text-dark p-4 rounded shadow-sm custom-card-DetalleTarea">
       {loadingTarea && <p className="text-muted">Cargando tarea...</p>}
       {errorTarea && <p className="text-danger">Error al cargar la tarea</p>}
       {!loadingTarea && !errorTarea && tarea && (
-        <div>
+        <div class = "custom-detalles-tarea">
           <h1 className="mb-4">{tarea.nombre_tarea}</h1>
           <p>
             <strong>Proyecto:</strong> {tarea.nombre_proyecto}
@@ -143,14 +143,16 @@ function DetalleTareas() {
           <p>
             <strong>Organización:</strong> {tarea.nombre_organizacion}
           </p>
+
+          <hr class = "separator"/>
           <div className="tarea-info">
             <div className="tarea-info-container">
               <div
                 className="bg-secondary text-white p-3 mb-3 custom-background"
                 style={{ overflow: 'auto', height: '50%' }}
               >
-                <strong>Descripción:</strong>
-                <div
+                <strong class = "custom-strong">Descripción:</strong>
+                <div class = "custom-strong-text"
                   dangerouslySetInnerHTML={{ __html: tarea.descripcion }}
                 />
               </div>
@@ -166,6 +168,7 @@ function DetalleTareas() {
                 <strong>Estado:</strong> {tarea.estado_tarea}
               </p>
               <div className="container-usuarios">
+
                 <div className="dropdown usuarios-lista">
                   <button
                     onClick={() => setTaskUsersOpen(!isTaskUsersOpen)}
@@ -262,6 +265,9 @@ function DetalleTareas() {
                 </div>
               </div>
             </div>
+
+<hr class = "separator"/>
+
             <div className="info-tarea-buttons">
               <button
                 onClick={() =>
@@ -271,7 +277,7 @@ function DetalleTareas() {
               >
                 Editar Tarea
               </button>
-              <button className="btn btn-danger custome-botones">Eliminar Tarea</button>
+              <button className="btn btn-danger custome-botones custom-btnEliminar">Eliminar Tarea</button>
             </div>
           </div>
         </div>

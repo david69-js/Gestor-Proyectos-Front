@@ -70,7 +70,7 @@ function EditarProyecto() {
       ) : error ? (
         <p>Error al cargar el proyecto</p>
       ) : (
-        <form className="form-crear-proyecto styled-form" onSubmit={handleSubmit}>
+        <form className="form-crear-proyecto styled-form custom-editarProyecto" onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="nombre_proyecto" className="form-label">
               Nombre del proyecto

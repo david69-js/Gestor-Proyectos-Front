@@ -7,8 +7,9 @@
     min-height: 100vh;
   }
   .card-crear-tareas{
-    height: 550px;
+    height: 750px;
     background: #1f293b !important;
+    width: 650px;
   }
 
   h2.custom-title-editar-tarea{
@@ -25,7 +26,7 @@
   }
 
   .custom-background{
-    background: #1f293b!important;
+    background: #ffffff!important;
   }
 
   .custom-buttom-detalle{
@@ -36,6 +37,15 @@
     color: #ffffff;
   }
   
+  .custom-strong{
+    color: #2c3e50;
+    font-size: 30px;
+  }
+
+  .custom-strong-text{
+    color: #212529;
+    font-size: 18px;
+  }
   /* Formulario */
   .task-form {
     display: flex;
@@ -66,6 +76,22 @@
     border-color: #007bff;
   }
   
+  .custom-nombre{
+    margin-top: 40px;
+  }
+
+  .custom-descripcion{
+    margin-top: 40px;
+  }
+
+  .custom-fecha{
+    margin-top: 40px;
+  }
+
+  .custom-estado{
+    margin-top: 40px;
+  }
+
   .task-form button {
     background-color: #007bff;
     color: white;
@@ -93,6 +119,21 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
   }
   
+  .custom-btnEliminar{
+    background: #A06B6B !important;
+    color: #fff;
+  }
+
+  .custom-btnEliminar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 8px #a06b6bc2;
+  }
+
+  .custom-boton-crear{
+    margin-top: 50px !important;
+  }
+  
+
   .task-card h4 {
     color: #2c3e50;
     font-size: 18px;
@@ -136,11 +177,11 @@
  
   
   .tarea-info{
-    background-color: #f0f4f8;
+    background-color: #ffffff;
     margin: 22px 20px;
   }
   .tarea-info-container{
-    padding: 20px;
+    padding: 0px;
   }
   .info-tarea-buttons{
     padding: 0 20px;
@@ -151,8 +192,23 @@
   }
 
 
+  .custom-card-DetalleTarea{
+    background: #fff !important;
+  }
   
+  .custom-detalles-tarea{
+    padding: 25px;
+    box-shadow: 0px 1px 1px 2px #b0b4b9;
+    margin-bottom: 80px;
+  }
 
+  .dropdown-menu.show {
+    display: block;
+    position: absolute;
+    inset: 0px auto auto 0px;
+    margin: 0px;
+    transform: translate(-20px, 45px);
+}
 
   @media (max-width: 768px) {
     .task-list {
@@ -170,6 +226,8 @@
       padding: 0 !important;
     }
     
+    
+
     .tarea-info{
       
       margin: 0px;

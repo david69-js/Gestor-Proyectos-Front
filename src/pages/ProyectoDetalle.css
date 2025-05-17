@@ -14,19 +14,38 @@
 }
 
 .btn-darkbluecustom{
-  background: #435779 !important;
+  background: #5D3143 !important;
+  color: #fff;
+  margin-bottom: 15px;
+}
+
+.btn-darkbluecustom:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 8px #5d3142b0;
   color: #fff;
 }
+
+
+
+
 .btn-custom{
-  background: #6c757d !important;
+  background: #1e293b !important;
   color: #fff;
   font-size: 15px !important;
 }
+
+.btn-custom:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 8px #1e293bdc;
+  color: #fff;
+}
+
 .container-usuarios{
     display: flex;
-    gap: 40px;
+    gap: 90px;
     margin: 20px 0;
     justify-content: center;
+    margin-bottom: 150px;
 }
 
 .usuarios-lista{
@@ -105,6 +124,10 @@
 }
 .usuarios-lista .btn{
   padding: 10px 0!important;
+  font-size: 15px!important;
+  background: #5D3142;
+  color: #fff;
+  margin-bottom: 10px;
 }
 .container-buttons{
   display: flex;
@@ -112,6 +135,7 @@
   gap: 10px;
   justify-content: center;
   align-items: center;
+  margin-top: 100px;
   }
 
 
@@ -126,11 +150,12 @@ padding: 10px 15px!important;
   .container-generate-report{
     display: flex;
     gap: 15px;
+    justify-content: center;
   }
 
   .custom-separador{
-    border: 1px solid #0066ff;
-    margin: 2rem 0;
+    border: 1px solid #1e293b;
+    margin: 4rem 0;
     width: 100%;
     
   }
@@ -140,14 +165,34 @@ padding: 10px 15px!important;
   .custom-detalleproyecto {
     background: #fff;
     box-shadow: #fff !important;
-
+    margin-top: 100px;
   }
 
 .custom-detalleproyecto h1 {
   text-align: center;
-  margin-top: 50px;
+  margin-top: -60px;
 }
 
+.custom-parrafo{
+  font-size: 30px !important;
+}
+
+.custom-btnReport{
+    align-items: center !important;
+    display: flex !important;
+    justify-content: center !important;
+    margin-top: 30px !important;
+    margin-bottom: 50px !important;
+}
+
+.custom-fechaFin{
+font-size: 20px;
+margin-bottom: 50px;
+}
+
+.custom-card-tareas{
+  background: #fff !important;
+}
 
 @media (max-width: 768px) {
   
@@ -198,6 +243,14 @@ padding: 10px 15px!important;
       width: 100%;
       margin-bottom: 25px;
     }
+
+
+
+
+
+  
+ 
+
 
 }
 

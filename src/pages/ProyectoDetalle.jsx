@@ -140,12 +140,12 @@ function ProyectoDetalle() {
 
           <div className="proyecto-descripcion mb-4">
             
-            <strong>Descripción:</strong>
+            <strong class='custom-parrafo'>Descripción:</strong>
             {proyecto.descripcion && (
               <div className="mt-2" dangerouslySetInnerHTML={{ __html: decodeHTML(proyecto.descripcion) }} />
             )}
           </div>
-<hr className='custom-separador'/>
+
           <div class="container flex-container px-4 text-center container-buttons">
           
               <div className="container-cta">
@@ -226,28 +226,21 @@ function ProyectoDetalle() {
             </div>
           )}
 
-          <hr className='custom-separador'/>
-          <button className="btn btn-info btn-report text-center justify-content-center align-items-center" onClick={generarReporte}>
-            Generar Reporte del Proyecto
-          </button>
 
-          <div className='container-generate-report'>
-            { reporte &&
-            <>
-               <button onClick={handleOpenModal} className="btn btn-primary justify-content-center align-items-center">Ver Reporte</button>
-               <ReporteProyectos reporte={reporte} showModal={showModal} handleClose={handleCloseModal} />
-              <DescargarPDF reporte={reporte} />
-            </>
-            }
-          </div>
+          
+
+          
+
           </div>
           
         
-          
+          <hr class="separator"/>
 
           
-          <p className="mt-4">
+          <p className="mt-4 custom-fechaFin">
             <strong>Fecha de fin:</strong>{" "}
+
+            
             {proyecto.fecha_fin
               ? new Date(proyecto.fecha_fin).toLocaleDateString("es-ES", {
                   weekday: "long",
@@ -259,10 +252,31 @@ function ProyectoDetalle() {
           </p>
           
           <TareasProyecto projectId={projectId} />
+<hr class= "separator" />
+                <div class="custom-btnReport">
+                  <button className="btn btn-info btn-secondary text-center justify-content-center align-items-center" onClick={generarReporte}>
+                    Generar Reporte del Proyecto
+                  </button>
+                </div>
+                <div className='container-generate-report'>
+            { reporte &&
+            <>
+               <button onClick={handleOpenModal} className="btn btn-primary justify-content-center align-items-center">Ver Reporte</button>
+               <ReporteProyectos reporte={reporte} showModal={showModal} handleClose={handleCloseModal} />
+              <DescargarPDF reporte={reporte} />
+            </>
+            }
+          </div>
         </div>
+        
       )}
     </div>
+    
   );
+
+
 }
+
+
 
 export default ProyectoDetalle;

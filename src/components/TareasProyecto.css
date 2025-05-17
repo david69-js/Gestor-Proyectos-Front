@@ -33,9 +33,20 @@
   background: #1cbf3994;
 }
 
+.custom-title-cardTarea {
+  color: #000 !important;
+  font-size: 20px;
+}
 
+title-cards-tareas{
+  color: #000!important;
+}
 .card-title{
   color: #000;
   padding: 15px;
   
+}
+
+.custom-card-tareas{
+  background: #ffffff !important;
 }

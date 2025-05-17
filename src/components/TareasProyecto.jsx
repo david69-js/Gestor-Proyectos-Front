@@ -29,7 +29,7 @@ function TareasProyecto({ projectId }) {
   };
 
   return (
-    <div className="container bg-light text-dark p-4 rounded">
+    <div className="container bg-light text-dark p-4 rounded custom-card-tareas">
       <h3 className="mb-4">Tareas del Proyecto</h3>
       {loading && <p>Cargando tareas...</p>}
       {error && <p>Error al cargar las tareas</p>}
@@ -40,9 +40,9 @@ function TareasProyecto({ projectId }) {
               key={categoria.key}
               className={`col-md-6 col-lg-4 mb-3 tareas-columna ${categoria.className}`}
             >
-              <div className="card bg-light text-white">
+              <div className="card bg-light text-white custom-card-tareas">
                 <div className="card-body">
-                  <h4 className="card-title">{categoria.label}</h4>
+                  <h4 className="card-title custom-title-cardTarea">{categoria.label}</h4>
                   {getTareasPorCategoria(categoria).length === 0 ? (
                     <p>Sin tareas</p>
                   ) : (
@@ -52,7 +52,7 @@ function TareasProyecto({ projectId }) {
                         key={tarea.TareaId}
                         to={`/proyectos/${projectId}/detalle-tarea/${tarea.TareaId}`}
                       >
-                        <h5>{tarea.nombre_tarea}</h5>
+                        <h5 class="title-cards-tareas">{tarea.nombre_tarea}</h5>
                         <p>
                           Asignada a: {tarea.usuarios_asignados ? tarea.usuarios_asignados : "Ninguno"}
                         </p>
@@ -69,6 +69,9 @@ function TareasProyecto({ projectId }) {
       )}
     </div>
   );
+
+
+
 }
 
 export default TareasProyecto;
