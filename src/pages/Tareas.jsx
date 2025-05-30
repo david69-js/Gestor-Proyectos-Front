@@ -110,7 +110,7 @@ function Tareas() {
                 onChange={handleEditorChange}
                 onReady={handleEditorReady}
                 config={{
-                  licenseKey: 'eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3NDg0NzY3OTksImp0aSI6Ijc0YzJhYmVkLTRkNTMtNDZjMy04YzU1LTNjYmRiYmVlNzNkOCIsInVzYWdlRW5kcG9pbnQiOiJodHRwczovL3Byb3h5LWV2ZW50LmNrZWRpdG9yLmNvbSIsImRpc3RyaWJ1dGlvbkNoYW5uZWwiOlsiY2xvdWQiLCJkcnVwYWwiLCJzaCJdLCJ3aGl0ZUxhYmVsIjp0cnVlLCJsaWNlbnNlVHlwZSI6InRyaWFsIiwiZmVhdHVyZXMiOlsiKiJdLCJ2YyI6IjAzYTY0NzdkIn0.JCJlAtYQ2wSKD9O0et-aM2reZNWD7INP41cN1mzNlRDmIOsFu62-uv5ZT-F0pV3I_6RKmjWlwQuzGu3jYSNvWg',
+                  licenseKey: 'eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3NDk4NTkxOTksImp0aSI6IjhmYTMyOTNiLThkZjQtNGEzNS1hYTA0LTE0ZDRkOTM2YTk3MyIsInVzYWdlRW5kcG9pbnQiOiJodHRwczovL3Byb3h5LWV2ZW50LmNrZWRpdG9yLmNvbSIsImRpc3RyaWJ1dGlvbkNoYW5uZWwiOlsiY2xvdWQiLCJkcnVwYWwiLCJzaCJdLCJ3aGl0ZUxhYmVsIjp0cnVlLCJsaWNlbnNlVHlwZSI6InRyaWFsIiwiZmVhdHVyZXMiOlsiKiJdLCJ2YyI6ImE4YTY1YjQ1In0.SmfmK72afO2bE04NzkU2i2XltlHwJ1v6UcAz65Ezom4Tn4Xm_gV7-QsBoA6pcVQhd7gqRjxon5Y_57S4kq_mkQ',
                   toolbar: [
                     'heading',
                     '|',
